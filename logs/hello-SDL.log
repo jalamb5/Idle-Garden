@@ -169,3 +169,409 @@ doesn't exist on
 *** app/main.rb:29:in tick
 *** app/main.rb:21 (17342)
 ? 000326 [Engine] RNG seed has been set to 1675803787.
+? 000435 [Engine] Marked app/main.rb for reload. (26099)
+? 000440 [Engine] Marked app/main.rb for reload. (26399)
+? 000444 [Engine] Marked app/main.rb for reload. (26639)
+? 000445 [Engine] Marked app/main.rb for reload. (26699)
+- 000452 [Game] * EXCEPTION:
+** Failed to reload app/main.rb.
+line 45:0: syntax error, unexpected end of file, expecting keyword_end
+
+
+
+** Backtrace:
+*** app/main.rb:21 (27119)
+? 000453 [Engine] Marked app/main.rb for reload. (27178)
+- 000456 [Game] * WARNING:
+Your average framerate dropped below 60 fps for two seconds.
+
+The average FPS was 36.0.
+
+** How To Disable Warning
+If this warning is getting annoying put the following in your tick method:
+
+#+begin_src
+  args.gtk.log_level = :off
+#+end_src
+
+* INFO: Framerate Diagnostics
+You can display these diagnostics using:
+
+#+begin_src
+  def tick args
+    # ....
+
+    # IMPORTANT: Put this at the END of the ~tick~ method.
+    args.outputs.debug << args.gtk.framerate_diagnostics_primitives
+  end
+#+end_src
+
+** Draw Calls: ~<<~ Invocation Perf Counter
+Here is how many times ~args.outputs.PRIMITIVE_ARRAY <<~ was called:
+
+  2 times invoked.
+
+If the number above is high, consider batching primitives so you can lower the invocation of ~<<~. For example.
+
+Instead of:
+
+#+begin_src
+  args.state.enemies.map do |e|
+    e.alpha = 128
+    args.outputs.sprites << e # <-- ~args.outputs.sprites <<~ is invoked a lot
+  end
+#+end_src
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << args.state
+                              .enemies
+                              .map do |e| # <-- ~args.outputs.sprites <<~ is only invoked once.
+    e.alpha = 128
+    e
+  end
+#+end_src
+
+** Array Primitives
+~Primitives~ represented as an ~Array~ (~Tuple~) are great for prototyping, but are not as performant as using a ~Hash~.
+
+Here is the number of ~Array~ primitives that were encountered:
+
+  0 Array Primitives.
+
+If the number above is high, consider converting them to hashes. For example.
+
+Instead of:
+
+#+begin_src
+  args.outputs.sprites << [0, 0, 100, 100, 'sprites/enemy.png']
+#+begin_end
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << { x: 0,
+                            y: 0,
+                            w: 100,
+                            h: 100,
+                            path: 'sprites/enemy.png' }
+#+begin_end
+
+** Primitive Counts
+Here are the draw counts ordered by lowest to highest z order:
+
+PRIMITIVE   COUNT, STATIC COUNT
+solids:     0, 0
+sprites:    6, 0
+primitives: 0, 0
+labels:     1, 0
+lines:      0, 0
+borders:    0, 0
+debug:      0, 0
+reserved:   0, 0
+
+** Additional Help
+Come to the DragonRuby Discord channel if you need help troubleshooting performance issues. http://discord.dragonruby.org.
+
+Source code for these diagnostics can be found at: [[https://github.com/dragonruby/dragonruby-game-toolkit-contrib/]]
+
+
+? 000471 [Engine] Marked app/main.rb for reload. (28258)
+? 000482 [Engine] Marked app/main.rb for reload. (28918)
+? 000486 [Engine] Marked app/main.rb for reload. (29158)
+? 000491 [Engine] RNG seed has been set to 1675803787.
+? 000512 [Engine] RNG seed has been set to 1675803787.
+- 000519 [Game] * EXCEPTION:
+** Failed to reload app/main.rb.
+line 33:16: no .<digit> floating literal anymore; put 0 before dot
+line 33:16: syntax error, unexpected '.'
+
+
+
+** Backtrace:
+*** app/main.rb:21 (31138)
+- 000521 [Game] * EXCEPTION:
+** Failed to reload app/main.rb.
+line 33:16: no .<digit> floating literal anymore; put 0 before dot
+line 33:16: syntax error, unexpected '.'
+line 34:12: no .<digit> floating literal anymore; put 0 before dot
+line 34:12: syntax error, unexpected '.'
+
+
+
+** Backtrace:
+*** app/main.rb:21 (31257)
+? 000528 [Engine] Marked app/main.rb for reload. (31677)
+- 000531 [Game] * WARNING:
+Your average framerate dropped below 60 fps for two seconds.
+
+The average FPS was 13.76923076923077.
+
+** How To Disable Warning
+If this warning is getting annoying put the following in your tick method:
+
+#+begin_src
+  args.gtk.log_level = :off
+#+end_src
+
+* INFO: Framerate Diagnostics
+You can display these diagnostics using:
+
+#+begin_src
+  def tick args
+    # ....
+
+    # IMPORTANT: Put this at the END of the ~tick~ method.
+    args.outputs.debug << args.gtk.framerate_diagnostics_primitives
+  end
+#+end_src
+
+** Draw Calls: ~<<~ Invocation Perf Counter
+Here is how many times ~args.outputs.PRIMITIVE_ARRAY <<~ was called:
+
+  2 times invoked.
+
+If the number above is high, consider batching primitives so you can lower the invocation of ~<<~. For example.
+
+Instead of:
+
+#+begin_src
+  args.state.enemies.map do |e|
+    e.alpha = 128
+    args.outputs.sprites << e # <-- ~args.outputs.sprites <<~ is invoked a lot
+  end
+#+end_src
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << args.state
+                              .enemies
+                              .map do |e| # <-- ~args.outputs.sprites <<~ is only invoked once.
+    e.alpha = 128
+    e
+  end
+#+end_src
+
+** Array Primitives
+~Primitives~ represented as an ~Array~ (~Tuple~) are great for prototyping, but are not as performant as using a ~Hash~.
+
+Here is the number of ~Array~ primitives that were encountered:
+
+  0 Array Primitives.
+
+If the number above is high, consider converting them to hashes. For example.
+
+Instead of:
+
+#+begin_src
+  args.outputs.sprites << [0, 0, 100, 100, 'sprites/enemy.png']
+#+begin_end
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << { x: 0,
+                            y: 0,
+                            w: 100,
+                            h: 100,
+                            path: 'sprites/enemy.png' }
+#+begin_end
+
+** Primitive Counts
+Here are the draw counts ordered by lowest to highest z order:
+
+PRIMITIVE   COUNT, STATIC COUNT
+solids:     0, 0
+sprites:    0, 0
+primitives: 0, 0
+labels:     1, 0
+lines:      0, 0
+borders:    0, 0
+debug:      0, 0
+reserved:   0, 0
+
+** Additional Help
+Come to the DragonRuby Discord channel if you need help troubleshooting performance issues. http://discord.dragonruby.org.
+
+Source code for these diagnostics can be found at: [[https://github.com/dragonruby/dragonruby-game-toolkit-contrib/]]
+
+
+? 000540 [Engine] RNG seed has been set to 1675803787.
+? 000548 [Engine] Marked app/main.rb for reload. (32877)
+? 000550 [Engine] Marked app/main.rb for reload. (32997)
+? 000572 [Engine] Marked app/main.rb for reload. (34317)
+? 000577 [Engine] Marked app/main.rb for reload. (34617)
+? 000578 [Engine] Marked app/main.rb for reload. (34677)
+? 000580 [Engine] Marked app/main.rb for reload. (34797)
+? 000588 [Engine] Marked app/main.rb for reload. (35277)
+? 000656 [Engine] Marked app/main.rb for reload. (39357)
+? 000664 [Engine] Marked app/main.rb for reload. (39837)
+? 000681 [Engine] Marked app/main.rb for reload. (40857)
+? 000758 [Engine] Marked app/main.rb for reload. (45477)
+? 000759 [Engine] Marked app/main.rb for reload. (45537)
+? 000763 [Engine] Marked app/main.rb for reload. (45777)
+- 000787 [Game] * EXCEPTION:
+** Failed to reload app/main.rb.
+line 26:1: syntax error, unexpected '='
+
+
+
+** Backtrace:
+*** app/main.rb:21 (47217)
+? 000789 [Engine] Marked app/main.rb for reload. (47336)
+? 000790 [Engine] Marked app/main.rb for reload. (47396)
+? 000794 [Engine] Marked app/main.rb for reload. (47636)
+? 000796 [Engine] Marked app/main.rb for reload. (47756)
+- 000803 [Game] * EXCEPTION:
+** Failed to reload app/main.rb.
+line 51:0: syntax error, unexpected end of file, expecting keyword_end
+
+
+
+** Backtrace:
+*** app/main.rb:21 (48176)
+? 000813 [Engine] Marked app/main.rb for reload. (48775)
+- 000816 [Game] * WARNING:
+Your average framerate dropped below 60 fps for two seconds.
+
+The average FPS was 12.85714285714286.
+
+** How To Disable Warning
+If this warning is getting annoying put the following in your tick method:
+
+#+begin_src
+  args.gtk.log_level = :off
+#+end_src
+
+* INFO: Framerate Diagnostics
+You can display these diagnostics using:
+
+#+begin_src
+  def tick args
+    # ....
+
+    # IMPORTANT: Put this at the END of the ~tick~ method.
+    args.outputs.debug << args.gtk.framerate_diagnostics_primitives
+  end
+#+end_src
+
+** Draw Calls: ~<<~ Invocation Perf Counter
+Here is how many times ~args.outputs.PRIMITIVE_ARRAY <<~ was called:
+
+  2 times invoked.
+
+If the number above is high, consider batching primitives so you can lower the invocation of ~<<~. For example.
+
+Instead of:
+
+#+begin_src
+  args.state.enemies.map do |e|
+    e.alpha = 128
+    args.outputs.sprites << e # <-- ~args.outputs.sprites <<~ is invoked a lot
+  end
+#+end_src
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << args.state
+                              .enemies
+                              .map do |e| # <-- ~args.outputs.sprites <<~ is only invoked once.
+    e.alpha = 128
+    e
+  end
+#+end_src
+
+** Array Primitives
+~Primitives~ represented as an ~Array~ (~Tuple~) are great for prototyping, but are not as performant as using a ~Hash~.
+
+Here is the number of ~Array~ primitives that were encountered:
+
+  0 Array Primitives.
+
+If the number above is high, consider converting them to hashes. For example.
+
+Instead of:
+
+#+begin_src
+  args.outputs.sprites << [0, 0, 100, 100, 'sprites/enemy.png']
+#+begin_end
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << { x: 0,
+                            y: 0,
+                            w: 100,
+                            h: 100,
+                            path: 'sprites/enemy.png' }
+#+begin_end
+
+** Primitive Counts
+Here are the draw counts ordered by lowest to highest z order:
+
+PRIMITIVE   COUNT, STATIC COUNT
+solids:     0, 0
+sprites:    7, 0
+primitives: 0, 0
+labels:     1, 0
+lines:      0, 0
+borders:    0, 0
+debug:      0, 0
+reserved:   0, 0
+
+** Additional Help
+Come to the DragonRuby Discord channel if you need help troubleshooting performance issues. http://discord.dragonruby.org.
+
+Source code for these diagnostics can be found at: [[https://github.com/dragonruby/dragonruby-game-toolkit-contrib/]]
+
+
+? 000840 [Engine] Marked app/main.rb for reload. (50395)
+? 000844 [Engine] Marked app/main.rb for reload. (50635)
+? 000916 [Engine] Marked app/main.rb for reload. (54955)
+? 000968 [Engine] Marked app/main.rb for reload. (58075)
+? 000980 [Engine] Marked app/main.rb for reload. (58795)
+? 000985 [Engine] Marked app/main.rb for reload. (59095)
+? 000989 [Engine] Marked app/main.rb for reload. (59335)
+? 000998 [Engine] Marked app/main.rb for reload. (59875)
+? 001005 [Engine] Marked app/main.rb for reload. (60295)
+? 001015 [Engine] Marked app/main.rb for reload. (60895)
+? 001018 [Engine] Marked app/main.rb for reload. (61075)
+? 001021 [Engine] Marked app/main.rb for reload. (61255)
+? 001023 [Engine] Marked app/main.rb for reload. (61375)
+? 001026 [Engine] Marked app/main.rb for reload. (61555)
+- 001040 [Game] * EXCEPTION:
+** Failed to reload app/main.rb.
+line 31:8: syntax error, unexpected keyword_else
+
+
+
+** Backtrace:
+*** app/main.rb:21 (62395)
+? 001042 [Engine] Marked app/main.rb for reload. (62514)
+? 001046 [Engine] Marked app/main.rb for reload. (62754)
+? 001051 [Engine] Marked app/main.rb for reload. (63054)
+- 001058 [Game] * EXCEPTION:
+** Failed to reload app/main.rb.
+line 30:93: syntax error, unexpected ')'
+line 32:3: syntax error, unexpected keyword_end, expecting ')'
+line 52:3: syntax error, unexpected keyword_end, expecting ')'
+
+
+
+** Backtrace:
+*** app/main.rb:21 (63474)
+? 001060 [Engine] Marked app/main.rb for reload. (63593)
+? 001063 [Engine] Marked app/main.rb for reload. (63773)
+? 001067 [Engine] Marked app/main.rb for reload. (64013)
+? 001073 [Engine] Marked app/main.rb for reload. (64373)
+? 001075 [Engine] Marked app/main.rb for reload. (64493)
+? 001079 [Engine] Marked app/main.rb for reload. (64733)
+? 001082 [Engine] Marked app/main.rb for reload. (64913)
+? 001100 [Engine] Marked app/main.rb for reload. (65993)
+? 001112 [Engine] RNG seed has been set to 1675803787.
+? 001185 [Engine] Marked app/main.rb for reload. (71093)
+? 001190 [Engine] Marked app/main.rb for reload. (71393)
+? 001191 [Engine] Marked app/main.rb for reload. (71453)

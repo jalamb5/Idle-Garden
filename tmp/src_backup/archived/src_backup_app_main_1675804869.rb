@@ -28,7 +28,7 @@ def tick(args)
     if new_plant.invalid
       # harvest plant
       plant_to_harvest = new_plant.invalid
-      plant_to_harvest.invalid = true if plant_to_harvest.w >= full_grown && plant_to_harvest.h >= full_grown
+      plant_to_harvest.invalid = true if (plant_to_harvest.w == full_grown && plant_to_harvest.h == full_grown)
     else
       args.state.plants << new_plant
     end

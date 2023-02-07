@@ -13,25 +13,18 @@ def occupied(args, new_plant)
   args.state.plants.each do |plant|
     next unless args.geometry.intersect_rect?(plant, new_plant)
 
-    new_plant.invalid = plant
+    new_plant.invalid = true
   end
   new_plant
 end
 
 def tick(args)
   args.state.plants ||= []
-  full_grown = 40
 
   # Place plants on board
   if args.inputs.mouse.click && args.inputs.mouse.x <= 1280 && args.inputs.mouse.y <= 720
-    new_plant = occupied(args, place_plant(args))
-    if new_plant.invalid
-      # harvest plant
-      plant_to_harvest = new_plant.invalid
-      plant_to_harvest.invalid = true if plant_to_harvest.w >= full_grown && plant_to_harvest.h >= full_grown
-    else
-      args.state.plants << new_plant
-    end
+    location = occupied(args, place_plant(args))
+    args.state.plants << occupied(args, place_plant(args))
   end
 
   # Remove invalid plants
@@ -39,8 +32,8 @@ def tick(args)
 
   # Grow plants
   args.state.plants.each do |plant|
-    plant.w += 0.01 unless plant.w >= full_grown
-    plant.h += 0.01 unless plant.h >= full_grown
+    plant.w += 0.01 unless plant.w >= 40
+    plant.h += 0.01 unless plant.h >= 40
   end
 
   # Render sprites
