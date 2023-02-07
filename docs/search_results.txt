@@ -1,0 +1,21 @@
+* ~args.geometry~ [[GTK::Runtime.docs_api_summary_geometry]]
+** ~args.geometry.inside_rect? rect_1, rect_2~
+** ~args.geometry.intersect_rect? rect_1, rect_2~
+** ~args.geometry.scale_rect rect, x_percentage, y_percentage~
+** ~args.geometry.angle_to start_point, end_point~
+** ~args.geometry.angle_from start_point, end_point~
+** ~args.geometry.point_inside_circle? point, circle_center_point, radius~
+** ~args.geometry.center_inside_rect rect, other_rect~
+** ~args.geometry.center_inside_rect_x rect, other_rect~
+** ~args.geometry.center_inside_rect_y rect, other_rect~
+** ~args.geometry.anchor_rect rect, anchor_x, anchor_y~
+** ~args.geometry.shift_line line, x, y~
+** ~args.geometry.line_y_intercept line~
+** ~args.geometry.angle_between_lines line_one, line_two, replace_infinity:~
+** ~args.geometry.line_slope line, replace_infinity:~
+** ~args.geometry.line_rise_run~
+** ~args.geometry.ray_test point, line~
+** ~args.geometry.line_rect line~
+** ~args.geometry.line_intersect line_one, line_two~
+** ~args.geometry.distance point_one, point_two~
+** ~args.geometry.cubic_bezier t, a, b, c, d~

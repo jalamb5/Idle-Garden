@@ -1,0 +1,171 @@
+* 000000 [Engine] Log started at 2023/2/7 13:3:7
+* 000000 [Engine] This copy of the engine is git hash 683cab3cde55985112f46049a17cbeeaadad4410, built on Jan 30 2023, at 14:33:27
+* 000000 [Engine] Platform: Mac OS X
+* 000000 [Engine] 
+* 000000 [Engine] *******************************************************************************************
+* 000000 [Engine] *** This is the Standard license build!                                                 ***
+* 000000 [Engine] *** Get more with an Indie or Pro license such as C extensions, mobile dev, and VR dev! ***
+* 000000 [Engine] *** Details at http://dragonruby.org/toolkit/game#purchase                              ***
+* 000000 [Engine] *******************************************************************************************
+* 000000 [Engine] 
+! 000000 [Engine] Metadata file does not have all required fields!
+- 000000 [Engine] Game Dir: /Users/justinlamb/repos/Plants dragonruby-macos//mygame
+- 000000 [Engine] Game ID: hello-SDL
+- 000000 [Engine] Game Title: Update metadata/game_metadata.txt in your mygame directory to change this title.
+- 000000 [Engine] Game Version: 1.0
+- 000000 [Engine] Game Package ID: org.dragonruby.hello-SDL
+- 000000 [Engine] Game Developer ID: dragonruby
+- 000000 [Engine] Game Developer Title: DragonRuby LLC
+- 000000 [Engine] Production Build: no
+- 000000 [Engine] Remote Hotload: no
+? 000000 [Engine] Loading cvars from file 'metadata/cvars.txt' ...
+? 000000 [Engine] File 'metadata/cvars.txt' line 1 setting cvar 'log.filter_subsystems' to 'HTTPServer'
+? 000000 [Engine] File 'metadata/cvars.txt' complete
+? 000000 [Engine] RNG seed has been set to 1675803787.
+- 000000 [Engine] Janitor is using 4 threads.
+? 000000 [Engine] Marked app/main.rb for reload. (-1)
+- 000001 [Game] Game state and exception will be written to logs/exceptions/game_state_62.txt and logs/exceptions/current.txt.
+- 000001 [Game] * EXCEPTION:
+* ERROR - :invalid method missing on ~Array~.
+The method named
+  :invalid
+doesn't exist on
+  [Array, Enumerable].
+#+begin_src ~Array#inspect~
+[[...]]
+#+end_src ~Array#inspect~ for :invalid method missing on ~Array~
+** Backtrace:
+*** app/main.rb:27:in tick
+*** app/main.rb:27:in tick
+*** app/main.rb:19 (62)
+? 000082 [Engine] Marked app/main.rb for reload. (4919)
+- 000082 [Game] Game state and exception will be written to logs/exceptions/game_state_63.txt and logs/exceptions/current.txt.
+- 000082 [Game] * EXCEPTION:
+* ERROR - :invalid method missing on ~Array~.
+The method named
+  :invalid
+doesn't exist on
+  [Array, Enumerable].
+#+begin_src ~Array#inspect~
+[[...]]
+#+end_src ~Array#inspect~ for :invalid method missing on ~Array~
+** Backtrace:
+*** app/main.rb:27:in tick
+*** app/main.rb:27:in tick
+*** app/main.rb:19 (4922)
+? 000085 [Engine] Marked app/main.rb for reload. (5099)
+- 000085 [Game] Game state and exception will be written to logs/exceptions/game_state_64.txt and logs/exceptions/current.txt.
+- 000085 [Game] * EXCEPTION:
+* ERROR - :invalid method missing on ~Array~.
+The method named
+  :invalid
+doesn't exist on
+  [Array, Enumerable].
+#+begin_src ~Array#inspect~
+[[...]]
+#+end_src ~Array#inspect~ for :invalid method missing on ~Array~
+** Backtrace:
+*** app/main.rb:27:in tick
+*** app/main.rb:27:in tick
+*** app/main.rb:19 (5102)
+? 000088 [Engine] Marked app/main.rb for reload. (5279)
+- 000088 [Game] Game state and exception will be written to logs/exceptions/game_state_65.txt and logs/exceptions/current.txt.
+- 000088 [Game] * EXCEPTION:
+* ERROR - :dead method missing on ~Array~.
+The method named
+  :dead
+doesn't exist on
+  [Array, Enumerable].
+#+begin_src ~Array#inspect~
+[[...]]
+#+end_src ~Array#inspect~ for :dead method missing on ~Array~
+** Backtrace:
+*** app/main.rb:27:in tick
+*** app/main.rb:27:in tick
+*** app/main.rb:19 (5282)
+? 000147 [Engine] Marked app/main.rb for reload. (8819)
+- 000147 [Game] Game state and exception will be written to logs/exceptions/game_state_66.txt and logs/exceptions/current.txt.
+- 000147 [Game] * EXCEPTION:
+* ERROR - :invalid method missing on ~Array~.
+The method named
+  :invalid
+doesn't exist on
+  [Array, Enumerable].
+#+begin_src ~Array#inspect~
+[[...]]
+#+end_src ~Array#inspect~ for :invalid method missing on ~Array~
+** Backtrace:
+*** app/main.rb:27:in tick
+*** app/main.rb:27:in tick
+*** app/main.rb:19 (8822)
+? 000242 [Engine] Marked app/main.rb for reload. (14519)
+- 000242 [Game] Game state and exception will be written to logs/exceptions/game_state_67.txt and logs/exceptions/current.txt.
+- 000242 [Game] * EXCEPTION:
+* ERROR - :invalid method missing on ~Array~.
+The method named
+  :invalid
+doesn't exist on
+  [Array, Enumerable].
+#+begin_src ~Array#inspect~
+[[...]]
+#+end_src ~Array#inspect~ for :invalid method missing on ~Array~
+** Backtrace:
+*** app/main.rb:28:in tick
+*** app/main.rb:28:in tick
+*** app/main.rb:20 (14522)
+? 000243 [Engine] Marked app/main.rb for reload. (14579)
+? 000247 [Engine] Marked app/main.rb for reload. (14819)
+- 000247 [Game] Game state and exception will be written to logs/exceptions/game_state_68.txt and logs/exceptions/current.txt.
+- 000247 [Game] * EXCEPTION:
+* ERROR - :invalid method missing on ~Array~.
+The method named
+  :invalid
+doesn't exist on
+  [Array, Enumerable].
+#+begin_src ~Array#inspect~
+[[...]]
+#+end_src ~Array#inspect~ for :invalid method missing on ~Array~
+** Backtrace:
+*** app/main.rb:28:in tick
+*** app/main.rb:28:in tick
+*** app/main.rb:20 (14822)
+- 000278 [Game] * EXCEPTION:
+** Failed to reload app/main.rb.
+line 8:4: syntax error, unexpected local variable or method, expecting '}'
+line 40:0: syntax error, unexpected end of file, expecting keyword_end
+
+
+
+** Backtrace:
+*** app/main.rb:20 (16679)
+? 000284 [Engine] Marked app/main.rb for reload. (17039)
+- 000284 [Game] Game state and exception will be written to logs/exceptions/game_state_69.txt and logs/exceptions/current.txt.
+- 000284 [Game] * EXCEPTION:
+* ERROR - :invalid method missing on ~Array~.
+The method named
+  :invalid
+doesn't exist on
+  [Array, Enumerable].
+#+begin_src ~Array#inspect~
+[[...]]
+#+end_src ~Array#inspect~ for :invalid method missing on ~Array~
+** Backtrace:
+*** app/main.rb:29:in tick
+*** app/main.rb:29:in tick
+*** app/main.rb:21 (17042)
+? 000289 [Engine] Marked app/main.rb for reload. (17339)
+- 000289 [Game] Game state and exception will be written to logs/exceptions/game_state_70.txt and logs/exceptions/current.txt.
+- 000289 [Game] * EXCEPTION:
+* ERROR - :invalid method missing on ~Array~.
+The method named
+  :invalid
+doesn't exist on
+  [Array, Enumerable].
+#+begin_src ~Array#inspect~
+[[...]]
+#+end_src ~Array#inspect~ for :invalid method missing on ~Array~
+** Backtrace:
+*** app/main.rb:29:in tick
+*** app/main.rb:29:in tick
+*** app/main.rb:21 (17342)
+? 000326 [Engine] RNG seed has been set to 1675803787.
