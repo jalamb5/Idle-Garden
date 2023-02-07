@@ -2,10 +2,10 @@ def place_plant(args)
   {
     x: args.inputs.mouse.x - 15,
     y: args.inputs.mouse.y - 15,
-    w: 20,
-    h: 20,
+    w: 12,
+    h: 12,
     invalid: false,
-    path: 'sprites/circle/yellow.png'
+    path: 'sprites/circle/green.png'
   }
 end
 
@@ -18,23 +18,12 @@ def occupied(args, new_plant)
   new_plant
 end
 
-def in_bounds(args)
-  args.inputs.mouse.x <= 1280 &&
-    args.inputs.mouse.x >= 0 &&
-    args.inputs.mouse.y <= 720 &&
-    args.inputs.mouse.y >= 0
-end
-
 def tick(args)
-  args.outputs.background_color = [50, 168, 82]
-  args.outputs.static_borders << { x: 0, y: 0, w: 1280, h: 720 }
   args.state.plants ||= []
-
-  growth_rate = 0.1
   full_grown = 40
 
-  # Place plants in garden
-  if args.inputs.mouse.click && in_bounds(args)
+  # Place plants on board
+  if args.inputs.mouse.click && args.inputs.mouse.x <= 1280 && args.inputs.mouse.y <= 720
     new_plant = occupied(args, place_plant(args))
     if new_plant.invalid
       # harvest plant
@@ -50,12 +39,8 @@ def tick(args)
 
   # Grow plants
   args.state.plants.each do |plant|
-    if plant.w <= full_grown && plant.h <= full_grown
-      plant.w += growth_rate
-      plant.h += growth_rate
-    else
-      plant.path = 'sprites/circle/green.png'
-    end
+    plant.w += 0.01 unless plant.w >= full_grown
+    plant.h += 0.01 unless plant.h >= full_grown
   end
 
   # Render sprites

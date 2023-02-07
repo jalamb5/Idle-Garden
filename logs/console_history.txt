@@ -1,3 +1,8 @@
+$gtk.reset seed: 1675805964
+$gtk.grep_source [".static_borders =", "remove assignment and use << or .clear instead."]
+$gtk.grep_source [".borders =", "remove assignment and use << or .clear instead."]
+$gtk.reset seed: 1675805964
+$gtk.grep_source [".solids =", "remove assignment and use << or .clear instead."]
 $gtk.reset seed: 1675803787
 $gtk.grep_source [".arg", '']
 $gtk.reset seed: 1675802656

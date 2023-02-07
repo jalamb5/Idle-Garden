@@ -20,9 +20,9 @@ end
 
 def in_bounds(args)
   args.inputs.mouse.x <= 1280 &&
-    args.inputs.mouse.x >= 0 &&
-    args.inputs.mouse.y <= 720 &&
-    args.inputs.mouse.y >= 0
+  args.inputs.mouse.x >= 0 &&
+  args.inputs.mouse.y <= 720 &&
+  args.inputs.mouse.y >= 0
 end
 
 def tick(args)

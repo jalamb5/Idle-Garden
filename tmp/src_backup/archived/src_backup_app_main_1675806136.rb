@@ -18,23 +18,14 @@ def occupied(args, new_plant)
   new_plant
 end
 
-def in_bounds(args)
-  args.inputs.mouse.x <= 1280 &&
-    args.inputs.mouse.x >= 0 &&
-    args.inputs.mouse.y <= 720 &&
-    args.inputs.mouse.y >= 0
-end
-
 def tick(args)
-  args.outputs.background_color = [50, 168, 82]
-  args.outputs.static_borders << { x: 0, y: 0, w: 1280, h: 720 }
   args.state.plants ||= []
-
+  args.outputs.static_solids << [50, 168, 82]
   growth_rate = 0.1
   full_grown = 40
 
   # Place plants in garden
-  if args.inputs.mouse.click && in_bounds(args)
+  if args.inputs.mouse.click && args.inputs.mouse.x <= 1280 && args.inputs.mouse.y <= 720
     new_plant = occupied(args, place_plant(args))
     if new_plant.invalid
       # harvest plant
