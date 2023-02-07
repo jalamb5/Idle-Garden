@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def place_plant(args)
   {
     x: args.inputs.mouse.x - 15,
@@ -58,7 +60,7 @@ def tick(args)
   end
 
   # Remove invalid plants
-  args.state.plants.reject! { |p| p.invalid }
+  args.state.plants.reject!(&:invalid)
 
   # Grow plants
   args.state.plants.each do |plant|

@@ -2873,3 +2873,1535 @@ Come to the DragonRuby Discord channel if you need help troubleshooting performa
 Source code for these diagnostics can be found at: [[https://github.com/dragonruby/dragonruby-game-toolkit-contrib/]]
 
 
+- 000292 [Game] * WARNING:
+Your average framerate dropped below 60 fps for two seconds.
+
+The average FPS was 38.98293515358361.
+
+** How To Disable Warning
+If this warning is getting annoying put the following in your tick method:
+
+#+begin_src
+  args.gtk.log_level = :off
+#+end_src
+
+* INFO: Framerate Diagnostics
+You can display these diagnostics using:
+
+#+begin_src
+  def tick args
+    # ....
+
+    # IMPORTANT: Put this at the END of the ~tick~ method.
+    args.outputs.debug << args.gtk.framerate_diagnostics_primitives
+  end
+#+end_src
+
+** Draw Calls: ~<<~ Invocation Perf Counter
+Here is how many times ~args.outputs.PRIMITIVE_ARRAY <<~ was called:
+
+  5 times invoked.
+
+If the number above is high, consider batching primitives so you can lower the invocation of ~<<~. For example.
+
+Instead of:
+
+#+begin_src
+  args.state.enemies.map do |e|
+    e.alpha = 128
+    args.outputs.sprites << e # <-- ~args.outputs.sprites <<~ is invoked a lot
+  end
+#+end_src
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << args.state
+                              .enemies
+                              .map do |e| # <-- ~args.outputs.sprites <<~ is only invoked once.
+    e.alpha = 128
+    e
+  end
+#+end_src
+
+** Array Primitives
+~Primitives~ represented as an ~Array~ (~Tuple~) are great for prototyping, but are not as performant as using a ~Hash~.
+
+Here is the number of ~Array~ primitives that were encountered:
+
+  0 Array Primitives.
+
+If the number above is high, consider converting them to hashes. For example.
+
+Instead of:
+
+#+begin_src
+  args.outputs.sprites << [0, 0, 100, 100, 'sprites/enemy.png']
+#+begin_end
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << { x: 0,
+                            y: 0,
+                            w: 100,
+                            h: 100,
+                            path: 'sprites/enemy.png' }
+#+begin_end
+
+** Primitive Counts
+Here are the draw counts ordered by lowest to highest z order:
+
+PRIMITIVE   COUNT, STATIC COUNT
+solids:     0, 0
+sprites:    0, 0
+primitives: 0, 0
+labels:     2, 0
+lines:      0, 0
+borders:    0, 22844
+debug:      0, 0
+reserved:   0, 0
+
+** Additional Help
+Come to the DragonRuby Discord channel if you need help troubleshooting performance issues. http://discord.dragonruby.org.
+
+Source code for these diagnostics can be found at: [[https://github.com/dragonruby/dragonruby-game-toolkit-contrib/]]
+
+
+- 000293 [Game] * WARNING:
+Your average framerate dropped below 60 fps for two seconds.
+
+The average FPS was 38.92517006802721.
+
+** How To Disable Warning
+If this warning is getting annoying put the following in your tick method:
+
+#+begin_src
+  args.gtk.log_level = :off
+#+end_src
+
+* INFO: Framerate Diagnostics
+You can display these diagnostics using:
+
+#+begin_src
+  def tick args
+    # ....
+
+    # IMPORTANT: Put this at the END of the ~tick~ method.
+    args.outputs.debug << args.gtk.framerate_diagnostics_primitives
+  end
+#+end_src
+
+** Draw Calls: ~<<~ Invocation Perf Counter
+Here is how many times ~args.outputs.PRIMITIVE_ARRAY <<~ was called:
+
+  5 times invoked.
+
+If the number above is high, consider batching primitives so you can lower the invocation of ~<<~. For example.
+
+Instead of:
+
+#+begin_src
+  args.state.enemies.map do |e|
+    e.alpha = 128
+    args.outputs.sprites << e # <-- ~args.outputs.sprites <<~ is invoked a lot
+  end
+#+end_src
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << args.state
+                              .enemies
+                              .map do |e| # <-- ~args.outputs.sprites <<~ is only invoked once.
+    e.alpha = 128
+    e
+  end
+#+end_src
+
+** Array Primitives
+~Primitives~ represented as an ~Array~ (~Tuple~) are great for prototyping, but are not as performant as using a ~Hash~.
+
+Here is the number of ~Array~ primitives that were encountered:
+
+  0 Array Primitives.
+
+If the number above is high, consider converting them to hashes. For example.
+
+Instead of:
+
+#+begin_src
+  args.outputs.sprites << [0, 0, 100, 100, 'sprites/enemy.png']
+#+begin_end
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << { x: 0,
+                            y: 0,
+                            w: 100,
+                            h: 100,
+                            path: 'sprites/enemy.png' }
+#+begin_end
+
+** Primitive Counts
+Here are the draw counts ordered by lowest to highest z order:
+
+PRIMITIVE   COUNT, STATIC COUNT
+solids:     0, 0
+sprites:    0, 0
+primitives: 0, 0
+labels:     2, 0
+lines:      0, 0
+borders:    0, 22888
+debug:      0, 0
+reserved:   0, 0
+
+** Additional Help
+Come to the DragonRuby Discord channel if you need help troubleshooting performance issues. http://discord.dragonruby.org.
+
+Source code for these diagnostics can be found at: [[https://github.com/dragonruby/dragonruby-game-toolkit-contrib/]]
+
+
+- 000310 [Game] * WARNING:
+Your average framerate dropped below 60 fps for two seconds.
+
+The average FPS was 37.9871382636656.
+
+** How To Disable Warning
+If this warning is getting annoying put the following in your tick method:
+
+#+begin_src
+  args.gtk.log_level = :off
+#+end_src
+
+* INFO: Framerate Diagnostics
+You can display these diagnostics using:
+
+#+begin_src
+  def tick args
+    # ....
+
+    # IMPORTANT: Put this at the END of the ~tick~ method.
+    args.outputs.debug << args.gtk.framerate_diagnostics_primitives
+  end
+#+end_src
+
+** Draw Calls: ~<<~ Invocation Perf Counter
+Here is how many times ~args.outputs.PRIMITIVE_ARRAY <<~ was called:
+
+  5 times invoked.
+
+If the number above is high, consider batching primitives so you can lower the invocation of ~<<~. For example.
+
+Instead of:
+
+#+begin_src
+  args.state.enemies.map do |e|
+    e.alpha = 128
+    args.outputs.sprites << e # <-- ~args.outputs.sprites <<~ is invoked a lot
+  end
+#+end_src
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << args.state
+                              .enemies
+                              .map do |e| # <-- ~args.outputs.sprites <<~ is only invoked once.
+    e.alpha = 128
+    e
+  end
+#+end_src
+
+** Array Primitives
+~Primitives~ represented as an ~Array~ (~Tuple~) are great for prototyping, but are not as performant as using a ~Hash~.
+
+Here is the number of ~Array~ primitives that were encountered:
+
+  0 Array Primitives.
+
+If the number above is high, consider converting them to hashes. For example.
+
+Instead of:
+
+#+begin_src
+  args.outputs.sprites << [0, 0, 100, 100, 'sprites/enemy.png']
+#+begin_end
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << { x: 0,
+                            y: 0,
+                            w: 100,
+                            h: 100,
+                            path: 'sprites/enemy.png' }
+#+begin_end
+
+** Primitive Counts
+Here are the draw counts ordered by lowest to highest z order:
+
+PRIMITIVE   COUNT, STATIC COUNT
+solids:     0, 0
+sprites:    0, 0
+primitives: 0, 0
+labels:     2, 0
+lines:      0, 0
+borders:    0, 23628
+debug:      0, 0
+reserved:   0, 0
+
+** Additional Help
+Come to the DragonRuby Discord channel if you need help troubleshooting performance issues. http://discord.dragonruby.org.
+
+Source code for these diagnostics can be found at: [[https://github.com/dragonruby/dragonruby-game-toolkit-contrib/]]
+
+
+- 000311 [Game] * WARNING:
+Your average framerate dropped below 60 fps for two seconds.
+
+The average FPS was 37.93589743589744.
+
+** How To Disable Warning
+If this warning is getting annoying put the following in your tick method:
+
+#+begin_src
+  args.gtk.log_level = :off
+#+end_src
+
+* INFO: Framerate Diagnostics
+You can display these diagnostics using:
+
+#+begin_src
+  def tick args
+    # ....
+
+    # IMPORTANT: Put this at the END of the ~tick~ method.
+    args.outputs.debug << args.gtk.framerate_diagnostics_primitives
+  end
+#+end_src
+
+** Draw Calls: ~<<~ Invocation Perf Counter
+Here is how many times ~args.outputs.PRIMITIVE_ARRAY <<~ was called:
+
+  5 times invoked.
+
+If the number above is high, consider batching primitives so you can lower the invocation of ~<<~. For example.
+
+Instead of:
+
+#+begin_src
+  args.state.enemies.map do |e|
+    e.alpha = 128
+    args.outputs.sprites << e # <-- ~args.outputs.sprites <<~ is invoked a lot
+  end
+#+end_src
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << args.state
+                              .enemies
+                              .map do |e| # <-- ~args.outputs.sprites <<~ is only invoked once.
+    e.alpha = 128
+    e
+  end
+#+end_src
+
+** Array Primitives
+~Primitives~ represented as an ~Array~ (~Tuple~) are great for prototyping, but are not as performant as using a ~Hash~.
+
+Here is the number of ~Array~ primitives that were encountered:
+
+  0 Array Primitives.
+
+If the number above is high, consider converting them to hashes. For example.
+
+Instead of:
+
+#+begin_src
+  args.outputs.sprites << [0, 0, 100, 100, 'sprites/enemy.png']
+#+begin_end
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << { x: 0,
+                            y: 0,
+                            w: 100,
+                            h: 100,
+                            path: 'sprites/enemy.png' }
+#+begin_end
+
+** Primitive Counts
+Here are the draw counts ordered by lowest to highest z order:
+
+PRIMITIVE   COUNT, STATIC COUNT
+solids:     0, 0
+sprites:    0, 0
+primitives: 0, 0
+labels:     2, 0
+lines:      0, 0
+borders:    0, 23672
+debug:      0, 0
+reserved:   0, 0
+
+** Additional Help
+Come to the DragonRuby Discord channel if you need help troubleshooting performance issues. http://discord.dragonruby.org.
+
+Source code for these diagnostics can be found at: [[https://github.com/dragonruby/dragonruby-game-toolkit-contrib/]]
+
+
+- 000312 [Game] * WARNING:
+Your average framerate dropped below 60 fps for two seconds.
+
+The average FPS was 37.88178913738019.
+
+** How To Disable Warning
+If this warning is getting annoying put the following in your tick method:
+
+#+begin_src
+  args.gtk.log_level = :off
+#+end_src
+
+* INFO: Framerate Diagnostics
+You can display these diagnostics using:
+
+#+begin_src
+  def tick args
+    # ....
+
+    # IMPORTANT: Put this at the END of the ~tick~ method.
+    args.outputs.debug << args.gtk.framerate_diagnostics_primitives
+  end
+#+end_src
+
+** Draw Calls: ~<<~ Invocation Perf Counter
+Here is how many times ~args.outputs.PRIMITIVE_ARRAY <<~ was called:
+
+  5 times invoked.
+
+If the number above is high, consider batching primitives so you can lower the invocation of ~<<~. For example.
+
+Instead of:
+
+#+begin_src
+  args.state.enemies.map do |e|
+    e.alpha = 128
+    args.outputs.sprites << e # <-- ~args.outputs.sprites <<~ is invoked a lot
+  end
+#+end_src
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << args.state
+                              .enemies
+                              .map do |e| # <-- ~args.outputs.sprites <<~ is only invoked once.
+    e.alpha = 128
+    e
+  end
+#+end_src
+
+** Array Primitives
+~Primitives~ represented as an ~Array~ (~Tuple~) are great for prototyping, but are not as performant as using a ~Hash~.
+
+Here is the number of ~Array~ primitives that were encountered:
+
+  0 Array Primitives.
+
+If the number above is high, consider converting them to hashes. For example.
+
+Instead of:
+
+#+begin_src
+  args.outputs.sprites << [0, 0, 100, 100, 'sprites/enemy.png']
+#+begin_end
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << { x: 0,
+                            y: 0,
+                            w: 100,
+                            h: 100,
+                            path: 'sprites/enemy.png' }
+#+begin_end
+
+** Primitive Counts
+Here are the draw counts ordered by lowest to highest z order:
+
+PRIMITIVE   COUNT, STATIC COUNT
+solids:     0, 0
+sprites:    0, 0
+primitives: 0, 0
+labels:     2, 0
+lines:      0, 0
+borders:    0, 23714
+debug:      0, 0
+reserved:   0, 0
+
+** Additional Help
+Come to the DragonRuby Discord channel if you need help troubleshooting performance issues. http://discord.dragonruby.org.
+
+Source code for these diagnostics can be found at: [[https://github.com/dragonruby/dragonruby-game-toolkit-contrib/]]
+
+
+- 000330 [Game] * WARNING:
+Your average framerate dropped below 60 fps for two seconds.
+
+The average FPS was 36.96978851963746.
+
+** How To Disable Warning
+If this warning is getting annoying put the following in your tick method:
+
+#+begin_src
+  args.gtk.log_level = :off
+#+end_src
+
+* INFO: Framerate Diagnostics
+You can display these diagnostics using:
+
+#+begin_src
+  def tick args
+    # ....
+
+    # IMPORTANT: Put this at the END of the ~tick~ method.
+    args.outputs.debug << args.gtk.framerate_diagnostics_primitives
+  end
+#+end_src
+
+** Draw Calls: ~<<~ Invocation Perf Counter
+Here is how many times ~args.outputs.PRIMITIVE_ARRAY <<~ was called:
+
+  5 times invoked.
+
+If the number above is high, consider batching primitives so you can lower the invocation of ~<<~. For example.
+
+Instead of:
+
+#+begin_src
+  args.state.enemies.map do |e|
+    e.alpha = 128
+    args.outputs.sprites << e # <-- ~args.outputs.sprites <<~ is invoked a lot
+  end
+#+end_src
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << args.state
+                              .enemies
+                              .map do |e| # <-- ~args.outputs.sprites <<~ is only invoked once.
+    e.alpha = 128
+    e
+  end
+#+end_src
+
+** Array Primitives
+~Primitives~ represented as an ~Array~ (~Tuple~) are great for prototyping, but are not as performant as using a ~Hash~.
+
+Here is the number of ~Array~ primitives that were encountered:
+
+  0 Array Primitives.
+
+If the number above is high, consider converting them to hashes. For example.
+
+Instead of:
+
+#+begin_src
+  args.outputs.sprites << [0, 0, 100, 100, 'sprites/enemy.png']
+#+begin_end
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << { x: 0,
+                            y: 0,
+                            w: 100,
+                            h: 100,
+                            path: 'sprites/enemy.png' }
+#+begin_end
+
+** Primitive Counts
+Here are the draw counts ordered by lowest to highest z order:
+
+PRIMITIVE   COUNT, STATIC COUNT
+solids:     0, 0
+sprites:    0, 0
+primitives: 0, 0
+labels:     2, 0
+lines:      0, 0
+borders:    0, 24474
+debug:      0, 0
+reserved:   0, 0
+
+** Additional Help
+Come to the DragonRuby Discord channel if you need help troubleshooting performance issues. http://discord.dragonruby.org.
+
+Source code for these diagnostics can be found at: [[https://github.com/dragonruby/dragonruby-game-toolkit-contrib/]]
+
+
+- 000331 [Game] * WARNING:
+Your average framerate dropped below 60 fps for two seconds.
+
+The average FPS was 36.91867469879519.
+
+** How To Disable Warning
+If this warning is getting annoying put the following in your tick method:
+
+#+begin_src
+  args.gtk.log_level = :off
+#+end_src
+
+* INFO: Framerate Diagnostics
+You can display these diagnostics using:
+
+#+begin_src
+  def tick args
+    # ....
+
+    # IMPORTANT: Put this at the END of the ~tick~ method.
+    args.outputs.debug << args.gtk.framerate_diagnostics_primitives
+  end
+#+end_src
+
+** Draw Calls: ~<<~ Invocation Perf Counter
+Here is how many times ~args.outputs.PRIMITIVE_ARRAY <<~ was called:
+
+  5 times invoked.
+
+If the number above is high, consider batching primitives so you can lower the invocation of ~<<~. For example.
+
+Instead of:
+
+#+begin_src
+  args.state.enemies.map do |e|
+    e.alpha = 128
+    args.outputs.sprites << e # <-- ~args.outputs.sprites <<~ is invoked a lot
+  end
+#+end_src
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << args.state
+                              .enemies
+                              .map do |e| # <-- ~args.outputs.sprites <<~ is only invoked once.
+    e.alpha = 128
+    e
+  end
+#+end_src
+
+** Array Primitives
+~Primitives~ represented as an ~Array~ (~Tuple~) are great for prototyping, but are not as performant as using a ~Hash~.
+
+Here is the number of ~Array~ primitives that were encountered:
+
+  0 Array Primitives.
+
+If the number above is high, consider converting them to hashes. For example.
+
+Instead of:
+
+#+begin_src
+  args.outputs.sprites << [0, 0, 100, 100, 'sprites/enemy.png']
+#+begin_end
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << { x: 0,
+                            y: 0,
+                            w: 100,
+                            h: 100,
+                            path: 'sprites/enemy.png' }
+#+begin_end
+
+** Primitive Counts
+Here are the draw counts ordered by lowest to highest z order:
+
+PRIMITIVE   COUNT, STATIC COUNT
+solids:     0, 0
+sprites:    0, 0
+primitives: 0, 0
+labels:     2, 0
+lines:      0, 0
+borders:    0, 24514
+debug:      0, 0
+reserved:   0, 0
+
+** Additional Help
+Come to the DragonRuby Discord channel if you need help troubleshooting performance issues. http://discord.dragonruby.org.
+
+Source code for these diagnostics can be found at: [[https://github.com/dragonruby/dragonruby-game-toolkit-contrib/]]
+
+
+? 000342 [Engine] Marked app/main.rb for reload. (12479)
+? 000343 [Engine] Marked app/main.rb for reload. (12501)
+- 000348 [Game] * WARNING:
+Your average framerate dropped below 60 fps for two seconds.
+
+The average FPS was 20.33333333333333.
+
+** How To Disable Warning
+If this warning is getting annoying put the following in your tick method:
+
+#+begin_src
+  args.gtk.log_level = :off
+#+end_src
+
+* INFO: Framerate Diagnostics
+You can display these diagnostics using:
+
+#+begin_src
+  def tick args
+    # ....
+
+    # IMPORTANT: Put this at the END of the ~tick~ method.
+    args.outputs.debug << args.gtk.framerate_diagnostics_primitives
+  end
+#+end_src
+
+** Draw Calls: ~<<~ Invocation Perf Counter
+Here is how many times ~args.outputs.PRIMITIVE_ARRAY <<~ was called:
+
+  5 times invoked.
+
+If the number above is high, consider batching primitives so you can lower the invocation of ~<<~. For example.
+
+Instead of:
+
+#+begin_src
+  args.state.enemies.map do |e|
+    e.alpha = 128
+    args.outputs.sprites << e # <-- ~args.outputs.sprites <<~ is invoked a lot
+  end
+#+end_src
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << args.state
+                              .enemies
+                              .map do |e| # <-- ~args.outputs.sprites <<~ is only invoked once.
+    e.alpha = 128
+    e
+  end
+#+end_src
+
+** Array Primitives
+~Primitives~ represented as an ~Array~ (~Tuple~) are great for prototyping, but are not as performant as using a ~Hash~.
+
+Here is the number of ~Array~ primitives that were encountered:
+
+  0 Array Primitives.
+
+If the number above is high, consider converting them to hashes. For example.
+
+Instead of:
+
+#+begin_src
+  args.outputs.sprites << [0, 0, 100, 100, 'sprites/enemy.png']
+#+begin_end
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << { x: 0,
+                            y: 0,
+                            w: 100,
+                            h: 100,
+                            path: 'sprites/enemy.png' }
+#+begin_end
+
+** Primitive Counts
+Here are the draw counts ordered by lowest to highest z order:
+
+PRIMITIVE   COUNT, STATIC COUNT
+solids:     0, 0
+sprites:    0, 0
+primitives: 0, 0
+labels:     2, 0
+lines:      0, 0
+borders:    0, 25206
+debug:      0, 0
+reserved:   0, 0
+
+** Additional Help
+Come to the DragonRuby Discord channel if you need help troubleshooting performance issues. http://discord.dragonruby.org.
+
+Source code for these diagnostics can be found at: [[https://github.com/dragonruby/dragonruby-game-toolkit-contrib/]]
+
+
+- 000349 [Game] * WARNING:
+Your average framerate dropped below 60 fps for two seconds.
+
+The average FPS was 20.28571428571429.
+
+** How To Disable Warning
+If this warning is getting annoying put the following in your tick method:
+
+#+begin_src
+  args.gtk.log_level = :off
+#+end_src
+
+* INFO: Framerate Diagnostics
+You can display these diagnostics using:
+
+#+begin_src
+  def tick args
+    # ....
+
+    # IMPORTANT: Put this at the END of the ~tick~ method.
+    args.outputs.debug << args.gtk.framerate_diagnostics_primitives
+  end
+#+end_src
+
+** Draw Calls: ~<<~ Invocation Perf Counter
+Here is how many times ~args.outputs.PRIMITIVE_ARRAY <<~ was called:
+
+  5 times invoked.
+
+If the number above is high, consider batching primitives so you can lower the invocation of ~<<~. For example.
+
+Instead of:
+
+#+begin_src
+  args.state.enemies.map do |e|
+    e.alpha = 128
+    args.outputs.sprites << e # <-- ~args.outputs.sprites <<~ is invoked a lot
+  end
+#+end_src
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << args.state
+                              .enemies
+                              .map do |e| # <-- ~args.outputs.sprites <<~ is only invoked once.
+    e.alpha = 128
+    e
+  end
+#+end_src
+
+** Array Primitives
+~Primitives~ represented as an ~Array~ (~Tuple~) are great for prototyping, but are not as performant as using a ~Hash~.
+
+Here is the number of ~Array~ primitives that were encountered:
+
+  0 Array Primitives.
+
+If the number above is high, consider converting them to hashes. For example.
+
+Instead of:
+
+#+begin_src
+  args.outputs.sprites << [0, 0, 100, 100, 'sprites/enemy.png']
+#+begin_end
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << { x: 0,
+                            y: 0,
+                            w: 100,
+                            h: 100,
+                            path: 'sprites/enemy.png' }
+#+begin_end
+
+** Primitive Counts
+Here are the draw counts ordered by lowest to highest z order:
+
+PRIMITIVE   COUNT, STATIC COUNT
+solids:     0, 0
+sprites:    0, 0
+primitives: 0, 0
+labels:     2, 0
+lines:      0, 0
+borders:    0, 25246
+debug:      0, 0
+reserved:   0, 0
+
+** Additional Help
+Come to the DragonRuby Discord channel if you need help troubleshooting performance issues. http://discord.dragonruby.org.
+
+Source code for these diagnostics can be found at: [[https://github.com/dragonruby/dragonruby-game-toolkit-contrib/]]
+
+
+- 000350 [Game] * WARNING:
+Your average framerate dropped below 60 fps for two seconds.
+
+The average FPS was 20.25.
+
+** How To Disable Warning
+If this warning is getting annoying put the following in your tick method:
+
+#+begin_src
+  args.gtk.log_level = :off
+#+end_src
+
+* INFO: Framerate Diagnostics
+You can display these diagnostics using:
+
+#+begin_src
+  def tick args
+    # ....
+
+    # IMPORTANT: Put this at the END of the ~tick~ method.
+    args.outputs.debug << args.gtk.framerate_diagnostics_primitives
+  end
+#+end_src
+
+** Draw Calls: ~<<~ Invocation Perf Counter
+Here is how many times ~args.outputs.PRIMITIVE_ARRAY <<~ was called:
+
+  5 times invoked.
+
+If the number above is high, consider batching primitives so you can lower the invocation of ~<<~. For example.
+
+Instead of:
+
+#+begin_src
+  args.state.enemies.map do |e|
+    e.alpha = 128
+    args.outputs.sprites << e # <-- ~args.outputs.sprites <<~ is invoked a lot
+  end
+#+end_src
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << args.state
+                              .enemies
+                              .map do |e| # <-- ~args.outputs.sprites <<~ is only invoked once.
+    e.alpha = 128
+    e
+  end
+#+end_src
+
+** Array Primitives
+~Primitives~ represented as an ~Array~ (~Tuple~) are great for prototyping, but are not as performant as using a ~Hash~.
+
+Here is the number of ~Array~ primitives that were encountered:
+
+  0 Array Primitives.
+
+If the number above is high, consider converting them to hashes. For example.
+
+Instead of:
+
+#+begin_src
+  args.outputs.sprites << [0, 0, 100, 100, 'sprites/enemy.png']
+#+begin_end
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << { x: 0,
+                            y: 0,
+                            w: 100,
+                            h: 100,
+                            path: 'sprites/enemy.png' }
+#+begin_end
+
+** Primitive Counts
+Here are the draw counts ordered by lowest to highest z order:
+
+PRIMITIVE   COUNT, STATIC COUNT
+solids:     0, 0
+sprites:    0, 0
+primitives: 0, 0
+labels:     2, 0
+lines:      0, 0
+borders:    0, 25286
+debug:      0, 0
+reserved:   0, 0
+
+** Additional Help
+Come to the DragonRuby Discord channel if you need help troubleshooting performance issues. http://discord.dragonruby.org.
+
+Source code for these diagnostics can be found at: [[https://github.com/dragonruby/dragonruby-game-toolkit-contrib/]]
+
+
+- 000351 [Game] * WARNING:
+Your average framerate dropped below 60 fps for two seconds.
+
+The average FPS was 20.22222222222222.
+
+** How To Disable Warning
+If this warning is getting annoying put the following in your tick method:
+
+#+begin_src
+  args.gtk.log_level = :off
+#+end_src
+
+* INFO: Framerate Diagnostics
+You can display these diagnostics using:
+
+#+begin_src
+  def tick args
+    # ....
+
+    # IMPORTANT: Put this at the END of the ~tick~ method.
+    args.outputs.debug << args.gtk.framerate_diagnostics_primitives
+  end
+#+end_src
+
+** Draw Calls: ~<<~ Invocation Perf Counter
+Here is how many times ~args.outputs.PRIMITIVE_ARRAY <<~ was called:
+
+  5 times invoked.
+
+If the number above is high, consider batching primitives so you can lower the invocation of ~<<~. For example.
+
+Instead of:
+
+#+begin_src
+  args.state.enemies.map do |e|
+    e.alpha = 128
+    args.outputs.sprites << e # <-- ~args.outputs.sprites <<~ is invoked a lot
+  end
+#+end_src
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << args.state
+                              .enemies
+                              .map do |e| # <-- ~args.outputs.sprites <<~ is only invoked once.
+    e.alpha = 128
+    e
+  end
+#+end_src
+
+** Array Primitives
+~Primitives~ represented as an ~Array~ (~Tuple~) are great for prototyping, but are not as performant as using a ~Hash~.
+
+Here is the number of ~Array~ primitives that were encountered:
+
+  0 Array Primitives.
+
+If the number above is high, consider converting them to hashes. For example.
+
+Instead of:
+
+#+begin_src
+  args.outputs.sprites << [0, 0, 100, 100, 'sprites/enemy.png']
+#+begin_end
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << { x: 0,
+                            y: 0,
+                            w: 100,
+                            h: 100,
+                            path: 'sprites/enemy.png' }
+#+begin_end
+
+** Primitive Counts
+Here are the draw counts ordered by lowest to highest z order:
+
+PRIMITIVE   COUNT, STATIC COUNT
+solids:     0, 0
+sprites:    0, 0
+primitives: 0, 0
+labels:     2, 0
+lines:      0, 0
+borders:    0, 25326
+debug:      0, 0
+reserved:   0, 0
+
+** Additional Help
+Come to the DragonRuby Discord channel if you need help troubleshooting performance issues. http://discord.dragonruby.org.
+
+Source code for these diagnostics can be found at: [[https://github.com/dragonruby/dragonruby-game-toolkit-contrib/]]
+
+
+- 000352 [Game] * WARNING:
+Your average framerate dropped below 60 fps for two seconds.
+
+The average FPS was 20.2.
+
+** How To Disable Warning
+If this warning is getting annoying put the following in your tick method:
+
+#+begin_src
+  args.gtk.log_level = :off
+#+end_src
+
+* INFO: Framerate Diagnostics
+You can display these diagnostics using:
+
+#+begin_src
+  def tick args
+    # ....
+
+    # IMPORTANT: Put this at the END of the ~tick~ method.
+    args.outputs.debug << args.gtk.framerate_diagnostics_primitives
+  end
+#+end_src
+
+** Draw Calls: ~<<~ Invocation Perf Counter
+Here is how many times ~args.outputs.PRIMITIVE_ARRAY <<~ was called:
+
+  5 times invoked.
+
+If the number above is high, consider batching primitives so you can lower the invocation of ~<<~. For example.
+
+Instead of:
+
+#+begin_src
+  args.state.enemies.map do |e|
+    e.alpha = 128
+    args.outputs.sprites << e # <-- ~args.outputs.sprites <<~ is invoked a lot
+  end
+#+end_src
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << args.state
+                              .enemies
+                              .map do |e| # <-- ~args.outputs.sprites <<~ is only invoked once.
+    e.alpha = 128
+    e
+  end
+#+end_src
+
+** Array Primitives
+~Primitives~ represented as an ~Array~ (~Tuple~) are great for prototyping, but are not as performant as using a ~Hash~.
+
+Here is the number of ~Array~ primitives that were encountered:
+
+  0 Array Primitives.
+
+If the number above is high, consider converting them to hashes. For example.
+
+Instead of:
+
+#+begin_src
+  args.outputs.sprites << [0, 0, 100, 100, 'sprites/enemy.png']
+#+begin_end
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << { x: 0,
+                            y: 0,
+                            w: 100,
+                            h: 100,
+                            path: 'sprites/enemy.png' }
+#+begin_end
+
+** Primitive Counts
+Here are the draw counts ordered by lowest to highest z order:
+
+PRIMITIVE   COUNT, STATIC COUNT
+solids:     0, 0
+sprites:    0, 0
+primitives: 0, 0
+labels:     2, 0
+lines:      0, 0
+borders:    0, 25366
+debug:      0, 0
+reserved:   0, 0
+
+** Additional Help
+Come to the DragonRuby Discord channel if you need help troubleshooting performance issues. http://discord.dragonruby.org.
+
+Source code for these diagnostics can be found at: [[https://github.com/dragonruby/dragonruby-game-toolkit-contrib/]]
+
+
+- 000353 [Game] * WARNING:
+Your average framerate dropped below 60 fps for two seconds.
+
+The average FPS was 20.18181818181818.
+
+** How To Disable Warning
+If this warning is getting annoying put the following in your tick method:
+
+#+begin_src
+  args.gtk.log_level = :off
+#+end_src
+
+* INFO: Framerate Diagnostics
+You can display these diagnostics using:
+
+#+begin_src
+  def tick args
+    # ....
+
+    # IMPORTANT: Put this at the END of the ~tick~ method.
+    args.outputs.debug << args.gtk.framerate_diagnostics_primitives
+  end
+#+end_src
+
+** Draw Calls: ~<<~ Invocation Perf Counter
+Here is how many times ~args.outputs.PRIMITIVE_ARRAY <<~ was called:
+
+  5 times invoked.
+
+If the number above is high, consider batching primitives so you can lower the invocation of ~<<~. For example.
+
+Instead of:
+
+#+begin_src
+  args.state.enemies.map do |e|
+    e.alpha = 128
+    args.outputs.sprites << e # <-- ~args.outputs.sprites <<~ is invoked a lot
+  end
+#+end_src
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << args.state
+                              .enemies
+                              .map do |e| # <-- ~args.outputs.sprites <<~ is only invoked once.
+    e.alpha = 128
+    e
+  end
+#+end_src
+
+** Array Primitives
+~Primitives~ represented as an ~Array~ (~Tuple~) are great for prototyping, but are not as performant as using a ~Hash~.
+
+Here is the number of ~Array~ primitives that were encountered:
+
+  0 Array Primitives.
+
+If the number above is high, consider converting them to hashes. For example.
+
+Instead of:
+
+#+begin_src
+  args.outputs.sprites << [0, 0, 100, 100, 'sprites/enemy.png']
+#+begin_end
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << { x: 0,
+                            y: 0,
+                            w: 100,
+                            h: 100,
+                            path: 'sprites/enemy.png' }
+#+begin_end
+
+** Primitive Counts
+Here are the draw counts ordered by lowest to highest z order:
+
+PRIMITIVE   COUNT, STATIC COUNT
+solids:     0, 0
+sprites:    0, 0
+primitives: 0, 0
+labels:     2, 0
+lines:      0, 0
+borders:    0, 25406
+debug:      0, 0
+reserved:   0, 0
+
+** Additional Help
+Come to the DragonRuby Discord channel if you need help troubleshooting performance issues. http://discord.dragonruby.org.
+
+Source code for these diagnostics can be found at: [[https://github.com/dragonruby/dragonruby-game-toolkit-contrib/]]
+
+
+- 000354 [Game] * WARNING:
+Your average framerate dropped below 60 fps for two seconds.
+
+The average FPS was 20.16666666666666.
+
+** How To Disable Warning
+If this warning is getting annoying put the following in your tick method:
+
+#+begin_src
+  args.gtk.log_level = :off
+#+end_src
+
+* INFO: Framerate Diagnostics
+You can display these diagnostics using:
+
+#+begin_src
+  def tick args
+    # ....
+
+    # IMPORTANT: Put this at the END of the ~tick~ method.
+    args.outputs.debug << args.gtk.framerate_diagnostics_primitives
+  end
+#+end_src
+
+** Draw Calls: ~<<~ Invocation Perf Counter
+Here is how many times ~args.outputs.PRIMITIVE_ARRAY <<~ was called:
+
+  5 times invoked.
+
+If the number above is high, consider batching primitives so you can lower the invocation of ~<<~. For example.
+
+Instead of:
+
+#+begin_src
+  args.state.enemies.map do |e|
+    e.alpha = 128
+    args.outputs.sprites << e # <-- ~args.outputs.sprites <<~ is invoked a lot
+  end
+#+end_src
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << args.state
+                              .enemies
+                              .map do |e| # <-- ~args.outputs.sprites <<~ is only invoked once.
+    e.alpha = 128
+    e
+  end
+#+end_src
+
+** Array Primitives
+~Primitives~ represented as an ~Array~ (~Tuple~) are great for prototyping, but are not as performant as using a ~Hash~.
+
+Here is the number of ~Array~ primitives that were encountered:
+
+  0 Array Primitives.
+
+If the number above is high, consider converting them to hashes. For example.
+
+Instead of:
+
+#+begin_src
+  args.outputs.sprites << [0, 0, 100, 100, 'sprites/enemy.png']
+#+begin_end
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << { x: 0,
+                            y: 0,
+                            w: 100,
+                            h: 100,
+                            path: 'sprites/enemy.png' }
+#+begin_end
+
+** Primitive Counts
+Here are the draw counts ordered by lowest to highest z order:
+
+PRIMITIVE   COUNT, STATIC COUNT
+solids:     0, 0
+sprites:    0, 0
+primitives: 0, 0
+labels:     2, 0
+lines:      0, 0
+borders:    0, 25446
+debug:      0, 0
+reserved:   0, 0
+
+** Additional Help
+Come to the DragonRuby Discord channel if you need help troubleshooting performance issues. http://discord.dragonruby.org.
+
+Source code for these diagnostics can be found at: [[https://github.com/dragonruby/dragonruby-game-toolkit-contrib/]]
+
+
+? 000355 [Engine] Marked app/main.rb for reload. (12741)
+- 000355 [Game] * WARNING:
+Your average framerate dropped below 60 fps for two seconds.
+
+The average FPS was 20.15384615384615.
+
+** How To Disable Warning
+If this warning is getting annoying put the following in your tick method:
+
+#+begin_src
+  args.gtk.log_level = :off
+#+end_src
+
+* INFO: Framerate Diagnostics
+You can display these diagnostics using:
+
+#+begin_src
+  def tick args
+    # ....
+
+    # IMPORTANT: Put this at the END of the ~tick~ method.
+    args.outputs.debug << args.gtk.framerate_diagnostics_primitives
+  end
+#+end_src
+
+** Draw Calls: ~<<~ Invocation Perf Counter
+Here is how many times ~args.outputs.PRIMITIVE_ARRAY <<~ was called:
+
+  6 times invoked.
+
+If the number above is high, consider batching primitives so you can lower the invocation of ~<<~. For example.
+
+Instead of:
+
+#+begin_src
+  args.state.enemies.map do |e|
+    e.alpha = 128
+    args.outputs.sprites << e # <-- ~args.outputs.sprites <<~ is invoked a lot
+  end
+#+end_src
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << args.state
+                              .enemies
+                              .map do |e| # <-- ~args.outputs.sprites <<~ is only invoked once.
+    e.alpha = 128
+    e
+  end
+#+end_src
+
+** Array Primitives
+~Primitives~ represented as an ~Array~ (~Tuple~) are great for prototyping, but are not as performant as using a ~Hash~.
+
+Here is the number of ~Array~ primitives that were encountered:
+
+  0 Array Primitives.
+
+If the number above is high, consider converting them to hashes. For example.
+
+Instead of:
+
+#+begin_src
+  args.outputs.sprites << [0, 0, 100, 100, 'sprites/enemy.png']
+#+begin_end
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << { x: 0,
+                            y: 0,
+                            w: 100,
+                            h: 100,
+                            path: 'sprites/enemy.png' }
+#+begin_end
+
+** Primitive Counts
+Here are the draw counts ordered by lowest to highest z order:
+
+PRIMITIVE   COUNT, STATIC COUNT
+solids:     0, 0
+sprites:    0, 0
+primitives: 0, 0
+labels:     0, 0
+lines:      0, 0
+borders:    0, 25484
+debug:      0, 0
+reserved:   1, 0
+
+** Additional Help
+Come to the DragonRuby Discord channel if you need help troubleshooting performance issues. http://discord.dragonruby.org.
+
+Source code for these diagnostics can be found at: [[https://github.com/dragonruby/dragonruby-game-toolkit-contrib/]]
+
+
+- 000359 [Game] * EXCEPTION:
+** Failed to reload app/main.rb.
+line 63:56: both block arg and actual block given
+
+
+
+** Backtrace:
+*** app/main.rb:31 (12824)
+? 000363 [Engine] Marked app/main.rb for reload. (12884)
+- 000369 [Game] * WARNING:
+Your average framerate dropped below 60 fps for two seconds.
+
+The average FPS was 12.7.
+
+** How To Disable Warning
+If this warning is getting annoying put the following in your tick method:
+
+#+begin_src
+  args.gtk.log_level = :off
+#+end_src
+
+* INFO: Framerate Diagnostics
+You can display these diagnostics using:
+
+#+begin_src
+  def tick args
+    # ....
+
+    # IMPORTANT: Put this at the END of the ~tick~ method.
+    args.outputs.debug << args.gtk.framerate_diagnostics_primitives
+  end
+#+end_src
+
+** Draw Calls: ~<<~ Invocation Perf Counter
+Here is how many times ~args.outputs.PRIMITIVE_ARRAY <<~ was called:
+
+  5 times invoked.
+
+If the number above is high, consider batching primitives so you can lower the invocation of ~<<~. For example.
+
+Instead of:
+
+#+begin_src
+  args.state.enemies.map do |e|
+    e.alpha = 128
+    args.outputs.sprites << e # <-- ~args.outputs.sprites <<~ is invoked a lot
+  end
+#+end_src
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << args.state
+                              .enemies
+                              .map do |e| # <-- ~args.outputs.sprites <<~ is only invoked once.
+    e.alpha = 128
+    e
+  end
+#+end_src
+
+** Array Primitives
+~Primitives~ represented as an ~Array~ (~Tuple~) are great for prototyping, but are not as performant as using a ~Hash~.
+
+Here is the number of ~Array~ primitives that were encountered:
+
+  0 Array Primitives.
+
+If the number above is high, consider converting them to hashes. For example.
+
+Instead of:
+
+#+begin_src
+  args.outputs.sprites << [0, 0, 100, 100, 'sprites/enemy.png']
+#+begin_end
+
+Do this:
+
+#+begin_src
+  args.outputs.sprites << { x: 0,
+                            y: 0,
+                            w: 100,
+                            h: 100,
+                            path: 'sprites/enemy.png' }
+#+begin_end
+
+** Primitive Counts
+Here are the draw counts ordered by lowest to highest z order:
+
+PRIMITIVE   COUNT, STATIC COUNT
+solids:     0, 0
+sprites:    5, 0
+primitives: 0, 0
+labels:     2, 0
+lines:      0, 0
+borders:    0, 25900
+debug:      0, 0
+reserved:   0, 0
+
+** Additional Help
+Come to the DragonRuby Discord channel if you need help troubleshooting performance issues. http://discord.dragonruby.org.
+
+Source code for these diagnostics can be found at: [[https://github.com/dragonruby/dragonruby-game-toolkit-contrib/]]
+
+

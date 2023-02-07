@@ -60,7 +60,7 @@ def tick(args)
   end
 
   # Remove invalid plants
-  args.state.plants.reject!(&:invalid)
+  args.state.plants.reject!() { |p| p.invalid }
 
   # Grow plants
   args.state.plants.each do |plant|
