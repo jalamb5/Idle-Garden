@@ -44,11 +44,12 @@ def tick(args)
   if args.inputs.mouse.click && in_bounds(args)
     new_plant = occupied(args, place_plant(args))
     if new_plant.invalid
-      # harvest plant
+      # Harvest plant
       plant_to_harvest = new_plant.invalid
       if plant_to_harvest.age.positive? && plant_to_harvest.age < wither
         plant_to_harvest.invalid = true
         args.state.harvested_plants += 1
+      # Collect seeds from withered plant
       elsif plant_to_harvest.age >= wither
         plant_to_harvest.invalid = true
         args.state.seeds += rand(10)

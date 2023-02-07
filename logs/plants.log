@@ -4405,3 +4405,6 @@ Come to the DragonRuby Discord channel if you need help troubleshooting performa
 Source code for these diagnostics can be found at: [[https://github.com/dragonruby/dragonruby-game-toolkit-contrib/]]
 
 
+? 000522 [Engine] Marked app/main.rb for reload. (15730)
+? 000532 [Engine] Marked app/main.rb for reload. (15880)
+? 000541 [Engine] Marked app/main.rb for reload. (16028)
