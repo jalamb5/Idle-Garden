@@ -44,12 +44,12 @@ def tick(args)
     if new_plant.invalid
       # harvest plant
       plant_to_harvest = new_plant.invalid
-      if plant_to_harvest.age.positive? && plant_to_harvest.age < wither
+      if plant_to_harvest.age > 0 && plant_to_harvest.age <
         plant_to_harvest.invalid = true
         args.state.harvested_plants += 1
       elsif plant_to_harvest.age >= wither
         plant_to_harvest.invalid = true
-        args.state.seeds += rand(10)
+        args.state.seeds += 10.randomize
       end
     elsif args.state.seeds.positive?
       args.state.plants << new_plant

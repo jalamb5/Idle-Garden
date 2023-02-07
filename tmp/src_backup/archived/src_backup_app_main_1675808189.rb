@@ -4,7 +4,6 @@ def place_plant(args)
     y: args.inputs.mouse.y - 15,
     w: 20,
     h: 20,
-    age: 0,
     invalid: false,
     path: 'sprites/circle/yellow.png'
   }
@@ -36,7 +35,6 @@ def tick(args)
 
   growth_rate = 0.1
   full_grown = 40
-  wither = 60 * 1
 
   # Place plants in garden
   if args.inputs.mouse.click && in_bounds(args)
@@ -44,12 +42,9 @@ def tick(args)
     if new_plant.invalid
       # harvest plant
       plant_to_harvest = new_plant.invalid
-      if plant_to_harvest.age.positive? && plant_to_harvest.age < wither
+      if plant_to_harvest.w >= full_grown && plant_to_harvest.h >= full_grown
         plant_to_harvest.invalid = true
         args.state.harvested_plants += 1
-      elsif plant_to_harvest.age >= wither
-        plant_to_harvest.invalid = true
-        args.state.seeds += rand(10)
       end
     elsif args.state.seeds.positive?
       args.state.plants << new_plant
@@ -65,11 +60,9 @@ def tick(args)
     if plant.w <= full_grown && plant.h <= full_grown
       plant.w += growth_rate
       plant.h += growth_rate
-    elsif plant.age >= wither
-      plant.path = 'sprites/circle/orange.png'
+    eslif plant.
     else
       plant.path = 'sprites/circle/green.png'
-      plant.age += 1
     end
   end
 
