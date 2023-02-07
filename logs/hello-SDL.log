@@ -562,3 +562,5 @@ doesn't exist on 10.
 ? 002984 [Engine] Marked app/main.rb for reload. (143233)
 ? 002995 [Engine] RNG seed has been set to 1675805964.
 ? 003050 [Engine] Marked app/main.rb for reload. (146877)
+? 003146 [Engine] RNG seed has been set to 1675805964.
+* 003148 [Engine] Logging shutting down
