@@ -16,6 +16,6 @@ A gardening game built with DragonRuby GTK.
   - Withered plants eventually die
 
 ## To Play
-clone repo
-cd into dir
-run `./dragonruby`
+- clone repo
+- cd into dir
+- run `./dragonruby`
