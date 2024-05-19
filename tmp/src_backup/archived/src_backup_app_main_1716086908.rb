@@ -11,7 +11,7 @@ def place_plant(args)
     age: 0,
     invalid: false,
     path: 'sprites/circle/yellow.png',
-    a: 255
+    a: 1
   }
 end
 
@@ -76,7 +76,7 @@ def tick(args)
   args.state.price = { seed: 5, plant: 10 }
 
   # Buy Seeds Button
-  args.state.buy_seed_button ||= new_button :buy_seed, 0, 0, 'Buy'
+  args.state.buy_seed_button ||= new_button :buy_seed, 0, 0, 'Buy Seed'
   args.outputs.primitives << args.state.buy_seed_button[:primitives]
 
   # check if the click occurred and buys seeds if enough money
@@ -96,11 +96,11 @@ def tick(args)
     args.state.harvested_plants = 0
   end
 
-  # Growth Stages & Rates
+  # Growth Stages & Rate
   growth_rate = 0.1
   full_grown = 40
   wither = 60 * 1.2
-  wither_rate = 0.4
+  wither_rate = 0.15
   death = 60 * 8
 
   # Place plants in garden

@@ -10,8 +10,7 @@ def place_plant(args)
     h: 20,
     age: 0,
     invalid: false,
-    path: 'sprites/circle/yellow.png',
-    a: 255
+    path: 'sprites/circle/yellow.png'
   }
 end
 
@@ -53,7 +52,7 @@ def new_button(id, x, y, text)
   # for that entity, define the primitives that form it
   entity[:primitives] = [
     { x: x, y: y, w: width, h: height }.border,
-    { x: x + 10, y: y + 30, text: text }.label
+    { x: height / 4, y: width / 4, text: text }.label
   ]
   entity
 end
@@ -75,33 +74,22 @@ def tick(args)
   args.state.cash ||= 5
   args.state.price = { seed: 5, plant: 10 }
 
-  # Buy Seeds Button
-  args.state.buy_seed_button ||= new_button :buy_seed, 0, 0, 'Buy'
+  # Buy Seeds
+  args.state.buy_seed_button ||= new_button :buy_seed, 0, 0, 'Buy Seed'
+
   args.outputs.primitives << args.state.buy_seed_button[:primitives]
 
   # check if the click occurred and buys seeds if enough money
-  if args.inputs.mouse.click && button_clicked?(args, args.state.buy_seed_button) && !(args.state.cash - args.state.price[:seed] < 0)
+  if args.inputs.mouse.click && button_clicked?(args,
+                                                args.state.buy_seed_button) && !(args.state.cash - args.state.price[:seed] < 0)
     #  args.gtk.notify! "click me button was clicked!"
     args.state.seeds += 1
-    args.state.cash -= args.state.price[:seed]
   end
 
-  # Sell Harvest Button
-  args.state.sell_button ||= new_button :sell, 0, 50, 'Sell'
-  args.outputs.primitives << args.state.sell_button[:primitives]
-
-  # check if the click occurred and sells harvest
-  if args.inputs.mouse.click && button_clicked?(args, args.state.sell_button) && !(args.state.harvested_plants.negative?)
-    args.state.cash += args.state.harvested_plants * args.state.price[:plant]
-    args.state.harvested_plants = 0
-  end
-
-  # Growth Stages & Rates
+  # Growth Stages & Rate
   growth_rate = 0.1
   full_grown = 40
-  wither = 60 * 1.2
-  wither_rate = 0.4
-  death = 60 * 8
+  wither = 60 * 1
 
   # Place plants in garden
   if args.inputs.mouse.click && in_garden(args)
@@ -131,12 +119,8 @@ def tick(args)
     if plant.w <= full_grown && plant.h <= full_grown
       plant.w += growth_rate
       plant.h += growth_rate
-    elsif plant.age >= wither && plant.age < death
+    elsif plant.age >= wither
       plant.path = 'sprites/circle/orange.png'
-      plant.age += 1
-      plant.a -= wither_rate
-    elsif plant.age >= death
-      plant.invalid = true
     else
       plant.path = 'sprites/circle/green.png'
       plant.age += 1
@@ -150,7 +134,7 @@ def tick(args)
   args.outputs.labels << {
     x: 40,
     y: args.grid.h - 40,
-    text: "Growing: #{args.state.plants.length} Harvested: #{args.state.harvested_plants} Cash: #{args.state.cash}",
+    text: "Growing: #{args.state.plants.length}, Harvested: #{args.state.harvested_plants}",
     size_enum: 2
   }
 

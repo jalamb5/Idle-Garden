@@ -1,3 +1,11 @@
+$gtk.reset seed: 1716084315
+$gtk.reset seed: 1716084006
+$gtk.reset seed: 1716083820
+$gtk.grep_source [".primitives", "you may need to call one of the methods above on this line."]
+$gtk.grep_source [".outputs", '']
+$gtk.reset seed: 1716083722
+$gtk.reset seed: 1716083431
+$gtk.grep_source [".h", '']
 $gtk.reset seed: 1716081317
 $gtk.grep_source [".button_clicked?", '']
 $gtk.reset seed: 1716081179
