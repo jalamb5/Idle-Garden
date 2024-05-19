@@ -67,7 +67,8 @@ end
 
 def tick(args)
   # args.outputs.background_color = [50, 168, 82]
-  args.outputs.solids << [200, 0, 1280, 720, 50, 168, 82]
+  args.outputs.solids << [200, 0, 1280, 720, 138, 185, 54] # grass background
+  args.outputs.solids << [250, 50, 980, 620, 170, 129, 56] # dirt background
   args.outputs.static_borders << { x: 0, y: 0, w: 1280, h: 720 }
   args.outputs.static_borders << { x: 0, y: 1, w: 1280, h: 0 }
   args.state.plants ||= []
@@ -82,7 +83,6 @@ def tick(args)
 
   # check if the click occurred and buys seeds if enough money
   if args.inputs.mouse.click && button_clicked?(args, args.state.buy_seed_button) && !(args.state.cash - args.state.price[:seed] < 0)
-    #  args.gtk.notify! "click me button was clicked!"
     args.state.seeds += 1
     args.state.cash -= args.state.price[:seed]
   end
