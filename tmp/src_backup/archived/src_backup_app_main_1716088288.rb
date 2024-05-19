@@ -35,7 +35,7 @@ end
 # Area available for plants
 def in_garden(args)
   args.inputs.mouse.x <= 1280 &&
-    args.inputs.mouse.x >= 200 &&
+    args.inputs.mouse.x >= 100 &&
     args.inputs.mouse.y <= 720 &&
     args.inputs.mouse.y >= 0
 end
@@ -88,7 +88,7 @@ def tick(args)
   end
 
   # Sell Harvest Button
-  args.state.sell_button ||= new_button :sell, 100, 0, 'Sell'
+  args.state.sell_button ||= new_button :sell, 0, 50, 'Sell'
   args.outputs.primitives << args.state.sell_button[:primitives]
 
   # check if the click occurred and sells harvest

@@ -88,7 +88,7 @@ def tick(args)
   end
 
   # Sell Harvest Button
-  args.state.sell_button ||= new_button :sell, 100, 0, 'Sell'
+  args.state.sell_button ||= new_button :sell, 0, 50, 'Sell'
   args.outputs.primitives << args.state.sell_button[:primitives]
 
   # check if the click occurred and sells harvest

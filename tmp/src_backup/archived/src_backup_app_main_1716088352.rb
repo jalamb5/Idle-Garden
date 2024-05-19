@@ -77,7 +77,7 @@ def tick(args)
   args.state.price = { seed: 5, plant: 10 }
 
   # Buy Seeds Button
-  args.state.buy_seed_button ||= new_button :buy_seed, 0, 0, 'Buy'
+  args.state.buy_seed_button ||= new_button :buy_seed, 10, 0, 'Buy'
   args.outputs.primitives << args.state.buy_seed_button[:primitives]
 
   # check if the click occurred and buys seeds if enough money
@@ -88,7 +88,7 @@ def tick(args)
   end
 
   # Sell Harvest Button
-  args.state.sell_button ||= new_button :sell, 100, 0, 'Sell'
+  args.state.sell_button ||= new_button :sell, 10, 50, 'Sell'
   args.outputs.primitives << args.state.sell_button[:primitives]
 
   # check if the click occurred and sells harvest

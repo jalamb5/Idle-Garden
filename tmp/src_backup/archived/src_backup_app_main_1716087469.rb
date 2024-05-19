@@ -35,7 +35,7 @@ end
 # Area available for plants
 def in_garden(args)
   args.inputs.mouse.x <= 1280 &&
-    args.inputs.mouse.x >= 200 &&
+    args.inputs.mouse.x >= 100 &&
     args.inputs.mouse.y <= 720 &&
     args.inputs.mouse.y >= 0
 end
@@ -67,7 +67,7 @@ end
 
 def tick(args)
   # args.outputs.background_color = [50, 168, 82]
-  args.outputs.solids << [200, 0, 1280, 720, 50, 168, 82]
+  args.outputs.solids << [100, 0, 1280, 720, 50, 168, 82]
   args.outputs.static_borders << { x: 0, y: 0, w: 1280, h: 720 }
   args.outputs.static_borders << { x: 0, y: 1, w: 1280, h: 0 }
   args.state.plants ||= []
@@ -88,7 +88,7 @@ def tick(args)
   end
 
   # Sell Harvest Button
-  args.state.sell_button ||= new_button :sell, 100, 0, 'Sell'
+  args.state.sell_button ||= new_button :sell, 0, 50, 'Sell'
   args.outputs.primitives << args.state.sell_button[:primitives]
 
   # check if the click occurred and sells harvest
@@ -147,35 +147,19 @@ def tick(args)
   # Render sprites
   args.outputs.sprites << [args.state.plants]
 
-  # Display number of seeds
-  args.outputs.labels << {
-    x: 5,
-    y: args.grid.h - 20,
-    text: "Seeds: #{args.state.seeds}",
-    size_px: 22
-  }
-
   # Display number of plants
   args.outputs.labels << {
-    x: 5,
+    x: 0,
     y: args.grid.h - 40,
-    text: "Growing: #{args.state.plants.length}",
-    size_px: 22
+    text: "Growing: #{args.state.plants.length} Harvested: #{args.state.harvested_plants} Cash: #{args.state.cash}",
+    size_enum: 2
   }
 
-  # Display harvested plants
+  # Display number of seeds
   args.outputs.labels << {
-    x: 5,
-    y: args.grid.h - 60,
-    text: "Harvested: #{args.state.harvested_plants}",
-    size_px: 22
-  }
-
-  # Display cash
-  args.outputs.labels << {
-    x: 5,
-    y: args.grid.h - 80,
-    text: "Cash: #{args.state.cash}",
-    size_px: 22
+    x: 1000,
+    y: args.grid.h - 40,
+    text: "Seeds: #{args.state.seeds}",
+    size_enum: 2
   }
 end
