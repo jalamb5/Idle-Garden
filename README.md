@@ -1,6 +1,8 @@
 # Plants
 A gardening game built with DragonRuby GTK.
 
+![Screenshot of game screen](./mygame/metadata/plants.png)
+
 ## Gameplay
 - Plant seeds in the garden by clicking inside the garden
 - Plants grow over time, harvest when fully grown
