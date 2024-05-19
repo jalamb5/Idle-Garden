@@ -52,8 +52,8 @@ def new_button(id, x, y, text)
 
   # for that entity, define the primitives that form it
   entity[:primitives] = [
-    { x: x, y: y, w: width, h: height }.border,
-    { x: x + 10, y: y + 30, text: text }.label
+    { x: x, y: y, w: width, h: height }.border!,
+    { x: x + 10, y: y + 30, text: text }.label!
   ]
   entity
 end
