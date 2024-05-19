@@ -132,7 +132,7 @@ def tick(args)
     if plant.w <= full_grown && plant.h <= full_grown
       plant.w += growth_rate
       plant.h += growth_rate
-      plant.path = 'sprites/stages/1growing.png' if plant.w > 30
+      
     elsif plant.age >= wither && plant.age < death
       plant.path = 'sprites/stages/3withered.png'
       plant.age += 1

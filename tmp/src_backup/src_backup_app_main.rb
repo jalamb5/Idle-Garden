@@ -10,7 +10,7 @@ def place_plant(args)
     h: 20,
     age: 0,
     invalid: false,
-    path: 'sprites/circle/yellow.png',
+    path: 'sprites/stages/0seed.png',
     a: 255
   }
 end
@@ -132,14 +132,15 @@ def tick(args)
     if plant.w <= full_grown && plant.h <= full_grown
       plant.w += growth_rate
       plant.h += growth_rate
+      plant.path = 'sprites/stages/1growing.png' if plant.w > 30
     elsif plant.age >= wither && plant.age < death
-      plant.path = 'sprites/circle/orange.png'
+      plant.path = 'sprites/stages/3withered.png'
       plant.age += 1
       plant.a -= wither_rate
     elsif plant.age >= death
       plant.invalid = true
     else
-      plant.path = 'sprites/circle/green.png'
+      plant.path = 'sprites/stages/2full_grown.png'
       plant.age += 1
     end
   end

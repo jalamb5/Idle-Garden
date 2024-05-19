@@ -5205,3 +5205,249 @@ and be notified of other places you're using this function.
 
 [Message ID: [:consider_label!]]
 
+
+* WARNING: ~Hash#border~ is deprecated becuase it's poorly named. Use ~Hash#border!~ instead.
+This method will stay here for backwards compatibility. But, consider using one of the following methods:
+** Option 1: ~:border! &OPTIONAL additional_keys_to_merge~
+This will mutate the current hash in-place. It's identical to the current method you're using,
+but better signifies that a side effect is occuring (because of the ~!~ at the end).
+*** Example
+Here is an example of how your code may change.
+**** Before
+#+begin_src ruby
+  def tick args
+    args.state.primitive_style  ||= { r: 255, g: 255, b: 255 }
+
+    # here ~Hash#merge!~ and ~Hash#border~ are used in combination
+    args.state.some_primitive ||= { x: 8, y: 8, w: 32, h: 32 }.merge!(primitive_style).border
+
+    args.outputs.primitives << args.state.some_primitive
+  end
+#+end_src
+**** After
+#+begin_src ruby
+  def tick args
+    args.state.primitive_style  ||= { r: 255, g: 255, b: 255 }
+
+    # if you use ~Hash#border!~ you can combine the
+    # ~Hash#merge!~ and ~Hash#border~ method calls
+    args.state.some_border ||= { x: 8, y: 8, w: 32, h: 32 }.border! primitive_style
+
+    args.outputs.primitives << args.state.button_border
+  end
+#+end_src
+** Option 2: ~:to_border &OPTIONAL additional_keys_to_merge~
+This will return a new ~Hash~ leaving the original *untouched*.
+** Caller:
+If you decide to fix this error now, you can run ~Log.reset~ to invalidate this warning
+and be notified of other places you're using this function.
+*** app/main.rb:80:in tick
+*** app/main.rb:68
+
+[Message ID: [:consider_border!]]
+
+
+* WARNING: ~Hash#label~ is deprecated becuase it's poorly named. Use ~Hash#label!~ instead.
+This method will stay here for backwards compatibility. But, consider using one of the following methods:
+** Option 1: ~:label! &OPTIONAL additional_keys_to_merge~
+This will mutate the current hash in-place. It's identical to the current method you're using,
+but better signifies that a side effect is occuring (because of the ~!~ at the end).
+*** Example
+Here is an example of how your code may change.
+**** Before
+#+begin_src ruby
+  def tick args
+    args.state.primitive_style  ||= { r: 255, g: 255, b: 255 }
+
+    # here ~Hash#merge!~ and ~Hash#border~ are used in combination
+    args.state.some_primitive ||= { x: 8, y: 8, w: 32, h: 32 }.merge!(primitive_style).label
+
+    args.outputs.primitives << args.state.some_primitive
+  end
+#+end_src
+**** After
+#+begin_src ruby
+  def tick args
+    args.state.primitive_style  ||= { r: 255, g: 255, b: 255 }
+
+    # if you use ~Hash#label!~ you can combine the
+    # ~Hash#merge!~ and ~Hash#label~ method calls
+    args.state.some_label ||= { x: 8, y: 8, w: 32, h: 32 }.label! primitive_style
+
+    args.outputs.primitives << args.state.button_label
+  end
+#+end_src
+** Option 2: ~:to_label &OPTIONAL additional_keys_to_merge~
+This will return a new ~Hash~ leaving the original *untouched*.
+** Caller:
+If you decide to fix this error now, you can run ~Log.reset~ to invalidate this warning
+and be notified of other places you're using this function.
+*** app/main.rb:80:in tick
+*** app/main.rb:68
+
+[Message ID: [:consider_label!]]
+
+
+* WARNING: ~Hash#border~ is deprecated becuase it's poorly named. Use ~Hash#border!~ instead.
+This method will stay here for backwards compatibility. But, consider using one of the following methods:
+** Option 1: ~:border! &OPTIONAL additional_keys_to_merge~
+This will mutate the current hash in-place. It's identical to the current method you're using,
+but better signifies that a side effect is occuring (because of the ~!~ at the end).
+*** Example
+Here is an example of how your code may change.
+**** Before
+#+begin_src ruby
+  def tick args
+    args.state.primitive_style  ||= { r: 255, g: 255, b: 255 }
+
+    # here ~Hash#merge!~ and ~Hash#border~ are used in combination
+    args.state.some_primitive ||= { x: 8, y: 8, w: 32, h: 32 }.merge!(primitive_style).border
+
+    args.outputs.primitives << args.state.some_primitive
+  end
+#+end_src
+**** After
+#+begin_src ruby
+  def tick args
+    args.state.primitive_style  ||= { r: 255, g: 255, b: 255 }
+
+    # if you use ~Hash#border!~ you can combine the
+    # ~Hash#merge!~ and ~Hash#border~ method calls
+    args.state.some_border ||= { x: 8, y: 8, w: 32, h: 32 }.border! primitive_style
+
+    args.outputs.primitives << args.state.button_border
+  end
+#+end_src
+** Option 2: ~:to_border &OPTIONAL additional_keys_to_merge~
+This will return a new ~Hash~ leaving the original *untouched*.
+** Caller:
+If you decide to fix this error now, you can run ~Log.reset~ to invalidate this warning
+and be notified of other places you're using this function.
+*** app/main.rb:80:in tick
+*** app/main.rb:68
+
+[Message ID: [:consider_border!]]
+
+
+* WARNING: ~Hash#label~ is deprecated becuase it's poorly named. Use ~Hash#label!~ instead.
+This method will stay here for backwards compatibility. But, consider using one of the following methods:
+** Option 1: ~:label! &OPTIONAL additional_keys_to_merge~
+This will mutate the current hash in-place. It's identical to the current method you're using,
+but better signifies that a side effect is occuring (because of the ~!~ at the end).
+*** Example
+Here is an example of how your code may change.
+**** Before
+#+begin_src ruby
+  def tick args
+    args.state.primitive_style  ||= { r: 255, g: 255, b: 255 }
+
+    # here ~Hash#merge!~ and ~Hash#border~ are used in combination
+    args.state.some_primitive ||= { x: 8, y: 8, w: 32, h: 32 }.merge!(primitive_style).label
+
+    args.outputs.primitives << args.state.some_primitive
+  end
+#+end_src
+**** After
+#+begin_src ruby
+  def tick args
+    args.state.primitive_style  ||= { r: 255, g: 255, b: 255 }
+
+    # if you use ~Hash#label!~ you can combine the
+    # ~Hash#merge!~ and ~Hash#label~ method calls
+    args.state.some_label ||= { x: 8, y: 8, w: 32, h: 32 }.label! primitive_style
+
+    args.outputs.primitives << args.state.button_label
+  end
+#+end_src
+** Option 2: ~:to_label &OPTIONAL additional_keys_to_merge~
+This will return a new ~Hash~ leaving the original *untouched*.
+** Caller:
+If you decide to fix this error now, you can run ~Log.reset~ to invalidate this warning
+and be notified of other places you're using this function.
+*** app/main.rb:80:in tick
+*** app/main.rb:68
+
+[Message ID: [:consider_label!]]
+
+
+* WARNING: ~Hash#border~ is deprecated becuase it's poorly named. Use ~Hash#border!~ instead.
+This method will stay here for backwards compatibility. But, consider using one of the following methods:
+** Option 1: ~:border! &OPTIONAL additional_keys_to_merge~
+This will mutate the current hash in-place. It's identical to the current method you're using,
+but better signifies that a side effect is occuring (because of the ~!~ at the end).
+*** Example
+Here is an example of how your code may change.
+**** Before
+#+begin_src ruby
+  def tick args
+    args.state.primitive_style  ||= { r: 255, g: 255, b: 255 }
+
+    # here ~Hash#merge!~ and ~Hash#border~ are used in combination
+    args.state.some_primitive ||= { x: 8, y: 8, w: 32, h: 32 }.merge!(primitive_style).border
+
+    args.outputs.primitives << args.state.some_primitive
+  end
+#+end_src
+**** After
+#+begin_src ruby
+  def tick args
+    args.state.primitive_style  ||= { r: 255, g: 255, b: 255 }
+
+    # if you use ~Hash#border!~ you can combine the
+    # ~Hash#merge!~ and ~Hash#border~ method calls
+    args.state.some_border ||= { x: 8, y: 8, w: 32, h: 32 }.border! primitive_style
+
+    args.outputs.primitives << args.state.button_border
+  end
+#+end_src
+** Option 2: ~:to_border &OPTIONAL additional_keys_to_merge~
+This will return a new ~Hash~ leaving the original *untouched*.
+** Caller:
+If you decide to fix this error now, you can run ~Log.reset~ to invalidate this warning
+and be notified of other places you're using this function.
+*** app/main.rb:80:in tick
+*** app/main.rb:68
+
+[Message ID: [:consider_border!]]
+
+
+* WARNING: ~Hash#label~ is deprecated becuase it's poorly named. Use ~Hash#label!~ instead.
+This method will stay here for backwards compatibility. But, consider using one of the following methods:
+** Option 1: ~:label! &OPTIONAL additional_keys_to_merge~
+This will mutate the current hash in-place. It's identical to the current method you're using,
+but better signifies that a side effect is occuring (because of the ~!~ at the end).
+*** Example
+Here is an example of how your code may change.
+**** Before
+#+begin_src ruby
+  def tick args
+    args.state.primitive_style  ||= { r: 255, g: 255, b: 255 }
+
+    # here ~Hash#merge!~ and ~Hash#border~ are used in combination
+    args.state.some_primitive ||= { x: 8, y: 8, w: 32, h: 32 }.merge!(primitive_style).label
+
+    args.outputs.primitives << args.state.some_primitive
+  end
+#+end_src
+**** After
+#+begin_src ruby
+  def tick args
+    args.state.primitive_style  ||= { r: 255, g: 255, b: 255 }
+
+    # if you use ~Hash#label!~ you can combine the
+    # ~Hash#merge!~ and ~Hash#label~ method calls
+    args.state.some_label ||= { x: 8, y: 8, w: 32, h: 32 }.label! primitive_style
+
+    args.outputs.primitives << args.state.button_label
+  end
+#+end_src
+** Option 2: ~:to_label &OPTIONAL additional_keys_to_merge~
+This will return a new ~Hash~ leaving the original *untouched*.
+** Caller:
+If you decide to fix this error now, you can run ~Log.reset~ to invalidate this warning
+and be notified of other places you're using this function.
+*** app/main.rb:80:in tick
+*** app/main.rb:68
+
+[Message ID: [:consider_label!]]
+
