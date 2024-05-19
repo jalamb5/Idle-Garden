@@ -64,7 +64,7 @@ def tick(args)
   args.state.harvested_plants ||= 0
 
   # Button
-  args.state.click_me_button ||= new_button :click_me, 0, 0, "click me"
+  args.state.click_me_button ||= new_button :click_me, 50, 0, "click me"
 
   args.outputs.primitives << args.state.click_me_button[:primitives]
 

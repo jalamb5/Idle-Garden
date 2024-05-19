@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# require 'app/button.rb'
+
 def place_plant(args)
   {
     x: args.inputs.mouse.x - 15,
@@ -28,6 +30,31 @@ def in_bounds(args)
     args.inputs.mouse.y >= 0
 end
 
+  # helper method to create a button
+  def new_button id, x, y, text
+    # create a hash ("entity") that has some metadata
+    # about what it represents
+    entity = {
+      id: id,
+      rect: { x: x, y: y, w: 100, h: 50 }
+    }
+
+    # for that entity, define the primitives
+    # that form it
+    entity[:primitives] = [
+      { x: x, y: y, w: 100, h: 50 }.border,
+      { x: x, y: y, text: text }.label
+    ]
+
+    entity
+  end
+
+  # helper method for determining if a button was clicked
+  def button_clicked? args, button
+    return false unless args.inputs.mouse.click
+    return args.inputs.mouse.point.inside_rect? button[:rect]
+  end
+
 def tick(args)
   args.outputs.background_color = [50, 168, 82]
   args.outputs.static_borders << { x: 0, y: 0, w: 1280, h: 720 }
@@ -36,6 +63,17 @@ def tick(args)
   args.state.seeds ||= 5
   args.state.harvested_plants ||= 0
 
+  # Button
+  args.state.click_me_button ||= new_button :click_me, 0, 0, "click me"
+
+  args.outputs.primitives << args.state.click_me_button[:primitives]
+
+  # check if the click occurred using the button_clicked? helper method
+  if button_clicked? args, args.state.click_me_button
+     args.gtk.notify! "click me button was clicked!"
+  end
+
+# Growth Stages & Rate
   growth_rate = 0.1
   full_grown = 40
   wither = 60 * 1

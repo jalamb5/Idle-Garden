@@ -24,7 +24,7 @@ def occupied(args, new_plant)
 end
 
 def in_bounds(args)
-  args.inputs.mouse.x <= 1280 &&
+  args.inputs.mouse.x <= 1180 &&
     args.inputs.mouse.x >= 0 &&
     args.inputs.mouse.y <= 720 &&
     args.inputs.mouse.y >= 0
@@ -64,7 +64,7 @@ def tick(args)
   args.state.harvested_plants ||= 0
 
   # Button
-  args.state.click_me_button ||= new_button :click_me, 0, 0, "click me"
+  args.state.click_me_button ||= new_button :click_me, 10, 20, "click me"
 
   args.outputs.primitives << args.state.click_me_button[:primitives]
 

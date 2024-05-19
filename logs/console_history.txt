@@ -1,3 +1,10 @@
+$gtk.reset seed: 1716081317
+$gtk.grep_source [".button_clicked?", '']
+$gtk.reset seed: 1716081179
+$gtk.reset seed: 1716080922
+$gtk.grep_source [".require_relative", '']
+$gtk.grep_source [".requ", '']
+$gtk.grep_source [".import", '']
 $gtk.reset seed: 1675809118
 $gtk.grep_source [".static_borders =", "remove assignment and use << or .clear instead."]
 $gtk.grep_source [".borders =", "remove assignment and use << or .clear instead."]
