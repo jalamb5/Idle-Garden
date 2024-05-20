@@ -77,6 +77,7 @@ def tick(args)
   end
 
   # Place plants in garden
+  # TODO: move harvest to Plant class
   if args.inputs.mouse.click && in_garden(args)
     new_plant = Plant.new(args)
     if new_plant.invalid
