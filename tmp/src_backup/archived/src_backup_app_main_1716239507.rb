@@ -76,17 +76,24 @@ def tick(args)
     args.state.harvested_plants = 0
   end
 
+  # Growth Stages & Rates
+  growth_rate = 0.1
+  full_grown = 40
+  wither = 60 * 1.2
+  wither_rate = 0.4
+  death = 60 * 8
+
   # Place plants in garden
   if args.inputs.mouse.click && in_garden(args)
     new_plant = Plant.new(args)
     if new_plant.invalid
       # Harvest plant
       plant_to_harvest = new_plant.invalid
-      if plant_to_harvest.stage == 'full_grown'
+      if plant_to_harvest.age.positive? && plant_to_harvest.age < wither
         plant_to_harvest.invalid = true
         args.state.harvested_plants += 1
       # Collect seeds from withered plant
-      elsif plant_to_harvest.stage == 'withered'
+      elsif plant_to_harvest.age >= wither
         plant_to_harvest.invalid = true
         args.state.seeds += rand(10)
       end
@@ -100,7 +107,22 @@ def tick(args)
   args.state.plants.reject!(&:invalid)
 
   # Grow plants
-  args.state.plants.each(&:grow)
+  args.state.plants.each do |plant|
+    if plant.w <= full_grown && plant.h <= full_grown
+      plant.w += growth_rate
+      plant.h += growth_rate
+      plant.path = 'sprites/stages/1growing.png' if plant.w > 30
+    elsif plant.age >= wither && plant.age < death
+      plant.path = 'sprites/stages/3withered.png'
+      plant.age += 1
+      plant.a -= wither_rate
+    elsif plant.age >= death
+      plant.invalid = true
+    else
+      plant.path = 'sprites/stages/2full_grown.png'
+      plant.age += 1
+    end
+  end
 
   # Render sprites
   args.outputs.sprites << [args.state.plants]
