@@ -41,8 +41,9 @@ class Automation
     false
   end
 
-  def auto_seller(_args)
-    false
+  def auto_seller(args)
+    args.state.cash += args.state.harvested_plants * args.state.price[:plant]
+    args.state.harvested_plants = 0
   end
 
   # DragonRuby required methods

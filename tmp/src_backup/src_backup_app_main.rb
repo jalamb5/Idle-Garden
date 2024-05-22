@@ -54,6 +54,7 @@ def tick(args)
   args.state.cash ||= 5
   args.state.price = { seed: 5, plant: 10 }
   args.state.auto_harvesters ||= []
+  args.state.auto_sellers ||= []
 
   # TODO: auto harvester, auto planter, auto seller
 
@@ -83,7 +84,16 @@ def tick(args)
 
   # check if the click occurred and creates auto harvester
   if args.inputs.mouse.click && button_clicked?(args, args.state.auto_harvester_button)
-    args.state.auto_harvesters << Automation.new(:harvest)
+    args.state.auto_harvesters << Automation.new(:harvester)
+  end
+
+  # Make Auto Seller Button
+  args.state.auto_seller_button ||= new_button :auto_seller, 100, 50, 'Auto Seller'
+  args.outputs.primitives << args.state.auto_seller_button[:primitives]
+
+  # check if the click occurred and creates auto seller
+  if args.inputs.mouse.click && button_clicked?(args, args.state.auto_seller_button)
+    args.state.auto_sellers << Automation.new(:seller)
   end
 
   # Place or harvest plants in garden
@@ -104,6 +114,9 @@ def tick(args)
 
   # Run auto harvesters
   args.state.auto_harvesters.each { |harvester| harvester.run(args) }
+
+  # Run auto sellers
+  args.state.auto_sellers.each { |seller| seller.run(args) }
 
   # Render sprites
   args.outputs.sprites << [args.state.plants]

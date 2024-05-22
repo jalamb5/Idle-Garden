@@ -88,7 +88,7 @@ def tick(args)
   end
 
   # Make Auto Seller Button
-  args.state.auto_seller_button ||= new_button :auto_seller, 100, 50, 'Auto Seller'
+  args.state.auto_seller_button ||= new_button :auto_seller, 0, 50, 'Auto Seller'
   args.outputs.primitives << args.state.auto_seller_button[:primitives]
 
   # check if the click occurred and creates auto seller
