@@ -57,14 +57,26 @@ class Plant
     end
   end
 
-  # sets @invalid to false if not occupied, returns plant at location if occupied
+  # sets @invalid to false if not occupied, attemps to harvest plant at location if occupied
   def occupied(args, new_plant)
     args.state.plants.each do |plant|
       next unless args.geometry.intersect_rect?(plant, new_plant)
 
-      return plant
+      harvest(args, plant)
+      return true
     end
     false
+  end
+
+  # Harvest plant if correct stage
+  def harvest(args, plant)
+    if plant.stage == 'full_grown'
+      args.state.harvested_plants += 1
+      plant.invalid = true
+    elsif plant.stage == 'withered'
+      args.state.seeds += rand(10)
+      plant.invalid = true
+    end
   end
 
   def serialize

@@ -76,22 +76,11 @@ def tick(args)
     args.state.harvested_plants = 0
   end
 
-  # Place plants in garden
-  # TODO: move harvest to Plant class
+  # Place or harvest plants in garden
   if args.inputs.mouse.click && in_garden(args)
     new_plant = Plant.new(args)
-    if new_plant.invalid
-      # Harvest plant
-      plant_to_harvest = new_plant.invalid
-      if plant_to_harvest.stage == 'full_grown'
-        plant_to_harvest.invalid = true
-        args.state.harvested_plants += 1
-      # Collect seeds from withered plant
-      elsif plant_to_harvest.stage == 'withered'
-        plant_to_harvest.invalid = true
-        args.state.seeds += rand(10)
-      end
-    elsif args.state.seeds.positive?
+
+    if args.state.seeds.positive? && !new_plant.invalid
       args.state.plants << new_plant
       args.state.seeds -= 1
     end
