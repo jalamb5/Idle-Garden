@@ -114,6 +114,9 @@ def tick(args)
     end
   end
 
+  # Run auto planters
+  args.state.auto_planters.each { |planter| planter.run(args) }
+
   # Remove invalid plants
   args.state.plants.reject!(&:invalid)
 
@@ -125,9 +128,6 @@ def tick(args)
 
   # Run auto sellers
   args.state.auto_sellers.each { |seller| seller.run(args) }
-
-  # Run auto planters
-  args.state.auto_planters.each { |planter| planter.run(args) }
 
   # Render sprites
   args.outputs.sprites << [args.state.plants]
