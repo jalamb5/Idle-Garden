@@ -30,7 +30,7 @@ def new_button(id, x, y, text)
 
   entity[:primitives] = [
     { x: x, y: y, w: width, h: height }.border!,
-    { x: x + 5, y: y + 30, text: text, size_enum: -4 }.label!
+    { x: x + 10, y: y + 30, text: text, size_enum: -4 }.label!
   ]
   entity
 end
@@ -43,6 +43,7 @@ def button_clicked?(args, button)
 end
 
 def tick(args)
+  # args.outputs.background_color = [50, 168, 82]
   args.outputs.solids << [200, 0, 1280, 720, 138, 185, 54] # grass background [x,y,w,h,r,g,b]
   args.outputs.solids << [250, 50, 980, 620, 170, 129, 56] # dirt background
   args.outputs.static_borders << { x: 0, y: 0, w: 1280, h: 720 }
@@ -80,33 +81,30 @@ def tick(args)
   end
 
   # Make Auto Harvester Button
-  args.state.auto_harvester_button ||= new_button :auto_harvester, 0, 50, "Harvester (#{args.state.price[:harvester]})"
+  args.state.auto_harvester_button ||= new_button :auto_harvester, 0, 50, "Auto Harvester (#{args.state.price[:harvester]})"
   args.outputs.primitives << args.state.auto_harvester_button[:primitives]
 
   # check if the click occurred and creates auto harvester
-  if args.inputs.mouse.click && button_clicked?(args, args.state.auto_harvester_button) && !(args.state.cash - args.state.price[:harvester] < 0)
+  if args.inputs.mouse.click && button_clicked?(args, args.state.auto_harvester_button)
     args.state.auto_harvesters << Automation.new(:harvester)
-    args.state.cash -= args.state.price[:harvester]
   end
 
   # Make Auto Seller Button
-  args.state.auto_seller_button ||= new_button :auto_seller, 100, 50, "Seller (#{args.state.price[:seller]})"
+  args.state.auto_seller_button ||= new_button :auto_seller, 100, 50, "Auto Seller (#{args.state.price[:seller]})"
   args.outputs.primitives << args.state.auto_seller_button[:primitives]
 
   # check if the click occurred and creates auto seller
-  if args.inputs.mouse.click && button_clicked?(args, args.state.auto_seller_button) && !(args.state.cash - args.state.price[:seller] < 0)
+  if args.inputs.mouse.click && button_clicked?(args, args.state.auto_seller_button)
     args.state.auto_sellers << Automation.new(:seller)
-    args.state.cash -= args.state.price[:seller]
   end
 
   # Make Auto Planter Button
-  args.state.auto_planter_button ||= new_button :auto_planter, 0, 100, "Planter (#{args.state.price[:planter]})"
+  args.state.auto_planter_button ||= new_button :auto_planter, 0, 100, "Auto Planter (#{args.state.price[:planter]})"
   args.outputs.primitives << args.state.auto_planter_button[:primitives]
 
   # check if the click occurred and creates auto planter
-  if args.inputs.mouse.click && button_clicked?(args, args.state.auto_planter_button) && !(args.state.cash - args.state.price[:planter] < 0)
+  if args.inputs.mouse.click && button_clicked?(args, args.state.auto_planter_button)
     args.state.auto_planters << Automation.new(:planter)
-    args.state.cash -= args.state.price[:planter]
   end
 
   # Place or harvest plants in garden
