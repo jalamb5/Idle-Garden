@@ -56,6 +56,9 @@ def tick(args)
   args.state.auto_planters ||= []
   args.state.auto_harvesters ||= []
   args.state.auto_sellers ||= []
+  args.state.counter ||= 0
+
+  args.state.counter += 1
 
   # Buy Seeds Button
   args.state.buy_seed_button ||= new_button :buy_seed, 0, 0, 'Buy'
@@ -120,14 +123,20 @@ def tick(args)
   # Grow plants
   args.state.plants.each(&:grow)
 
-  # Run auto harvesters
-  args.state.auto_harvesters.each { |harvester| harvester.run(args) }
+  # Run automations at regular intervals (2.5 seconds)
+  if args.state.counter >= 30 * 2.5
+    # Run auto harvesters
+    args.state.auto_harvesters.each { |harvester| harvester.run(args) }
 
-  # Run auto sellers
-  args.state.auto_sellers.each { |seller| seller.run(args) }
+    # Run auto sellers
+    args.state.auto_sellers.each { |seller| seller.run(args) }
 
-  # Run auto planters
-  args.state.auto_planters.each { |planter| planter.run(args) }
+    # Run auto planters
+    args.state.auto_planters.each { |planter| planter.run(args) }
+
+    # Reset counter
+    args.state.counter = 0
+  end
 
   # Render sprites
   args.outputs.sprites << [args.state.plants]

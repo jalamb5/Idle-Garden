@@ -123,8 +123,8 @@ def tick(args)
   # Grow plants
   args.state.plants.each(&:grow)
 
-  # Run automations at regular intervals (2.5 seconds)
-  if args.state.counter >= 30 * 2.5
+  # Run automations at regular intervals (5 seconds)
+  if args.state.counter >= 30 * 5
     # Run auto harvesters
     args.state.auto_harvesters.each { |harvester| harvester.run(args) }
 
