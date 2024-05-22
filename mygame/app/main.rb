@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# require 'app/button.rb'
 require 'app/plant.rb'
 
 # Total Interactive Area
@@ -23,13 +22,11 @@ end
 def new_button(id, x, y, text)
   width = 100
   height = 50
-  # create a hash ("entity") that has some metadata about what it represents
   entity = {
     id: id,
     rect: { x: x, y: y, w: width, h: height }
   }
 
-  # for that entity, define the primitives that form it
   entity[:primitives] = [
     { x: x, y: y, w: width, h: height }.border!,
     { x: x + 10, y: y + 30, text: text }.label!
