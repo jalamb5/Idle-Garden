@@ -30,7 +30,7 @@ def new_button(id, x, y, text)
 
   entity[:primitives] = [
     { x: x, y: y, w: width, h: height }.border!,
-    { x: x + 10, y: y + 30, text: text, size_px: 10 }.label!
+    { x: x + 10, y: y + 30, text: text, size_enum: -4 }.label!
   ]
   entity
 end
@@ -83,7 +83,7 @@ def tick(args)
 
   # check if the click occurred and creates auto harvester
   if args.inputs.mouse.click && button_clicked?(args, args.state.auto_harvester_button)
-    args.state.auto_harvesters << Automation.new(:harvest)
+    args.state.auto_harvesters << Automation.new(:harvester)
   end
 
   # Place or harvest plants in garden

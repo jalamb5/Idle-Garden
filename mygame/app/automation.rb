@@ -13,18 +13,37 @@ class Automation
 
   def run(args)
     @cooldown -= 1
-    return unless @type == :harvest && @cooldown <= 0
+    return unless @cooldown <= 0
 
-    args.state.plants.each do |plant|
-      next unless plant.stage == 'full_grown' || plant.stage == 'withered'
-
-      plant.harvest(args, plant)
-      @cooldown = 50 * rand(3)
-      break
+    case @type
+    when :harvester
+      auto_harvester(args)
+    when :planter
+      auto_planter(args)
+    when :seller
+      auto_seller(args)
     end
   end
 
   private
+
+  def auto_harvester(args)
+    args.state.plants.each do |plant|
+      next unless plant.stage == 'full_grown' || plant.stage == 'withered'
+
+      plant.harvest(args, plant)
+      @cooldown = 100 * rand(3)
+      break
+    end
+  end
+
+  def auto_planter(_args)
+    false
+  end
+
+  def auto_seller(_args)
+    false
+  end
 
   # DragonRuby required methods
   def serialize

@@ -30,7 +30,7 @@ def new_button(id, x, y, text)
 
   entity[:primitives] = [
     { x: x, y: y, w: width, h: height }.border!,
-    { x: x + 10, y: y + 30, text: text, size_enum: -4 }.label!
+    { x: x + 10, y: y + 30, text: text, size_enum: -2 }.label!
   ]
   entity
 end
