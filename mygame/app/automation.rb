@@ -40,7 +40,7 @@ class Automation
       next unless plant.stage == 'full_grown' || plant.stage == 'withered'
 
       plant.harvest(args, plant)
-      @harvest_cooldown = 100 * rand(3)
+      @harvest_cooldown = 300 * rand(3)
       break
     end
   end
@@ -50,7 +50,7 @@ class Automation
     plant = Plant.new(args)
     args.state.plants << plant
     args.state.seeds -= 1
-    @planter_cooldown = 100 * rand(3)
+    @planter_cooldown = 300 * rand(3)
   end
 
   def coord_generator
@@ -65,7 +65,7 @@ class Automation
   def auto_seller(args)
     args.state.cash += args.state.harvested_plants * args.state.price[:plant]
     args.state.harvested_plants = 0
-    @seller_cooldown = 100 * rand(3)
+    @seller_cooldown = 300 * rand(3)
   end
 
   # DragonRuby required methods
