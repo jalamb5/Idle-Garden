@@ -30,7 +30,7 @@ def new_button(id, x, y, text)
 
   entity[:primitives] = [
     { x: x, y: y, w: width, h: height }.border!,
-    { x: x + 10, y: y + 30, text: text, size_px: 10 }.label!
+    { x: x + 10, y: y + 30, text: text }.label!
   ]
   entity
 end
@@ -53,7 +53,6 @@ def tick(args)
   args.state.harvested_plants ||= 0
   args.state.cash ||= 5
   args.state.price = { seed: 5, plant: 10 }
-  args.state.auto_harvesters ||= []
 
   # TODO: auto harvester, auto planter, auto seller
 
@@ -77,15 +76,6 @@ def tick(args)
     args.state.harvested_plants = 0
   end
 
-  # Make Auto Harvester Button
-  args.state.auto_harvester_button ||= new_button :auto_harvester, 0, 50, 'Auto Harvester'
-  args.outputs.primitives << args.state.auto_harvester_button[:primitives]
-
-  # check if the click occurred and creates auto harvester
-  if args.inputs.mouse.click && button_clicked?(args, args.state.auto_harvester_button)
-    args.state.auto_harvesters << Automation.new(:harvest)
-  end
-
   # Place or harvest plants in garden
   if args.inputs.mouse.click && in_garden(args)
     new_plant = Plant.new(args)
@@ -96,14 +86,14 @@ def tick(args)
     end
   end
 
+  args.state.havesters ||= Automation.new(:harvest)
+  args.state.harvesters.run(args)
+
   # Remove invalid plants
   args.state.plants.reject!(&:invalid)
 
   # Grow plants
   args.state.plants.each(&:grow)
-
-  # Run auto harvesters
-  args.state.auto_harvesters.each { |harvester| harvester.run(args) }
 
   # Render sprites
   args.outputs.sprites << [args.state.plants]
@@ -137,14 +127,6 @@ def tick(args)
     x: 5,
     y: args.grid.h - 80,
     text: "Cash: #{args.state.cash}",
-    size_px: 22
-  }
-
-  # Display auto harvesters
-  args.outputs.labels << {
-    x: 5,
-    y: args.grid.h - 100,
-    text: "Harvesters: #{args.state.auto_harvesters.length}",
     size_px: 22
   }
 end

@@ -30,7 +30,7 @@ def new_button(id, x, y, text)
 
   entity[:primitives] = [
     { x: x, y: y, w: width, h: height }.border!,
-    { x: x + 10, y: y + 30, text: text, size_px: 10 }.label!
+    { x: x + 10, y: y + 30, text: text }.label!
   ]
   entity
 end
@@ -81,7 +81,7 @@ def tick(args)
   args.state.auto_harvester_button ||= new_button :auto_harvester, 0, 50, 'Auto Harvester'
   args.outputs.primitives << args.state.auto_harvester_button[:primitives]
 
-  # check if the click occurred and creates auto harvester
+  # check if the click occurred and sells harvest
   if args.inputs.mouse.click && button_clicked?(args, args.state.auto_harvester_button)
     args.state.auto_harvesters << Automation.new(:harvest)
   end

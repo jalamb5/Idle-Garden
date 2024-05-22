@@ -8,11 +8,11 @@ class Plant
 
   # Growth Stages & Rates
   GROWTH_RATE = 0.1
-  GROWING = 120
-  FULL_GROWN = 200
-  WITHER = 280 * 1.2
+  GROWING = 200
+  FULL_GROWN = 400
+  WITHER = 1000
   WITHER_RATE = 0.4
-  DEATH = 280 * 8
+  DEATH = 2200
   SPRITES = { SEED: 'sprites/stages/0seed.png', GROWING: 'sprites/stages/1growing.png',
               FULL_GROWN: 'sprites/stages/2full_grown.png', WITHERED: 'sprites/stages/3withered.png' }.freeze
   STAGES = %w[seed growing full_grown withered].freeze
@@ -42,6 +42,17 @@ class Plant
     end
   end
 
+  # Harvest plant if correct stage
+  def harvest(args, plant)
+    if plant.stage == 'full_grown'
+      args.state.harvested_plants += 1
+      plant.invalid = true
+    elsif plant.stage == 'withered'
+      args.state.seeds += rand(10)
+      plant.invalid = true
+    end
+  end
+
   private
 
   def set_growth_stage
@@ -68,16 +79,6 @@ class Plant
     false
   end
 
-  # Harvest plant if correct stage
-  def harvest(args, plant)
-    if plant.stage == 'full_grown'
-      args.state.harvested_plants += 1
-      plant.invalid = true
-    elsif plant.stage == 'withered'
-      args.state.seeds += rand(10)
-      plant.invalid = true
-    end
-  end
 
   # DragonRuby required methods
   def serialize

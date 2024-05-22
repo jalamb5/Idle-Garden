@@ -2,24 +2,29 @@
 
 # Create new automations for garden
 class Automation
-  attr_accessor :type, :cooldown
+  attr_accessor :type
 
   attr_sprite
 
   def initialize(type)
     @type = type
-    @cooldown = 30
+    @cool_down = 120
   end
 
   def run(args)
-    @cooldown -= 1
-    return unless @type == :harvest && @cooldown <= 0
+    return unless @type == :harvest
+
+    @cool_down -= 1
+
+    return unless @cool_down <= 0
 
     args.state.plants.each do |plant|
       next unless plant.stage == 'full_grown' || plant.stage == 'withered'
 
       plant.harvest(args, plant)
-      @cooldown = 50 * rand(3)
+      plant.invalid = true
+      args.state.harvested_plants += 1
+      @cool_down = 12000
       break
     end
   end
@@ -28,7 +33,7 @@ class Automation
 
   # DragonRuby required methods
   def serialize
-    { type: @type, cooldown: @cooldown }
+    { type: @type }
   end
 
   def inspect

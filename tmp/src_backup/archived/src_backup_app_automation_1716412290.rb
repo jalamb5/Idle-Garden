@@ -19,7 +19,7 @@ class Automation
       next unless plant.stage == 'full_grown' || plant.stage == 'withered'
 
       plant.harvest(args, plant)
-      @cooldown = 50 * rand(3)
+      @cooldown = 300
       break
     end
   end

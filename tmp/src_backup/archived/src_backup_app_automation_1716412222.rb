@@ -8,7 +8,7 @@ class Automation
 
   def initialize(type)
     @type = type
-    @cooldown = 30
+    @cooldown = 30 * 20
   end
 
   def run(args)
@@ -19,7 +19,7 @@ class Automation
       next unless plant.stage == 'full_grown' || plant.stage == 'withered'
 
       plant.harvest(args, plant)
-      @cooldown = 50 * rand(3)
+      @cooldown = 30 * 60
       break
     end
   end

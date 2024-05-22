@@ -30,7 +30,7 @@ def new_button(id, x, y, text)
 
   entity[:primitives] = [
     { x: x, y: y, w: width, h: height }.border!,
-    { x: x + 10, y: y + 30, text: text, size_px: 10 }.label!
+    { x: x + 10, y: y + 30, text: text }.label!
   ]
   entity
 end
@@ -56,6 +56,8 @@ def tick(args)
   args.state.auto_harvesters ||= []
 
   # TODO: auto harvester, auto planter, auto seller
+  Automation.new(:harvest).run(args)
+
 
   # Buy Seeds Button
   args.state.buy_seed_button ||= new_button :buy_seed, 0, 0, 'Buy'
@@ -81,7 +83,7 @@ def tick(args)
   args.state.auto_harvester_button ||= new_button :auto_harvester, 0, 50, 'Auto Harvester'
   args.outputs.primitives << args.state.auto_harvester_button[:primitives]
 
-  # check if the click occurred and creates auto harvester
+  # check if the click occurred and sells harvest
   if args.inputs.mouse.click && button_clicked?(args, args.state.auto_harvester_button)
     args.state.auto_harvesters << Automation.new(:harvest)
   end
@@ -103,7 +105,7 @@ def tick(args)
   args.state.plants.each(&:grow)
 
   # Run auto harvesters
-  args.state.auto_harvesters.each { |harvester| harvester.run(args) }
+  args.state.auto_harvesters.each(&:run)
 
   # Render sprites
   args.outputs.sprites << [args.state.plants]
@@ -137,14 +139,6 @@ def tick(args)
     x: 5,
     y: args.grid.h - 80,
     text: "Cash: #{args.state.cash}",
-    size_px: 22
-  }
-
-  # Display auto harvesters
-  args.outputs.labels << {
-    x: 5,
-    y: args.grid.h - 100,
-    text: "Harvesters: #{args.state.auto_harvesters.length}",
     size_px: 22
   }
 end
