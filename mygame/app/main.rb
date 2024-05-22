@@ -43,7 +43,7 @@ end
 
 def tick(args)
   # args.outputs.background_color = [50, 168, 82]
-  args.outputs.solids << [200, 0, 1280, 720, 138, 185, 54] # grass background
+  args.outputs.solids << [200, 0, 1280, 720, 138, 185, 54] # grass background [x,y,w,h,r,g,b]
   args.outputs.solids << [250, 50, 980, 620, 170, 129, 56] # dirt background
   args.outputs.static_borders << { x: 0, y: 0, w: 1280, h: 720 }
   args.outputs.static_borders << { x: 0, y: 1, w: 1280, h: 0 }
@@ -52,6 +52,8 @@ def tick(args)
   args.state.harvested_plants ||= 0
   args.state.cash ||= 5
   args.state.price = { seed: 5, plant: 10 }
+
+  # TODO: auto harvester, auto planter, auto seller
 
   # Buy Seeds Button
   args.state.buy_seed_button ||= new_button :buy_seed, 0, 0, 'Buy'
