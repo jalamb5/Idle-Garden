@@ -1,10 +1,10 @@
 # Remove the pound sign and leading space for the properties below before publishing your game.
 devid=jalamb5
 devtitle=Justin Lamb
-gameid=plants
-gametitle=Plants
+gameid=idle-garden
+gametitle=Idle Garden
 version=0.1
-icon=metadata/icon.png
+icon=sprites/stages/2full_grown.png
 
 # === Flags available at all licensing tiers ===
 
