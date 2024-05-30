@@ -43,6 +43,7 @@ def button_clicked?(args, button)
 end
 
 # TODO: Review borders -> being redrawn on every tick
+# TODO: Change background to .png -> flappy dragon example
 def tick(args)
   args.outputs.solids << [200, 0, 1280, 720, 138, 185, 54] # grass background [x,y,w,h,r,g,b]
   args.outputs.solids << [250, 50, 980, 620, 170, 129, 56] # dirt background
