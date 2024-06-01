@@ -2,7 +2,7 @@ var GDragonRubyGameId = 'idle-garden';
 var GDragonRubyGameTitle = 'Idle Garden';
 var GDragonRubyDevTitle = 'Justin Lamb';
 var GDragonRubyGameVersion = '0.1';
-var GDragonRubyIcon = '/sprites/stages/2full_grown.png';
+var GDragonRubyIcon = '/metadata/icon.png';
 var GDragonRubyWriteDir = '/jalamb5-idle-garden';
 
 function syncDataFiles(dbname, baseurl)

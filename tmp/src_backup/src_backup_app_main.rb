@@ -45,10 +45,11 @@ end
 # TODO: Review borders -> being redrawn on every tick
 # TODO: Change background to .png -> flappy dragon example
 def tick(args)
-  args.outputs.solids << [200, 0, 1280, 720, 138, 185, 54] # grass background [x,y,w,h,r,g,b]
-  args.outputs.solids << [250, 50, 980, 620, 170, 129, 56] # dirt background
+  # args.outputs.solids << [200, 0, 1280, 720, 138, 185, 54] # grass background [x,y,w,h,r,g,b]
+  # args.outputs.solids << [250, 50, 980, 620, 170, 129, 56] # dirt background
   # args.outputs.static_borders << { x: 0, y: 0, w: 1280, h: 720 }
   # args.outputs.static_borders << { x: 0, y: 1, w: 1280, h: 0 }
+  args.outputs.sprites << { x: 200, y: 0, w: 1280, h: 720, path: 'sprites/background.jpeg' }
   args.state.plants ||= []
   args.state.seeds ||= 5
   args.state.harvested_plants ||= 0
