@@ -79,7 +79,6 @@ class Plant
     false
   end
 
-
   # DragonRuby required methods
   def serialize
     { w: @w, h: @h, x: @x, y: @y, age: @age, invalid: @invalid, path: @path, stage: @stage, a: @a }
