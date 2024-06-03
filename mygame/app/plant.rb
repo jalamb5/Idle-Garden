@@ -17,9 +17,9 @@ class Plant
               FULL_GROWN: 'sprites/stages/2full_grown.png', WITHERED: 'sprites/stages/3withered.png' }.freeze
   STAGES = %w[seed growing full_grown withered].freeze
 
-  def initialize(args)
-    @x = args.inputs.mouse.x - 15
-    @y = args.inputs.mouse.y - 15
+  def initialize(args, x_coord=args.inputs.mouse.x, y_coord=args.inputs.mouse.y)
+    @x = x_coord - 15
+    @y = y_coord - 15
     @w = 20
     @h = 20
     @age = 0

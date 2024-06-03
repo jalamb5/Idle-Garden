@@ -45,10 +45,9 @@ class Automation
     end
   end
 
-  # TODO: change x, y to not hi-jack mouse
   def auto_planter(args)
-    args.inputs.mouse.x, args.inputs.mouse.y = coord_generator
-    plant = Plant.new(args)
+    x, y = coord_generator
+    plant = Plant.new(args, x, y)
     args.state.plants << plant
     args.state.seeds -= 1
     @planter_cooldown = rand(10)
