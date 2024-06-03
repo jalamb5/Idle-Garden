@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# DragonRuby requires extensions
 require 'app/plant.rb'
 require 'app/automation.rb'
 
@@ -14,7 +13,7 @@ end
 
 # Area available for plants
 def in_garden(args)
-  args.inputs.mouse.x <= 1180 &&
+  args.inputs.mouse.x <= 980 &&
     args.inputs.mouse.x >= 250 &&
     args.inputs.mouse.y <= 620 &&
     args.inputs.mouse.y >= 50

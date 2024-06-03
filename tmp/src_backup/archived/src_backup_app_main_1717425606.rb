@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# DragonRuby requires extensions
 require 'app/plant.rb'
 require 'app/automation.rb'
 
@@ -14,7 +13,7 @@ end
 
 # Area available for plants
 def in_garden(args)
-  args.inputs.mouse.x <= 1180 &&
+  args.inputs.mouse.x <= 980 &&
     args.inputs.mouse.x >= 250 &&
     args.inputs.mouse.y <= 620 &&
     args.inputs.mouse.y >= 50
@@ -50,7 +49,7 @@ def tick(args)
   # args.outputs.solids << [250, 50, 980, 620, 170, 129, 56] # dirt background
   # args.outputs.static_borders << { x: 0, y: 0, w: 1280, h: 720 }
   # args.outputs.static_borders << { x: 0, y: 1, w: 1280, h: 0 }
-  args.outputs.sprites << { x: 200, y: 0, w: 1080, h: 720, path: 'sprites/background.jpeg' }
+  # args.outputs.sprites << { x: 200, y: 0, w: 1280, h: 720, path: 'sprites/background.jpeg' }
   args.state.plants ||= []
   args.state.seeds ||= 5
   args.state.harvested_plants ||= 0
