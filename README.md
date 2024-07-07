@@ -20,6 +20,8 @@ A gardening game built with DragonRuby GTK.
   - Withered plants eventually die
 
 ## To Play
+[Itch.io](https://jalamb5.itch.io/idle-garden)
+
 - clone repo
 - cd into dir
 - run `./dragonruby`
