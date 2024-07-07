@@ -1,4 +1,4 @@
-* 000000 [Engine] Log started at 2024/6/3 9:9:1
+* 000000 [Engine] Log started at 2024/7/6 17:35:56
 * 000000 [Engine] This copy of the engine is git hash 683cab3cde55985112f46049a17cbeeaadad4410, built on Jan 30 2023, at 14:33:27
 * 000000 [Engine] Platform: Mac OS X
 * 000000 [Engine] 
@@ -8,7 +8,7 @@
 * 000000 [Engine] *** Details at http://dragonruby.org/toolkit/game#purchase                              ***
 * 000000 [Engine] *******************************************************************************************
 * 000000 [Engine] 
-- 000000 [Engine] Game Dir: /Users/justinlamb/repos/Plants dragonruby-macos//mygame
+- 000000 [Engine] Game Dir: /Users/justinlamb/repos/Plants-dragonruby-macos//mygame
 - 000000 [Engine] Game ID: idle-garden
 - 000000 [Engine] Game Title: Idle Garden
 - 000000 [Engine] Game Version: 0.1
@@ -20,7 +20,7 @@
 ? 000000 [Engine] Loading cvars from file 'metadata/cvars.txt' ...
 ? 000000 [Engine] File 'metadata/cvars.txt' line 1 setting cvar 'log.filter_subsystems' to 'HTTPServer'
 ? 000000 [Engine] File 'metadata/cvars.txt' complete
-? 000000 [Engine] RNG seed has been set to 1717430941.
+? 000000 [Engine] RNG seed has been set to 1720312556.
 - 000000 [Engine] Janitor is using 4 threads.
 ? 000000 [Engine] Marked app/main.rb for reload. (-1)
-* 000146 [Engine] Logging shutting down
+* 000048 [Engine] Logging shutting down
