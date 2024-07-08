@@ -146,37 +146,59 @@ def tick(args)
   args.outputs.sprites << [args.state.plants]
 
   # Display number of seeds
-  args.state.seed_label ||= Labels.new(5, args.grid.h - 20, 'Seeds', args.state.seeds)
-  args.state.seed_label.display(args)
-  args.state.seed_label.update(args.state.seeds)
+  # args.outputs.labels << {
+  #   x: 5,
+  #   y: args.grid.h - 20,
+  #   text: "Seeds: #{args.state.seeds}",
+  #   size_px: 22
+  # }
+  Labels.new(5, args.grid.h - 20, 'Seeds', args.state.seeds, 10).display(args)
 
-  # Display number of growing plants
-  args.state.plant_label ||= Labels.new(5, args.grid.h - 40, 'Growing', args.state.plants.length)
-  args.state.plant_label.display(args)
-  args.state.plant_label.update(args.state.plants.length)
+  # Display number of plants
+  args.outputs.labels << {
+    x: 5,
+    y: args.grid.h - 40,
+    text: "Growing: #{args.state.plants.length}",
+    size_px: 22
+  }
 
   # Display harvested plants
-  args.state.harvested_label ||= Labels.new(5, args.grid.h - 60, 'Harvested', args.state.harvested_plants)
-  args.state.harvested_label.display(args)
-  args.state.harvested_label.update(args.state.harvested_plants)
+  args.outputs.labels << {
+    x: 5,
+    y: args.grid.h - 60,
+    text: "Harvested: #{args.state.harvested_plants}",
+    size_px: 22
+  }
 
   # Display cash
-  args.state.cash_label ||= Labels.new(5, args.grid.h - 80, 'Cash', args.state.cash)
-  args.state.cash_label.display(args)
-  args.state.cash_label.update(args.state.cash)
+  args.outputs.labels << {
+    x: 5,
+    y: args.grid.h - 80,
+    text: "Cash: #{args.state.cash}",
+    size_px: 22
+  }
 
   # Display auto harvesters
-  args.state.auto_harvesters_label ||= Labels.new(5, args.grid.h - 100, 'Harvesters', args.state.auto_harvesters.length)
-  args.state.auto_harvesters_label.display(args)
-  args.state.auto_harvesters_label.update(args.state.auto_harvesters.length)
+  args.outputs.labels << {
+    x: 5,
+    y: args.grid.h - 100,
+    text: "Harvesters: #{args.state.auto_harvesters.length}",
+    size_px: 22
+  }
 
   # Display auto planters
-  args.state.auto_planters_label ||= Labels.new(5, args.grid.h - 120, 'Planters', args.state.auto_planters.length)
-  args.state.auto_planters_label.display(args)
-  args.state.auto_planters_label.update(args.state.auto_planters.length)
+  args.outputs.labels << {
+    x: 5,
+    y: args.grid.h - 120,
+    text: "Planters: #{args.state.auto_planters.length}",
+    size_px: 22
+  }
 
   # Display auto sellers
-  args.state.auto_sellers_label ||= Labels.new(5, args.grid.h - 140, 'Sellers', args.state.auto_sellers.length)
-  args.state.auto_sellers_label.display(args)
-  args.state.auto_sellers_label.update(args.state.auto_sellers.length)
+  args.outputs.labels << {
+    x: 5,
+    y: args.grid.h - 140,
+    text: "Sellers: #{args.state.auto_sellers.length}",
+    size_px: 22
+  }
 end
