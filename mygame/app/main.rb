@@ -6,12 +6,12 @@ require 'app/automation.rb'
 require 'app/labels.rb'
 
 # Total Interactive Area
-def in_bounds(args)
-  args.inputs.mouse.x <= 1280 &&
-    args.inputs.mouse.x >= 0 &&
-    args.inputs.mouse.y <= 720 &&
-    args.inputs.mouse.y >= 0
-end
+# def in_bounds(args)
+#   args.inputs.mouse.x <= 1280 &&
+#     args.inputs.mouse.x >= 0 &&
+#     args.inputs.mouse.y <= 720 &&
+#     args.inputs.mouse.y >= 0
+# end
 
 # Area available for plants
 def in_garden(args)
