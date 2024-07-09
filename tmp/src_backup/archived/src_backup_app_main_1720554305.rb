@@ -15,13 +15,10 @@ end
 
 # Area available for plants
 def in_garden(args)
-  # args.inputs.mouse.x <= 1280 &&
-  #   args.inputs.mouse.x >= 250 &&
-  #   args.inputs.mouse.y <= 720 &&
-  #   args.inputs.mouse.y >= 50
-  rect = { x: 250, y: 50, w: 980, h: 620 }
-
-  args.inputs.mouse.point.inside_rect? rect
+  args.inputs.mouse.x <= 1180 &&
+    args.inputs.mouse.x >= 250 &&
+    args.inputs.mouse.y <= 620 &&
+    args.inputs.mouse.y >= 50
 end
 
 # helper method to create a button
@@ -52,9 +49,9 @@ end
 def tick(args)
   args.outputs.solids << [200, 0, 1280, 720, 138, 185, 54] # grass background [x,y,w,h,r,g,b]
   # args.outputs.solids << [250, 50, 980, 620, 170, 129, 56] # dirt background
-  args.outputs.sprites << { x: 250, y: 50, w: 980, h: 620, path: 'sprites/background.jpeg' }
+  args.outputs.sprites << { x: 200, y: 0, w: 1080, h: 720, path: 'sprites/background.jpeg' }
   args.state.plants ||= []
-  args.state.seeds ||= 500
+  args.state.seeds ||= 5
   args.state.harvested_plants ||= 0
   args.state.cash ||= 5
   args.state.price = { seed: 5, plant: 10, harvester: 150, planter: 150, seller: 50 }

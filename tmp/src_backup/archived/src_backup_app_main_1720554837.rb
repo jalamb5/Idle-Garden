@@ -15,13 +15,10 @@ end
 
 # Area available for plants
 def in_garden(args)
-  # args.inputs.mouse.x <= 1280 &&
-  #   args.inputs.mouse.x >= 250 &&
-  #   args.inputs.mouse.y <= 720 &&
-  #   args.inputs.mouse.y >= 50
-  rect = { x: 250, y: 50, w: 980, h: 620 }
-
-  args.inputs.mouse.point.inside_rect? rect
+  args.inputs.mouse.x <= 1280 &&
+    args.inputs.mouse.x >= 250 &&
+    args.inputs.mouse.y <= 620 &&
+    args.inputs.mouse.y >= 50
 end
 
 # helper method to create a button
