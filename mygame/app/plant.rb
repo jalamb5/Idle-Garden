@@ -10,12 +10,13 @@ class Plant
   GROWTH_RATE = 0.1
   GROWING = 200
   FULL_GROWN = 400
+  READY_TO_HARVEST = 600
   WITHER = 1000
   WITHER_RATE = 0.4
   DEATH = 2200
-  SPRITES = { SEED: 'sprites/stages/0seed.png', GROWING: 'sprites/stages/1growing.png',
-              FULL_GROWN: 'sprites/stages/2ready_to_harvest.png', WITHERED: 'sprites/stages/3withered.png' }.freeze
-  STAGES = %w[seed growing full_grown withered].freeze
+  SPRITES = { SEED: 'sprites/stages/0seed.png', GROWING: 'sprites/stages/1growing.png', FULL_GROWN: 'sprites/stages/2full_grown.png',
+              READY_TO_HARVEST: 'sprites/stages/3ready_to_harvest.png', WITHERED: 'sprites/stages/4withered.png' }.freeze
+  STAGES = %w[seed growing full_grown ready_to_harvest withered].freeze
 
   def initialize(args, x_coord=args.inputs.mouse.x, y_coord=args.inputs.mouse.y)
     @x = x_coord - 15
@@ -44,7 +45,7 @@ class Plant
 
   # Harvest plant if correct stage
   def harvest(args, plant)
-    if plant.stage == 'full_grown'
+    if plant.stage == 'ready_to_harvest'
       args.state.harvested_plants += 1
       plant.invalid = true
     elsif plant.stage == 'withered'
@@ -59,12 +60,15 @@ class Plant
     if @age >= GROWING && @age < FULL_GROWN
       @path = SPRITES[:GROWING]
       @stage = STAGES[1]
-    elsif @age >= FULL_GROWN && @age < WITHER
+    elsif @age >= FULL_GROWN && @age < READY_TO_HARVEST
       @path = SPRITES[:FULL_GROWN]
       @stage = STAGES[2]
+    elsif @age >= READY_TO_HARVEST && @age < WITHER
+      @path = SPRITES[:READY_TO_HARVEST]
+      @stage = STAGES[3]
     elsif @age >= WITHER && @age < DEATH
       @path = SPRITES[:WITHERED]
-      @stage = STAGES[3]
+      @stage = STAGES[4]
     end
   end
 
