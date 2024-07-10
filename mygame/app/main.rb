@@ -32,7 +32,7 @@ def new_button(id, x, y, text, args)
   entity[:primitives] = [
     # { x: x, y: y, w: width, h: height }.border!,
     { x: x + 5, y: y + 30, text: text, size_enum: -4 }.label!,
-    [x + 1, y + 1, width - 2, height - 2, 138, 185, 54, 80].solid
+    [x + 1, y + 1, width - 2, height - 2, 88, 62, 35, 60].solid
   ]
   entity
 end
@@ -46,8 +46,9 @@ end
 
 # TODO: Clean up background sprite
 def tick(args)
-  args.outputs.solids << [200, 0, 1280, 720, 138, 185, 54, 160] # grass background [x,y,w,h,r,g,b]
+  # args.outputs.solids << [200, 0, 1280, 720, 138, 185, 54, 160] # grass background [x,y,w,h,r,g,b]
   # args.outputs.solids << [250, 50, 980, 620, 170, 129, 56] # dirt background
+  args.outputs.sprites << { x: 200, y: 0, w: 1280, h: 720, path: 'sprites/grass_background.jpeg' }
   args.outputs.sprites << { x: 250, y: 50, w: 980, h: 620, path: 'sprites/background.jpeg' }
   args.state.plants ||= []
   args.state.seeds ||= 500
