@@ -27,7 +27,7 @@ class Plant
     @invalid = occupied(args, [@x, @y, @w, @h])
     @path = SPRITES[:SEED]
     @stage = STAGES[0]
-    @a = 255
+    @a = 255 # TODO: Set a lower limit, plant is still harvestable when it is functionally invisible to the player
   end
 
   def grow
