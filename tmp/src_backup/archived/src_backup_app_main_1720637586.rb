@@ -46,7 +46,7 @@ end
 def tick(args)
   # args.outputs.solids << [200, 0, 1280, 720, 138, 185, 54, 160] # grass background [x,y,w,h,r,g,b]
   # args.outputs.solids << [250, 50, 980, 620, 170, 129, 56] # dirt background
-  args.outputs.sprites << { x: 200, y: 0, w: 1080, h: 720, path: 'sprites/grass_background.png' }
+  args.outputs.sprites << { x: 200, y: 0, w: 1280, h: 720, path: 'sprites/grass_background.png' }
   args.outputs.sprites << { x: 250, y: 50, w: 980, h: 620, path: 'sprites/background.png' }
   args.state.plants ||= []
   args.state.seeds ||= 500

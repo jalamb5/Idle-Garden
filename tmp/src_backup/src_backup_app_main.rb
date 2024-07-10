@@ -21,8 +21,7 @@ def in_garden(args)
 end
 
 # helper method to create a button
-def new_button(id, x, y, text, args)
-  width = 100
+def new_button(id, x, y, text, width = 100)
   height = 50
   entity = {
     id: id,
@@ -47,7 +46,7 @@ end
 def tick(args)
   # args.outputs.solids << [200, 0, 1280, 720, 138, 185, 54, 160] # grass background [x,y,w,h,r,g,b]
   # args.outputs.solids << [250, 50, 980, 620, 170, 129, 56] # dirt background
-  args.outputs.sprites << { x: 200, y: 0, w: 1280, h: 720, path: 'sprites/grass_background.jpeg' }
+  args.outputs.sprites << { x: 200, y: 0, w: 1080, h: 720, path: 'sprites/grass_background.png' }
   args.outputs.sprites << { x: 250, y: 50, w: 980, h: 620, path: 'sprites/background.png' }
   args.state.plants ||= []
   args.state.seeds ||= 500
@@ -62,7 +61,7 @@ def tick(args)
   args.state.counter += 1
 
   # Buy Seeds Button
-  args.state.buy_seed_button ||= new_button :buy_seed, 0, 0, "Seed (#{args.state.price[:seed]})", args
+  args.state.buy_seed_button ||= new_button :buy_seed, 100, 100, "Seed (#{args.state.price[:seed]})"
   args.outputs.primitives << args.state.buy_seed_button[:primitives]
 
   # check if the click occurred and buys seeds if enough money
@@ -72,7 +71,7 @@ def tick(args)
   end
 
   # Sell Harvest Button
-  args.state.sell_button ||= new_button :sell, 100, 0, 'Sell', args
+  args.state.sell_button ||= new_button :sell, 0, 0, 'Sell', 200
   args.outputs.primitives << args.state.sell_button[:primitives]
 
   # check if the click occurred and sells harvest
@@ -82,7 +81,7 @@ def tick(args)
   end
 
   # Make Auto Harvester Button
-  args.state.auto_harvester_button ||= new_button :auto_harvester, 0, 50, "Harvester (#{args.state.price[:harvester]})", args
+  args.state.auto_harvester_button ||= new_button :auto_harvester, 0, 50, "Harvester (#{args.state.price[:harvester]})"
   args.outputs.primitives << args.state.auto_harvester_button[:primitives]
 
   # check if the click occurred and creates auto harvester
@@ -92,7 +91,7 @@ def tick(args)
   end
 
   # Make Auto Seller Button
-  args.state.auto_seller_button ||= new_button :auto_seller, 100, 50, "Seller (#{args.state.price[:seller]})", args
+  args.state.auto_seller_button ||= new_button :auto_seller, 100, 50, "Seller (#{args.state.price[:seller]})"
   args.outputs.primitives << args.state.auto_seller_button[:primitives]
 
   # check if the click occurred and creates auto seller
@@ -102,7 +101,7 @@ def tick(args)
   end
 
   # Make Auto Planter Button
-  args.state.auto_planter_button ||= new_button :auto_planter, 0, 100, "Planter (#{args.state.price[:planter]})", args
+  args.state.auto_planter_button ||= new_button :auto_planter, 0, 100, "Planter (#{args.state.price[:planter]})"
   args.outputs.primitives << args.state.auto_planter_button[:primitives]
 
   # check if the click occurred and creates auto planter
