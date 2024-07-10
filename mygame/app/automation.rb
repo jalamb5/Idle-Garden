@@ -37,7 +37,7 @@ class Automation
 
   def auto_harvester(args)
     args.state.plants.each do |plant|
-      next unless plant.stage == 'full_grown' || plant.stage == 'withered'
+      next unless plant.stage == 'ready_to_harvest' || plant.stage == 'withered'
 
       plant.harvest(args, plant)
       @harvest_cooldown = rand(15)
