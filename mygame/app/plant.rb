@@ -14,7 +14,7 @@ class Plant
   WITHER_RATE = 0.4
   DEATH = 2200
   SPRITES = { SEED: 'sprites/stages/0seed.png', GROWING: 'sprites/stages/1growing.png',
-              FULL_GROWN: 'sprites/stages/2full_grown.png', WITHERED: 'sprites/stages/3withered.png' }.freeze
+              FULL_GROWN: 'sprites/stages/2ready_to_harvest.png', WITHERED: 'sprites/stages/3withered.png' }.freeze
   STAGES = %w[seed growing full_grown withered].freeze
 
   def initialize(args, x_coord=args.inputs.mouse.x, y_coord=args.inputs.mouse.y)
