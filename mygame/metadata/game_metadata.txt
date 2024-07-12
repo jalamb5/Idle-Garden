@@ -5,7 +5,7 @@ gameid=idle-garden
 gametitle=Idle Garden
 version=0.5
 icon=metadata/icon.png
-
+ 
 # === Flags available at all licensing tiers ===
 
 # Defines the render scale quality for sprites. scale_quality=0 (default) is nearest neighbor, scale_quality=1 is linear, scale_quality=2 is antialiased.
