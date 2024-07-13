@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 # DragonRuby requires extensions
-require 'app/plant.rb'
-require 'app/automation.rb'
-require 'app/labels.rb'
+require 'app/plant'
+require 'app/automation'
+require 'app/labels'
 
 # Total Interactive Area
 # def in_bounds(args)
@@ -124,7 +124,7 @@ def tick(args)
   args.state.save_button ||= new_button :save, 0, 150, 'Save'
   args.outputs.primitives << args.state.save_button[:primitives]
 
-  save(args.state) if args.inputs.mouse.click && button_clicked?(args, args.state.save_button)
+  save_game(args.state) if args.inputs.mouse.click && button_clicked?(args, args.state.save_button)
 
   # Place or harvest plants in garden
   if args.inputs.mouse.click && in_garden(args)

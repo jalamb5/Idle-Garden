@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 # DragonRuby requires extensions
+# rubocop:disable Style/RedundantFileExtensionInRequire
 require 'app/plant.rb'
 require 'app/automation.rb'
 require 'app/labels.rb'
+# rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Total Interactive Area
 # def in_bounds(args)
@@ -43,6 +45,11 @@ def button_clicked?(args, button)
   args.inputs.mouse.point.inside_rect? button[:rect]
 end
 
+# Saves the state of the game in a text file called game_state.txt
+def save(state)
+  $gtk.serialize_state('game_state.txt', state)
+end
+
 def tick(args)
   # args.outputs.solids << [200, 0, 1280, 720, 138, 185, 54, 160] # grass background [x,y,w,h,r,g,b]
   # args.outputs.solids << [250, 50, 980, 620, 170, 129, 56] # dirt background
@@ -65,7 +72,8 @@ def tick(args)
   args.outputs.primitives << args.state.buy_seed_button[:primitives]
 
   # check if the click occurred and buys seeds if enough money
-  if args.inputs.mouse.click && button_clicked?(args, args.state.buy_seed_button) && !(args.state.cash - args.state.price[:seed] < 0)
+  if args.inputs.mouse.click && button_clicked?(args,
+                                                args.state.buy_seed_button) && !(args.state.cash - args.state.price[:seed] < 0)
     args.state.seeds += 1
     args.state.cash -= args.state.price[:seed]
   end
@@ -75,7 +83,8 @@ def tick(args)
   args.outputs.primitives << args.state.sell_button[:primitives]
 
   # check if the click occurred and sells harvest
-  if args.inputs.mouse.click && button_clicked?(args, args.state.sell_button) && !(args.state.harvested_plants.negative?)
+  if args.inputs.mouse.click && button_clicked?(args,
+                                                args.state.sell_button) && !args.state.harvested_plants.negative?
     args.state.cash += args.state.harvested_plants * args.state.price[:plant]
     args.state.harvested_plants = 0
   end
@@ -85,7 +94,8 @@ def tick(args)
   args.outputs.primitives << args.state.auto_harvester_button[:primitives]
 
   # check if the click occurred and creates auto harvester
-  if args.inputs.mouse.click && button_clicked?(args, args.state.auto_harvester_button) && !(args.state.cash - args.state.price[:harvester] < 0)
+  if args.inputs.mouse.click && button_clicked?(args,
+                                                args.state.auto_harvester_button) && !(args.state.cash - args.state.price[:harvester] < 0)
     args.state.auto_harvesters << Automation.new(:harvester)
     args.state.cash -= args.state.price[:harvester]
   end
@@ -95,7 +105,8 @@ def tick(args)
   args.outputs.primitives << args.state.auto_seller_button[:primitives]
 
   # check if the click occurred and creates auto seller
-  if args.inputs.mouse.click && button_clicked?(args, args.state.auto_seller_button) && !(args.state.cash - args.state.price[:seller] < 0)
+  if args.inputs.mouse.click && button_clicked?(args,
+                                                args.state.auto_seller_button) && !(args.state.cash - args.state.price[:seller] < 0)
     args.state.auto_sellers << Automation.new(:seller)
     args.state.cash -= args.state.price[:seller]
   end
@@ -105,10 +116,17 @@ def tick(args)
   args.outputs.primitives << args.state.auto_planter_button[:primitives]
 
   # check if the click occurred and creates auto planter
-  if args.inputs.mouse.click && button_clicked?(args, args.state.auto_planter_button) && !(args.state.cash - args.state.price[:planter] < 0)
+  if args.inputs.mouse.click && button_clicked?(args,
+                                                args.state.auto_planter_button) && !(args.state.cash - args.state.price[:planter] < 0)
     args.state.auto_planters << Automation.new(:planter)
     args.state.cash -= args.state.price[:planter]
   end
+
+  # Make Save button
+  args.state.save_button ||= new_button :save, 0, 150, 'Save'
+  args.outputs.primitives << args.state.save_button[:primitives]
+
+  save(args.state) if args.inputs.mouse.click && button_clicked?(args, args.state.save_button)
 
   # Place or harvest plants in garden
   if args.inputs.mouse.click && in_garden(args)
