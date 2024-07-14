@@ -71,7 +71,7 @@ def tick(args)
   if args.state.tick_count == 1
     args.audio[:music] = {
       input: 'sounds/Garden_Melody.ogg',
-      gain: 0.25,
+      gain: 0.5,
       looping: true
     }
   end

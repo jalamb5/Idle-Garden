@@ -68,6 +68,14 @@ def tick(args)
 
   args.state.counter += 1
 
+  if args.state.tick_count == 1
+    args.audio[:music] = {
+      input: 'sounds/Garden_Melody.ogg',
+      gain: 0.25,
+      looping: true
+    }
+  end
+
   # Buy Seeds Button
   args.state.buy_seed_button ||= new_button :buy_seed, 100, 100, "Seed (#{args.state.price[:seed]})"
   args.outputs.primitives << args.state.buy_seed_button[:primitives]
