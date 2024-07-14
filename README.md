@@ -32,6 +32,7 @@ A gardening game built with DragonRuby GTK.
 - Images: [DeepAI](https://deepai.org/machine-learning-model/text2img)[^1]
 - Sound Effects: [jsfxr](https://sfxr.me/)
 - Background Track: [Suno](https://suno.com/)[^1]
+- Font: [Maname Regular](https://fonts.google.com/specimen/Maname)
 
 ## Footnotes
 [^1]: I've used AI to generate art for the sake of expediency and due to my own lack of artistic ability. But I'm not proud of it, if I'm able I'll replace this with legitimate art in the future.
