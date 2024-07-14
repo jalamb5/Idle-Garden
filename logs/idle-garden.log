@@ -1,4 +1,4 @@
-* 000000 [Engine] Log started at 2024/7/13 14:8:43
+* 000000 [Engine] Log started at 2024/7/14 11:59:14
 * 000000 [Engine] This copy of the engine is git hash 683cab3cde55985112f46049a17cbeeaadad4410, built on Jan 30 2023, at 14:33:27
 * 000000 [Engine] Platform: Mac OS X
 * 000000 [Engine] 
@@ -20,8 +20,8 @@
 ? 000000 [Engine] Loading cvars from file 'metadata/cvars.txt' ...
 ? 000000 [Engine] File 'metadata/cvars.txt' line 1 setting cvar 'log.filter_subsystems' to 'HTTPServer'
 ? 000000 [Engine] File 'metadata/cvars.txt' complete
-? 000000 [Engine] RNG seed has been set to 1720904923.
+? 000000 [Engine] RNG seed has been set to 1720983554.
 - 000000 [Engine] Janitor is using 4 threads.
 ? 000000 [Engine] Marked app/main.rb for reload. (-1)
-- 000005 [Game] State with length of 2552 saved to file game_state.txt.
-* 000013 [Engine] Logging shutting down
+- 000011 [Game] State with length of 2250 saved to file game_state.txt.
+* 000019 [Engine] Logging shutting down

@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 # DragonRuby requires extensions
+# rubocop:disable Style/RedundantFileExtensionInRequire
 require 'app/plant.rb'
 require 'app/automation.rb'
 require 'app/labels.rb'
+# rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Total Interactive Area
 # def in_bounds(args)
@@ -41,6 +43,7 @@ def button_clicked?(args, button)
   return false unless args.inputs.mouse.click
 
   args.inputs.mouse.point.inside_rect? button[:rect]
+  args.outputs.sounds << 'sounds/button_click.wav' if args.mouse.point.inside_rect?(button[:rect])
 end
 
 # Saves the state of the game in a text file called game_state.txt

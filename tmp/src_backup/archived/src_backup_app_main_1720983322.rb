@@ -43,7 +43,6 @@ def button_clicked?(args, button)
   return false unless args.inputs.mouse.click
 
   args.inputs.mouse.point.inside_rect? button[:rect]
-  args.outputs.sounds << 'sounds/button_click.wav' if args.mouse.point.inside_rect?(button[:rect])
 end
 
 # Saves the state of the game in a text file called game_state.txt

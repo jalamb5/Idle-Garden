@@ -48,9 +48,11 @@ class Plant
     if plant.stage == 'ready_to_harvest'
       args.state.harvested_plants += 1
       plant.invalid = true
+      args.outputs.sounds << 'sounds/harvest_plant.wav'
     elsif plant.stage == 'withered'
       args.state.seeds += rand(10)
       plant.invalid = true
+      args.outputs.sounds << 'sounds/harvest_withered.wav'
     end
   end
 

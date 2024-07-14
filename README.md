@@ -13,6 +13,7 @@ A gardening game built with DragonRuby GTK.
 ### Plant Lifecycle
 - Planted
 - Growing
+- Fully grown
 - Ready to harvest
   - Harvested plants can be sold for cash
 - Withered
@@ -29,6 +30,7 @@ A gardening game built with DragonRuby GTK.
 ## Attributions
 - Engine: [DragonRuby Toolkit](https://dragonruby.org/)
 - Images: AI Generated[^1] - [DeepAI](https://deepai.org/machine-learning-model/text2img)
+- Sound Effects: [jsfxr](https://sfxr.me/)
 
 ## Footnotes
 [^1]: I've used AI to generate the images for the sake of expediency and due to my own lack of artistic ability. But I'm not proud of it, if I'm able I'll replace this with legitimate art in the future.
