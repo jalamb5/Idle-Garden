@@ -4,7 +4,7 @@
 class Button
   attr_accessor :entity
 
-  def initialize(name, x_coord, y_coord, text, args, width = 100, height = 50)
+  def initialize(name, x_coord, y_coord, text, width = 100, height = 50)
     @name = name
     @x = x_coord
     @y = y_coord

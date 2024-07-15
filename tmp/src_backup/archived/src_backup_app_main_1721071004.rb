@@ -8,11 +8,42 @@ require 'app/labels.rb'
 require 'app/button.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
+# Total Interactive Area
+# def in_bounds(args)
+#   args.inputs.mouse.x <= 1280 &&
+#     args.inputs.mouse.x >= 0 &&
+#     args.inputs.mouse.y <= 720 &&
+#     args.inputs.mouse.y >= 0
+# end
+
 # Area available for plants
 def in_garden(args)
   garden = { x: 250, y: 50, w: 980, h: 620 }
 
   args.inputs.mouse.point.inside_rect? garden
+end
+
+# helper method to create a button
+def new_button(id, x, y, text, width = 100)
+  height = 50
+  entity = {
+    id: id,
+    rect: { x: x, y: y, w: width, h: height },
+    primitives: [
+      # { x: x, y: y, w: width, h: height }.border!,
+      { x: x + 5, y: y + 30, text: text, size_enum: -4 }.label!,
+      [x + 1, y + 1, width - 2, height - 2, 88, 62, 35, 60].solid
+    ]
+  }
+  entity
+end
+
+# helper method for determining if a button was clicked
+def button_clicked?(args, button)
+  return false unless args.inputs.mouse.click
+
+  args.inputs.mouse.point.inside_rect? button[:rect]
+  args.outputs.sounds << 'sounds/button_click.wav' if args.mouse.point.inside_rect?(button[:rect])
 end
 
 # Saves the state of the game in a text file called game_state.txt
@@ -45,61 +76,70 @@ def tick(args)
     }
   end
 
+  # Test button class
+  args.state.justin_button ||= Button.new(:test, 0, 150, 'Test', args)
+  args.state.justin_button.display(args)
+  args.state.justin_button.clicked?(args)
+
   # Buy Seeds Button
-  args.state.buy_seed_button ||= Button.new(:buy_seed, 100, 100, "Seed (#{args.state.price[:seed]})")
+  args.state.buy_seed_button ||= Button.new(:buy_seed, 100, 100, "Seed (#{args.state.price[:seed]})", args)
   args.state.buy_seed_button.display(args)
 
   # check if the click occurred and buys seeds if enough money
-  if args.state.buy_seed_button.clicked?(args) && (args.state.cash - args.state.price[:seed] >= 0)
+  if args.state.buy_seed_button.clicked?(args) && !(args.state.cash - args.state.price[:seed] < 0)
     args.state.seeds += 1
     args.state.cash -= args.state.price[:seed]
   end
 
   # Sell Harvest Button
-  args.state.sell_button ||= Button.new(:sell, 0, 0, 'Sell', 200)
-  args.state.sell_button.display(args)
+  args.state.sell_button ||= new_button :sell, 0, 0, 'Sell', 200
+  args.outputs.primitives << args.state.sell_button[:primitives]
 
   # check if the click occurred and sells harvest
-  if args.state.sell_button.clicked?(args) && !args.state.harvested_plants.negative?
+  if args.inputs.mouse.click && button_clicked?(args,
+                                                args.state.sell_button) && !args.state.harvested_plants.negative?
     args.state.cash += args.state.harvested_plants * args.state.price[:plant]
     args.state.harvested_plants = 0
   end
 
   # Make Auto Harvester Button
-  args.state.auto_harvester_button ||= Button.new(:auto_harvester, 0, 50, "Harvester (#{args.state.price[:harvester]})")
-  args.state.auto_harvester_button.display(args)
+  args.state.auto_harvester_button ||= new_button :auto_harvester, 0, 50, "Harvester (#{args.state.price[:harvester]})"
+  args.outputs.primitives << args.state.auto_harvester_button[:primitives]
 
   # check if the click occurred and creates auto harvester
-  if args.state.auto_harvester_button.clicked?(args) && (args.state.cash - args.state.price[:harvester] >= 0)
+  if args.inputs.mouse.click && button_clicked?(args,
+                                                args.state.auto_harvester_button) && !(args.state.cash - args.state.price[:harvester] < 0)
     args.state.auto_harvesters << Automation.new(:harvester)
     args.state.cash -= args.state.price[:harvester]
   end
 
   # Make Auto Seller Button
-  args.state.auto_seller_button ||= Button.new(:auto_seller, 100, 50, "Seller (#{args.state.price[:seller]})")
-  args.state.auto_seller_button.display(args)
+  args.state.auto_seller_button ||= new_button :auto_seller, 100, 50, "Seller (#{args.state.price[:seller]})"
+  args.outputs.primitives << args.state.auto_seller_button[:primitives]
 
   # check if the click occurred and creates auto seller
-  if args.state.auto_seller_button.clicked?(args) && (args.state.cash - args.state.price[:seller] >= 0)
+  if args.inputs.mouse.click && button_clicked?(args,
+                                                args.state.auto_seller_button) && !(args.state.cash - args.state.price[:seller] < 0)
     args.state.auto_sellers << Automation.new(:seller)
     args.state.cash -= args.state.price[:seller]
   end
 
   # Make Auto Planter Button
-  args.state.auto_planter_button ||= Button.new(:auto_planter, 0, 100, "Planter (#{args.state.price[:planter]})")
-  args.state.auto_planter_button.display(args)
+  args.state.auto_planter_button ||= new_button :auto_planter, 0, 100, "Planter (#{args.state.price[:planter]})"
+  args.outputs.primitives << args.state.auto_planter_button[:primitives]
 
   # check if the click occurred and creates auto planter
-  if args.state.auto_planter_button.clicked?(args) && (args.state.cash - args.state.price[:planter] >= 0)
+  if args.inputs.mouse.click && button_clicked?(args,
+                                                args.state.auto_planter_button) && !(args.state.cash - args.state.price[:planter] < 0)
     args.state.auto_planters << Automation.new(:planter)
     args.state.cash -= args.state.price[:planter]
   end
 
   # Make Save button
-  # args.state.save_button ||= Button.new(:save, 0, 150, 'Save')
-  # args.state.save_button.display(args)
+  # args.state.save_button ||= new_button :save, 0, 150, 'Save'
+  # args.outputs.primitives << args.state.save_button[:primitives]
 
-  # save(args.state) if args.state.save_button.clicked?(args)
+  # save(args.state) if args.inputs.mouse.click && button_clicked?(args, args.state.save_button)
 
   # Place or harvest plants in garden
   if args.inputs.mouse.click && in_garden(args)

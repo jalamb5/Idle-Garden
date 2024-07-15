@@ -8,11 +8,42 @@ require 'app/labels.rb'
 require 'app/button.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
+# Total Interactive Area
+# def in_bounds(args)
+#   args.inputs.mouse.x <= 1280 &&
+#     args.inputs.mouse.x >= 0 &&
+#     args.inputs.mouse.y <= 720 &&
+#     args.inputs.mouse.y >= 0
+# end
+
 # Area available for plants
 def in_garden(args)
   garden = { x: 250, y: 50, w: 980, h: 620 }
 
   args.inputs.mouse.point.inside_rect? garden
+end
+
+# helper method to create a button
+def new_button(id, x, y, text, width = 100)
+  height = 50
+  entity = {
+    id: id,
+    rect: { x: x, y: y, w: width, h: height },
+    primitives: [
+      # { x: x, y: y, w: width, h: height }.border!,
+      { x: x + 5, y: y + 30, text: text, size_enum: -4 }.label!,
+      [x + 1, y + 1, width - 2, height - 2, 88, 62, 35, 60].solid
+    ]
+  }
+  entity
+end
+
+# helper method for determining if a button was clicked
+def button_clicked?(args, button)
+  return false unless args.inputs.mouse.click
+
+  args.inputs.mouse.point.inside_rect? button[:rect]
+  args.outputs.sounds << 'sounds/button_click.wav' if args.mouse.point.inside_rect?(button[:rect])
 end
 
 # Saves the state of the game in a text file called game_state.txt
@@ -46,7 +77,7 @@ def tick(args)
   end
 
   # Buy Seeds Button
-  args.state.buy_seed_button ||= Button.new(:buy_seed, 100, 100, "Seed (#{args.state.price[:seed]})")
+  args.state.buy_seed_button ||= Button.new(:buy_seed, 100, 100, "Seed (#{args.state.price[:seed]})", args)
   args.state.buy_seed_button.display(args)
 
   # check if the click occurred and buys seeds if enough money
