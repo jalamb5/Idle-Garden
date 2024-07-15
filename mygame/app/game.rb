@@ -32,8 +32,12 @@ class Game
 
   def tick(args)
     @counter += 1
-    splash(args) if @splash_state
-    standard_display(args) unless @splash_state
+
+    if @splash_state
+      splash(args)
+    else
+      standard_display(args)
+    end
   end
 
   private
