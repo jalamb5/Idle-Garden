@@ -12,8 +12,8 @@ class Plant
   FULL_GROWN = 400
   READY_TO_HARVEST = 600
   WITHER = 1000
-  WITHER_RATE = 0.4
-  DEATH = 2200
+  WITHER_RATE = 0.2
+  DEATH = 2000
   SPRITES = { SEED: 'sprites/stages/0seed.png', GROWING: 'sprites/stages/1growing.png', FULL_GROWN: 'sprites/stages/2full_grown.png',
               READY_TO_HARVEST: 'sprites/stages/3ready_to_harvest.png', WITHERED: 'sprites/stages/4withered.png' }.freeze
   STAGES = %w[seed growing full_grown ready_to_harvest withered].freeze
@@ -27,7 +27,7 @@ class Plant
     @invalid = occupied(args, [@x, @y, @w, @h])
     @path = SPRITES[:SEED]
     @stage = STAGES[0]
-    @a = 255 # TODO: Set a lower limit, plant is still harvestable when it is functionally invisible to the player
+    @a = 255
   end
 
   def grow
@@ -37,7 +37,7 @@ class Plant
       @w += GROWTH_RATE
       @h += GROWTH_RATE
     elsif @age >= WITHER && @age < DEATH
-      @a -= WITHER_RATE
+      @a -= WITHER_RATE unless @a <= 80
     elsif @age >= DEATH
       @invalid = true
     end
