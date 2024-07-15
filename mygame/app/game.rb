@@ -10,10 +10,12 @@ require 'app/button.rb'
 
 # Handle game logic
 class Game
-  attr_accessor :splash_state, :plants, :seeds, :harvested_plants, :cash, :price, :auto_planters, :auto_harvesters, :auto_sellers, :counter
+  attr_accessor :splash_state, :plants, :seeds, :harvested_plants, :cash, :price, :auto_planters, :auto_harvesters,
+                :auto_sellers, :counter
 
   def initialize(args)
     @splash_state = true
+    @garden = { x: 250, y: 50, w: 980, h: 620 }
     @plants = []
     @seeds = 500
     @harvested_plants = 0
@@ -52,6 +54,11 @@ class Game
 
     display_labels(args)
     update_labels(args)
+
+    plant_harvest(args)
+    manage_plants(args)
+
+    manage_automations(args)
   end
 
   def play_music(args)
@@ -62,13 +69,13 @@ class Game
     }
   end
 
-  def generate_buttons(args)
+  def generate_buttons(_args)
     {
       buy_seed: Button.new(:buy_seed, 100, 100, "Seed (#{@price[:seed]})"),
       sell: Button.new(:sell, 0, 0, 'Sell', 200),
       auto_harvester: Button.new(:auto_harvester, 0, 50, "Harvester (#{@price[:harvester]})"),
       auto_seller: Button.new(:auto_seller, 100, 50, "Seller (#{@price[:seller]})"),
-      auto_planter: Button.new(:auto_planter, 0, 100, "Planter (#{@price[:planter]})"),
+      auto_planter: Button.new(:auto_planter, 0, 100, "Planter (#{@price[:planter]})")
       # save: Button.new(:save, 0, 150, 'Save')
     }
   end
@@ -109,9 +116,43 @@ class Game
     end
   end
 
+  def plant_harvest(args)
+    return unless args.inputs.mouse.click && args.inputs.mouse.point.inside_rect?(@garden)
+
+    new_plant = Plant.new(args)
+
+    return unless @seeds.positive? && !new_plant.invalid
+
+    @plants << new_plant
+    @seeds -= 1
+  end
+
+  def manage_plants(args)
+    @plants.reject!(&:invalid)
+    @plants.each(&:grow)
+    args.outputs.sprites << @plants
+  end
+
+  def manage_automations(args)
+    return if @counter % 75 != 0
+
+    @auto_harvesters.each do |automation|
+      automation.run(args)
+    end
+    @auto_planters.each do |automation|
+      automation.run(args)
+    end
+    @auto_sellers.each do |automation|
+      automation.run(args)
+    end
+
+    @counter = 0
+  end
+
   # DragonRuby required methods
   def serialize
-    { splash_state: @splash_state, plants: @plants, seeds: @seeds, harvested_plants: @harvested_plants, cash: @cash, price: @price, auto_planters: @auto_planters, auto_harvesters: @auto_harvesters, auto_sellers: @auto_sellers, counter: @counter }
+    { splash_state: @splash_state, plants: @plants, seeds: @seeds, harvested_plants: @harvested_plants, cash: @cash,
+      price: @price, auto_planters: @auto_planters, auto_harvesters: @auto_harvesters, auto_sellers: @auto_sellers, counter: @counter }
   end
 
   def inspect

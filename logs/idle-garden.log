@@ -1,4 +1,4 @@
-* 000000 [Engine] Log started at 2024/7/15 14:18:46
+* 000000 [Engine] Log started at 2024/7/15 14:42:55
 * 000000 [Engine] This copy of the engine is git hash 683cab3cde55985112f46049a17cbeeaadad4410, built on Jan 30 2023, at 14:33:27
 * 000000 [Engine] Platform: Mac OS X
 * 000000 [Engine] 
@@ -20,7 +20,7 @@
 ? 000000 [Engine] Loading cvars from file 'metadata/cvars.txt' ...
 ? 000000 [Engine] File 'metadata/cvars.txt' line 1 setting cvar 'log.filter_subsystems' to 'HTTPServer'
 ? 000000 [Engine] File 'metadata/cvars.txt' complete
-? 000000 [Engine] RNG seed has been set to 1721078327.
-- 000000 [Engine] Janitor is using 4 threads.
-? 000000 [Engine] Marked app/main.rb for reload. (-1)
-* 000155 [Engine] Logging shutting down
+? 000002 [Engine] RNG seed has been set to 1721079778.
+- 000002 [Engine] Janitor is using 4 threads.
+? 000002 [Engine] Marked app/main.rb for reload. (-1)
+* 000030 [Engine] Logging shutting down
