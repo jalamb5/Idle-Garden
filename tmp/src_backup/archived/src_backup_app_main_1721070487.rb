@@ -78,7 +78,6 @@ def tick(args)
 
   # Test button class
   args.state.justin_button ||= Button.new(:test, 0, 150, 'Test', args)
-  # args.state.justin_button.display(args)
   args.state.justin_button.clicked?(args)
 
   # Buy Seeds Button

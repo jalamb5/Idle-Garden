@@ -1,3 +1,11 @@
+$gtk.reset seed: 1721069951
+$gtk.reset seed: 1721069610
+$gtk.reset seed: 1721069088
+$gtk.reset seed: 1721068899
+$gtk.reset seed: 1721068807
+$gtk.reset seed: 1721068768
+$gtk.reset seed: 1721068698
+$gtk.reset seed: 1721068666
 $gtk.grep_source [".save_game", '']
 $gtk.reset seed: 1720904859
 $gtk.reset seed: 1720554481

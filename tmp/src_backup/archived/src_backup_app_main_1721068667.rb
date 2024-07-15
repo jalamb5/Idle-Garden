@@ -28,13 +28,14 @@ def new_button(id, x, y, text, width = 100)
   height = 50
   entity = {
     id: id,
-    rect: { x: x, y: y, w: width, h: height },
-    primitives: [
-      # { x: x, y: y, w: width, h: height }.border!,
-      { x: x + 5, y: y + 30, text: text, size_enum: -4 }.label!,
-      [x + 1, y + 1, width - 2, height - 2, 88, 62, 35, 60].solid
-    ]
+    rect: { x: x, y: y, w: width, h: height }
   }
+
+  entity[:primitives] = [
+    # { x: x, y: y, w: width, h: height }.border!,
+    { x: x + 5, y: y + 30, text: text, size_enum: -4 }.label!,
+    [x + 1, y + 1, width - 2, height - 2, 88, 62, 35, 60].solid
+  ]
   entity
 end
 
@@ -77,9 +78,8 @@ def tick(args)
   end
 
   # Test button class
-  args.state.justin_button ||= Button.new(:test, 0, 150, 'Test', args)
-  # args.state.justin_button.display(args)
-  args.state.justin_button.clicked?(args)
+  args.state.test_button ||= Button.new(:test, 200, 200, 'Test')
+  args.state.test_button.clicked?(args)
 
   # Buy Seeds Button
   args.state.buy_seed_button ||= new_button :buy_seed, 100, 100, "Seed (#{args.state.price[:seed]})"
@@ -137,10 +137,10 @@ def tick(args)
   end
 
   # Make Save button
-  # args.state.save_button ||= new_button :save, 0, 150, 'Save'
-  # args.outputs.primitives << args.state.save_button[:primitives]
+  args.state.save_button ||= new_button :save, 0, 150, 'Save'
+  args.outputs.primitives << args.state.save_button[:primitives]
 
-  # save(args.state) if args.inputs.mouse.click && button_clicked?(args, args.state.save_button)
+  save(args.state) if args.inputs.mouse.click && button_clicked?(args, args.state.save_button)
 
   # Place or harvest plants in garden
   if args.inputs.mouse.click && in_garden(args)

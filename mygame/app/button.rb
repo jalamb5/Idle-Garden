@@ -2,38 +2,45 @@
 
 # Create buttons
 class Button
-  attr_accessor :entity, :var_name
+  attr_accessor :entity
 
-  def initialize(name, x_coord, y_coord, text, args)
-    @width = 100
-    @height = 50
+  def initialize(name, x_coord, y_coord, text, args, width = 100, height = 50)
+    @name = name
+    @x = x_coord
+    @y = y_coord
+    @text = text
+    @width = width
+    @height = height
+    @var_name = "#{@name}_button"
     @entity = {
-      id: name,
-      rect: { x: x_coord, y: y_coord, w: @width, h: @height }
+      id: @name,
+      rect: { x: @x, y: @y, w: @width, h: @height },
+      primitives: [
+        { x: @x, y: @y, w: @width, h: @height }.border!,
+        { x: @x + 5, y: @y + 30, text: @text, size_enum: -4 }.label!,
+        [ @x + 1, @y + 1, @width - 2, @height - 2, 88, 62, 35, 60].solid
+      ]
     }
-
-    @entity[:primitives] = [
-      { x: x_coord, y: y_coord, w: @width, h: @height }.border!,
-      { x: x_coord + 5, y: y_coord + 30, text: text, size_enum: -4 }.label!
-    ]
-
-    @var_name = "#{name}_button"
-
   end
 
+  # show button on screen
   def display(args)
-    args.outputs.primitives << args.state.@var_name[:primitives]
+    args.outputs.primitives << @entity[:primitives]
   end
 
-  def update(new_value)
-    @value = new_value
+  # helper method for determining if a button was clicked
+  def clicked?(args)
+    return false unless args.inputs.mouse.click
+
+    args.inputs.mouse.point.inside_rect? @entity[:rect]
+    args.outputs.sounds << 'sounds/button_click.wav' if args.mouse.point.inside_rect?(@entity[:rect])
   end
 
   private
 
   # DragonRuby required methods
   def serialize
-    { x: @x, y: @y, text: @text, value: @value, size_px: @size_px }
+    { entity: @entity }
   end
 
   def inspect

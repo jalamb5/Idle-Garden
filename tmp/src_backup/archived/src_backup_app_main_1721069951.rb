@@ -28,13 +28,14 @@ def new_button(id, x, y, text, width = 100)
   height = 50
   entity = {
     id: id,
-    rect: { x: x, y: y, w: width, h: height },
-    primitives: [
-      # { x: x, y: y, w: width, h: height }.border!,
-      { x: x + 5, y: y + 30, text: text, size_enum: -4 }.label!,
-      [x + 1, y + 1, width - 2, height - 2, 88, 62, 35, 60].solid
-    ]
+    rect: { x: x, y: y, w: width, h: height }
   }
+
+  entity[:primitives] = [
+    # { x: x, y: y, w: width, h: height }.border!,
+    { x: x + 5, y: y + 30, text: text, size_enum: -4 }.label!,
+    [x + 1, y + 1, width - 2, height - 2, 88, 62, 35, 60].solid
+  ]
   entity
 end
 
@@ -78,7 +79,6 @@ def tick(args)
 
   # Test button class
   args.state.justin_button ||= Button.new(:test, 0, 150, 'Test', args)
-  # args.state.justin_button.display(args)
   args.state.justin_button.clicked?(args)
 
   # Buy Seeds Button
