@@ -9,7 +9,12 @@ require 'app/automation.rb'
 class Button
   attr_accessor :entity
 
-  def initialize(name, x_coord, y_coord, text, width = 100, height = 50)
+  COLORS = {
+    default: [88, 62, 35, 60],
+    opaque: [255, 255, 204, 250]
+  }
+
+  def initialize(name, x_coord, y_coord, text, width = 100, height = 50, color = :default)
     @name = name
     @x = x_coord
     @y = y_coord
@@ -20,9 +25,9 @@ class Button
       id: @name,
       rect: { x: @x, y: @y, w: @width, h: @height },
       primitives: [
+        [ @x + 1, @y + 1, @width - 2, @height - 2, COLORS[color]].solid,
         { x: @x, y: @y, w: @width, h: @height }.border!,
-        { x: @x + 5, y: @y + 30, text: @text, size_enum: -4 }.label!,
-        [ @x + 1, @y + 1, @width - 2, @height - 2, 88, 62, 35, 60].solid
+        { x: @x + 5, y: @y + 30, text: @text, size_enum: -4 }.label!
       ]
     }
   end

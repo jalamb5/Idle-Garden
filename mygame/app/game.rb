@@ -38,7 +38,7 @@ class Game
 
   def splash(args)
     args.outputs.sprites << { x: 0, y: 0, w: 1280, h: 720, path: 'sprites/splash.png' }
-    args.state.start_button ||= Button.new(:start, 540, 360, 'Start', 200)
+    args.state.start_button ||= Button.new(:start, 540, 360, 'Start', 200, 50, :opaque)
     args.state.start_button.display(args)
     args.state.start_button.clicked?(args)
   end
