@@ -16,8 +16,23 @@ class Labels
     args.outputs.labels << { x: @x, y: @y, text: "#{@text}: #{@value}", size_px: @size_px }
   end
 
-  def update(new_value)
-    @value = new_value
+  def update(key, args)
+    case key
+    when :seed
+      @value = args.state.game_state.seeds
+    when :growing
+      @value = args.state.game_state.plants.length
+    when :harvested
+      @value = args.state.game_state.harvested_plants
+    when :cash
+      @value = args.state.game_state.cash
+    when :auto_harvesters
+      @value = args.state.game_state.auto_harvesters.length
+    when :auto_planters
+      @value = args.state.game_state.auto_planters.length
+    when :auto_sellers
+      @value = args.state.game_state.auto_sellers.length
+    end
   end
 
   private

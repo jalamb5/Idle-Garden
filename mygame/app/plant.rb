@@ -46,11 +46,11 @@ class Plant
   # Harvest plant if correct stage
   def harvest(args, plant)
     if plant.stage == 'ready_to_harvest'
-      args.state.harvested_plants += 1
+      args.state.game_state.harvested_plants += 1
       plant.invalid = true
       args.outputs.sounds << 'sounds/harvest_plant.wav'
     elsif plant.stage == 'withered'
-      args.state.seeds += rand(10)
+      args.state.game_state.seeds += rand(10)
       plant.invalid = true
       args.outputs.sounds << 'sounds/harvest_withered.wav'
     end
@@ -76,7 +76,7 @@ class Plant
 
   # sets @invalid to false if not occupied, attemps to harvest plant at location if occupied
   def occupied(args, new_plant)
-    args.state.plants.each do |plant|
+    args.state.game_state.plants.each do |plant|
       next unless args.geometry.intersect_rect?(plant, new_plant)
 
       harvest(args, plant)
