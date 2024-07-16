@@ -107,14 +107,13 @@ class Button
 
   # Saves the state of the game in a text file called game_state.txt
   def save(args)
-    args.gtk.write_file('savegame.json', args.state.game_state.to_s)
-    args.gtk.serialize_state('game_state.txt', args.state.game_state)
+    args.gtk.write_file('savegame.txt', args.state)
   end
 
   def load_save(args)
-    # return nil unless File.exist?('savegame.txt')
+    return nil unless File.exist?('savegame.txt')
 
-    args.state.game_state = args.gtk.deserialize_state('game_state.txt')
+    args.state = 'savegame.txt'
   end
 
   # DragonRuby required methods

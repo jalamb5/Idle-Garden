@@ -47,6 +47,9 @@ class Game
     args.state.start_button ||= Button.new(:start, 540, 360, 'Start', 200, 50, :opaque)
     args.state.start_button.display(args)
     args.state.start_button.clicked?(args)
+    args.state.load_save_button ||= Button.new(:load_save, 540, 260, 'Load Save', 200, 50, :opaque)
+    args.state.load_save_button.display(args)
+    args.state.load_save_button.clicked?(args)
   end
 
   def standard_display(args)
@@ -79,8 +82,8 @@ class Game
       sell: Button.new(:sell, 0, 0, 'Sell', 200),
       auto_harvester: Button.new(:auto_harvester, 0, 50, "Harvester (#{@price[:harvester]})"),
       auto_seller: Button.new(:auto_seller, 100, 50, "Seller (#{@price[:seller]})"),
-      auto_planter: Button.new(:auto_planter, 0, 100, "Planter (#{@price[:planter]})")
-      # save: Button.new(:save, 0, 150, 'Save')
+      auto_planter: Button.new(:auto_planter, 0, 100, "Planter (#{@price[:planter]})"),
+      save: Button.new(:save, 0, 150, 'Save')
     }
   end
 
