@@ -23,10 +23,6 @@ A gardening game built with DragonRuby GTK.
 ## To Play
 [Itch.io](https://jalamb5.itch.io/idle-garden)
 
-- clone repo
-- cd into dir
-- run `./dragonruby`
-
 ## Attributions
 - Engine: [DragonRuby Toolkit](https://dragonruby.org/)
 - Images: [DeepAI](https://deepai.org/machine-learning-model/text2img)[^1]
