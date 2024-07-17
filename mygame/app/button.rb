@@ -53,12 +53,13 @@ class Button
     when :auto_planter
       play_button_sound(buy_auto_planter(args), args)
     when :start
-      args.state.game_state.splash_state = false
+      args.state.startup.splash_state = false
       play_button_sound(true, args)
     when :save
       play_button_sound(save(args), args)
     when :load_save
       load_save(args)
+      args.state.startup.splash_state = false
     else
       false
     end
@@ -108,14 +109,13 @@ class Button
 
   # Saves the state of the game in a text file called game_state.txt
   def save(args)
-    args.gtk.write_file('savegame.json', args.state.game_state.to_s)
-    args.gtk.serialize_state('game_state.txt', args.state.game_state)
+    $gtk.serialize_state('save.txt', args.state.game_state)
   end
 
   def load_save(args)
     # return nil unless File.exist?('savegame.txt')
 
-    args.state.game_state = args.gtk.deserialize_state('game_state.txt')
+    args.state.game_state = $gtk.deserialize_state('save.txt')
   end
 
   def play_button_sound(type, args)

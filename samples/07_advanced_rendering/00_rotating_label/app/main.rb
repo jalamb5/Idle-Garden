@@ -1,5 +1,6 @@
 def tick args
   # set the render target width and height to match the label
+  args.outputs[:scene].transient!
   args.outputs[:scene].w = 220
   args.outputs[:scene].h = 30
 
@@ -27,6 +28,6 @@ def tick args
                             y: 360 - args.outputs[:scene].h.half,
                             w: args.outputs[:scene].w,
                             h: args.outputs[:scene].h,
-                            angle: args.state.tick_count,
+                            angle: Kernel.tick_count,
                             path: :scene }
 end

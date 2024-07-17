@@ -27,30 +27,30 @@ class Game
     @counter = 0
     @standard_buttons = generate_buttons(args)
     @standard_labels = generate_labels(args)
-    play_music(args)
+    # play_music(args)
   end
 
   def tick(args)
     @counter += 1
 
-    if @splash_state
-      splash(args)
-    else
+    # if @splash_state
+    #   splash(args)
+    # else
       standard_display(args)
-    end
+    # end
   end
 
   private
 
-  def splash(args)
-    args.outputs.sprites << { x: 0, y: 0, w: 1280, h: 720, path: 'sprites/splash.png' }
-    args.state.start_button ||= Button.new(:start, 540, 360, 'Start', 200, 50, :opaque)
-    args.state.start_button.display(args)
-    args.state.start_button.clicked?(args)
-    args.state.load_save_button ||= Button.new(:load_save, 540, 260, 'Load Save', 200, 50, :opaque)
-    args.state.load_save_button.display(args)
-    args.state.load_save_button.clicked?(args)
-  end
+  # def splash(args)
+  #   args.outputs.sprites << { x: 0, y: 0, w: 1280, h: 720, path: 'sprites/splash.png' }
+  #   args.state.start_button ||= Button.new(:start, 540, 360, 'Start', 200, 50, :opaque)
+  #   args.state.start_button.display(args)
+  #   args.state.start_button.clicked?(args)
+  #   args.state.load_save_button ||= Button.new(:load_save, 540, 260, 'Load Save', 200, 50, :opaque)
+  #   args.state.load_save_button.display(args)
+  #   args.state.load_save_button.clicked?(args)
+  # end
 
   def standard_display(args)
     args.outputs.sprites << { x: 200, y: 0, w: 1080, h: 720, path: 'sprites/grass_background.png' }
@@ -68,13 +68,13 @@ class Game
     manage_automations(args)
   end
 
-  def play_music(args)
-    args.audio[:music] = {
-      input: 'sounds/Garden_Melody.ogg',
-      gain: 0.25,
-      looping: true
-    }
-  end
+  # def play_music(args)
+  #   args.audio[:music] = {
+  #     input: 'sounds/Garden_Melody.ogg',
+  #     gain: 0.25,
+  #     looping: true
+  #   }
+  # end
 
   def generate_buttons(_args)
     {

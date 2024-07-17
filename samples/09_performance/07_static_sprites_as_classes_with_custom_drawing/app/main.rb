@@ -55,6 +55,33 @@ class Star
     # angle_anchor_x, angle_anchor_y,
     # source_x, source_y, source_w, source_h,
     # blendmode_enum
+
+    # The argument order for ffi_draw.draw_sprite_5 is:
+    # x, y, w, h,
+    # path,
+    # angle,
+    # alpha, red_saturation, green_saturation, blue_saturation
+    # tile_x, tile_y, tile_w, tile_h,
+    # flip_horizontally, flip_vertically,
+    # angle_anchor_x, angle_anchor_y,
+    # source_x, source_y, source_w, source_h,
+    # blendmode_enum
+    # anchor_x
+    # anchor_y
+
+    # The argument order for ffi_draw.draw_sprite_6 is:
+    # x, y, w, h,
+    # path,
+    # angle,
+    # alpha, red_saturation, green_saturation, blue_saturation
+    # tile_x, tile_y, tile_w, tile_h,
+    # flip_horizontally, flip_vertically,
+    # angle_anchor_x, angle_anchor_y,
+    # source_x, source_y, source_w, source_h,
+    # blendmode_enum
+    # anchor_x
+    # anchor_y
+    # scale_quality_enum
   end
 end
 
@@ -70,8 +97,10 @@ def tick args
     args.gtk.console.set_command "reset_with count: 100"
   end
 
+  args.state.star_count ||= 0
+
   # init
-  if args.state.tick_count == 0
+  if Kernel.tick_count == 0
     args.state.stars = args.state.star_count.map { |i| Star.new args.grid }
     args.outputs.static_sprites << args.state.stars
   end

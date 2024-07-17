@@ -23,8 +23,8 @@ class FallingCircle
   end
 
   def defaults
-    if state.tick_count == 0
-      outputs.sounds << "sounds/bg.ogg"
+    if Kernel.tick_count == 0
+      args.audio[:bg] = { input: "sounds/bg.ogg", looping: true }
     end
 
     state.storyline ||= [
@@ -40,7 +40,7 @@ class FallingCircle
       { text: "the game jam was fun though ^_^",   distance_gate: 10000 },
     ]
 
-    load_level force: args.state.tick_count == 0
+    load_level force: Kernel.tick_count == 0
     state.line_mode            ||= :terrain
 
     state.sound_index          ||= 1
@@ -423,7 +423,7 @@ class FallingCircle
 
   def save_lines lines, file
     s = lines.map do |l|
-      "#{l.x1},#{l.y1},#{l.x2},#{l.y2}"
+      "#{l.x},#{l.y},#{l.x2},#{l.y2}"
     end.join("\n")
     gtk.write_file(file, s)
   end
@@ -454,19 +454,19 @@ class FallingCircle
     results[:rect] = { x: x - radius, y: y - radius, w: radius * 2, h: radius * 2 }
     results[:trajectory] = trajectory(results)
     results[:impacts] = terrain.find_all { |t| t && (line_near_rect? results[:rect], t) }.map do |t|
-      intersection = geometry.line_intersect(results[:trajectory], t)
+      intersection = geometry.ray_intersect(results[:trajectory], t)
       {
         terrain: t,
-        point: geometry.line_intersect(results[:trajectory], t),
+        point: geometry.ray_intersect(results[:trajectory], t),
         type: :terrain
       }
     end
 
     results[:impacts] += lava.find_all { |t| line_near_rect? results[:rect], t }.map do |t|
-      intersection = geometry.line_intersect(results[:trajectory], t)
+      intersection = geometry.ray_intersect(results[:trajectory], t)
       {
         terrain: t,
-        point: geometry.line_intersect(results[:trajectory], t),
+        point: geometry.ray_intersect(results[:trajectory], t),
         type: :lava
       }
     end
@@ -574,7 +574,7 @@ class FallingCircle
     circle.y = circle.check_point_y
     circle.dx = 0
     circle.dy = 0
-    circle.game_over_at = state.tick_count
+    circle.game_over_at = Kernel.tick_count
   end
 
   def not_game_over!
@@ -587,7 +587,7 @@ class FallingCircle
     circle.on_floor = impact_history_entry[:body][:new_on_floor]
 
     if circle.on_floor
-      circle.check_point_at = state.tick_count
+      circle.check_point_at = Kernel.tick_count
       circle.check_point_x = circle.x
       circle.check_point_y = circle.y
     end
@@ -806,7 +806,7 @@ class FallingCircle
     end
     calc_camera
     state.whisp_queue ||= []
-    if state.tick_count.mod_zero?(4)
+    if Kernel.tick_count.mod_zero?(4)
       state.whisp_queue << {
         x: -300,
         y: 1400 * rand,
@@ -814,7 +814,7 @@ class FallingCircle
         w: 20,
         h: 20, path: 'sprites/whisp.png',
         a: 0,
-        created_at: state.tick_count,
+        created_at: Kernel.tick_count,
         angle: 0,
         r: 100,
         g: 128 + 128 * rand,
@@ -833,14 +833,14 @@ class FallingCircle
 
     state.whisp_queue = state.whisp_queue.reject { |w| w[:x] > 1280 }
 
-    if state.tick_count.mod_zero?(2) && (circle.dx != 0 || circle.dy != 0)
+    if Kernel.tick_count.mod_zero?(2) && (circle.dx != 0 || circle.dy != 0)
       circle.after_images << {
         x: circle.x,
         y: circle.y,
         w: circle.radius,
         h: circle.radius,
         a: 255,
-        created_at: state.tick_count
+        created_at: Kernel.tick_count
       }
     end
 

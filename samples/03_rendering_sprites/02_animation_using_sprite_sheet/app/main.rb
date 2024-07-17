@@ -1,29 +1,28 @@
 def tick args
-  args.state.player.x ||= 100
-  args.state.player.y ||= 100
-  args.state.player.w ||= 64
-  args.state.player.h ||= 64
-  args.state.player.direction ||= 1
-
-  args.state.player.is_moving = false
+  args.state.player ||= { x: 100,
+                          y: 100,
+                          w: 64,
+                          h: 64,
+                          direction: 1,
+                          is_moving: false }
 
   # get the keyboard input and set player properties
   if args.inputs.keyboard.right
     args.state.player.x += 3
     args.state.player.direction = 1
-    args.state.player.started_running_at ||= args.state.tick_count
+    args.state.player.started_running_at ||= Kernel.tick_count
   elsif args.inputs.keyboard.left
     args.state.player.x -= 3
     args.state.player.direction = -1
-    args.state.player.started_running_at ||= args.state.tick_count
+    args.state.player.started_running_at ||= Kernel.tick_count
   end
 
   if args.inputs.keyboard.up
     args.state.player.y += 1
-    args.state.player.started_running_at ||= args.state.tick_count
+    args.state.player.started_running_at ||= Kernel.tick_count
   elsif args.inputs.keyboard.down
     args.state.player.y -= 1
-    args.state.player.started_running_at ||= args.state.tick_count
+    args.state.player.started_running_at ||= Kernel.tick_count
   end
 
   # if no arrow keys are being pressed, set the player as not moving
@@ -34,18 +33,18 @@ def tick args
   # wrap player around the stage
   if args.state.player.x > 1280
     args.state.player.x = -64
-    args.state.player.started_running_at ||= args.state.tick_count
+    args.state.player.started_running_at ||= Kernel.tick_count
   elsif args.state.player.x < -64
     args.state.player.x = 1280
-    args.state.player.started_running_at ||= args.state.tick_count
+    args.state.player.started_running_at ||= Kernel.tick_count
   end
 
   if args.state.player.y > 720
     args.state.player.y = -64
-    args.state.player.started_running_at ||= args.state.tick_count
+    args.state.player.started_running_at ||= Kernel.tick_count
   elsif args.state.player.y < -64
     args.state.player.y = 720
-    args.state.player.started_running_at ||= args.state.tick_count
+    args.state.player.started_running_at ||= Kernel.tick_count
   end
 
   # render player as standing or running
@@ -93,6 +92,6 @@ def running_sprite args
     tile_y: 0,
     tile_w: args.state.player.w,
     tile_h: args.state.player.h,
-    flip_horizontally: args.state.player.direction > 0,
+    flip_horizontally: args.state.player.direction > 0
   }
 end

@@ -25,13 +25,7 @@ begin # region: top level tick methods
   def render args
     args.outputs.borders << args.state.buttons.map { |b| b[:border] }
     args.outputs.labels  << args.state.buttons.map { |b| b[:label]  }
-    args.outputs.labels  << args.layout
-                              .rect(row: 0, col: 11.5)
-                              .yield_self { |r| r.merge y: r.y + r.h }
-                              .merge(text: "This is a Pro only feature. Click here to watch the YouTube video if you are on the Standard License.",
-                                     alignment_enum: 1)
   end
-
 
   def input args
     args.state.buttons.each do |b|
@@ -56,7 +50,7 @@ begin # region: top level tick methods
       .each     { |k, v| v[:gain] -= v[:decay_rate] }
 
     sounds_to_stop = args.audio
-                       .find_all { |k, v| v[:stop_at] && args.state.tick_count >= v[:stop_at] }
+                       .find_all { |k, v| v[:stop_at] && Kernel.tick_count >= v[:stop_at] }
                        .map { |k, v| k }
 
     sounds_to_stop.each { |k| args.audio.delete k }
@@ -480,7 +474,7 @@ begin # region: wave generation
         sample_rate:      48000,
         stop_at:          args.tick_count + opts[:queue_in] + opts[:duration],
         gain:             opts[:gain].to_f,
-        queue_at:         args.state.tick_count + opts[:queue_in],
+        queue_at:         Kernel.tick_count + opts[:queue_in],
         decay_rate:       decay_rate,
         pitch:            1.0,
         looping:          true,
@@ -499,7 +493,7 @@ begin # region: wave generation
     end
 
     def graph_wave args, wave, frequency
-      if args.state.tick_count != args.state.graphed_at
+      if Kernel.tick_count != args.state.graphed_at
         args.outputs.static_lines.clear
         args.outputs.static_sprites.clear
       end
@@ -550,7 +544,7 @@ begin # region: wave generation
         }
       end
 
-      args.state.graphed_at = args.state.tick_count
+      args.state.graphed_at = Kernel.tick_count
     end
   end
 

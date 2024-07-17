@@ -35,8 +35,10 @@ def tick args
     args.gtk.console.set_command "reset_with count: 100"
   end
 
+  args.state.star_count ||= 0
+
   # init
-  if args.state.tick_count == 0
+  if Kernel.tick_count == 0
     args.state.stars = args.state.star_count.map { |i| Star.new args.grid }
     args.outputs.static_sprites << args.state.stars
   end

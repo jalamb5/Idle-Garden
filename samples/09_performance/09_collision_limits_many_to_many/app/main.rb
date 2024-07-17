@@ -26,7 +26,7 @@ class Square
 end
 
 def reset_if_needed args
-  if args.state.tick_count == 0 || args.inputs.mouse.click
+  if Kernel.tick_count == 0 || args.inputs.mouse.click
     args.state.star_count = 1500
     args.state.stars = args.state.star_count.map { |i| Square.new }.to_a
     args.outputs.static_sprites.clear

@@ -1,0 +1,8 @@
+* INFO - If you need to find rogue puts statements do:
+#+begin_src
+  def tick args
+    # adding the following line to the TOP of your tick method
+    # will print ~caller~ along side each ~puts~ statement
+    $gtk.add_caller_to_puts!
+  end
+#+end_src

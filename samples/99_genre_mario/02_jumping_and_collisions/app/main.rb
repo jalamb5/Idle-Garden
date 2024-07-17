@@ -9,7 +9,7 @@ class Game
   end
 
   def defaults
-    return if state.tick_count != 0
+    return if Kernel.tick_count != 0
 
     player.x                     = 64
     player.y                     = 800
@@ -97,7 +97,8 @@ class Game
   end
 
   def render_grid
-    if state.tick_count == 0
+    if Kernel.tick_count == 0
+      outputs[:grid].transient!
       outputs[:grid].background_color = [0, 0, 0, 0]
       outputs[:grid].borders << available_brick_locations
       outputs[:grid].labels  << available_brick_locations.map do |b|
@@ -249,7 +250,7 @@ class Game
     return if player.action != :standing
     player.action = :jumping
     player.dy = state.player.jump_power
-    current_frame = state.tick_count
+    current_frame = Kernel.tick_count
     player.action_at = current_frame
   end
 

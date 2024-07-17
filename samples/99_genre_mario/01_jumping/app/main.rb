@@ -35,7 +35,7 @@ def input args
       args.state.player.dy = args.state.jump.power
 
       # record when the action took place
-      current_frame = args.state.tick_count
+      current_frame = Kernel.tick_count
       args.state.player.action_at = current_frame
     end
   end
