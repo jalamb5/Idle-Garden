@@ -3,6 +3,7 @@
 # DragonRuby requires extensions
 # rubocop:disable Style/RedundantFileExtensionInRequire
 require 'app/automation.rb'
+require 'app/game.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Create buttons
@@ -43,21 +44,23 @@ class Button
 
     case @name
     when :sell
-      sell(args)
+      play_button_sound(sell(args), args)
     when :buy_seed
-      buy_seed(args)
+      play_button_sound(buy_seed(args), args)
     when :auto_harvester
-      buy_auto_harvester(args)
+      play_button_sound(buy_auto_harvester(args), args)
     when :auto_seller
-      buy_auto_seller(args)
+      play_button_sound(buy_auto_seller(args), args)
     when :auto_planter
-      buy_auto_planter(args)
+      play_button_sound(buy_auto_planter(args), args)
     when :start
-      args.state.game_state.splash_state = false
+      args.state.startup.splash_state = false
+      play_button_sound(true, args)
     when :save
-      save(args)
+      play_button_sound(save(args), args)
     when :load_save
       load_save(args)
+      args.state.startup.splash_state = false
     else
       false
     end
@@ -66,54 +69,60 @@ class Button
   private
 
   def sell(args)
-    return if args.state.game_state.harvested_plants.negative?
+    return false if args.state.game_state.harvested_plants <= 0
 
-    args.outputs.sounds << 'sounds/button_click.wav'
     args.state.game_state.cash += args.state.game_state.harvested_plants * args.state.game_state.price[:plant]
     args.state.game_state.harvested_plants = 0
+    true
   end
 
   def buy_seed(args)
-    return if (args.state.game_state.cash - args.state.game_state.price[:seed]).negative?
+    return false if (args.state.game_state.cash - args.state.game_state.price[:seed]).negative?
 
-    args.outputs.sounds << 'sounds/button_click.wav'
     args.state.game_state.seeds += 1
     args.state.game_state.cash -= args.state.game_state.price[:seed]
+    true
   end
 
   def buy_auto_harvester(args)
-    return if (args.state.game_state.cash - args.state.game_state.price[:harvester]).negative?
+    return false if (args.state.game_state.cash - args.state.game_state.price[:harvester]).negative?
 
-    args.outputs.sounds << 'sounds/button_click.wav'
     args.state.game_state.auto_harvesters << Automation.new(:harvester)
     args.state.game_state.cash -= args.state.game_state.price[:harvester]
+    true
   end
 
   def buy_auto_seller(args)
-    return if (args.state.game_state.cash - args.state.game_state.price[:seller]).negative?
+    return false if (args.state.game_state.cash - args.state.game_state.price[:seller]).negative?
 
-    args.outputs.sounds << 'sounds/button_click.wav'
     args.state.game_state.auto_sellers << Automation.new(:seller)
     args.state.game_state.cash -= args.state.game_state.price[:seller]
+    true
   end
 
   def buy_auto_planter(args)
-    return if (args.state.game_state.cash - args.state.game_state.price[:planter]).negative?
+    return false if (args.state.game_state.cash - args.state.game_state.price[:planter]).negative?
 
-    args.outputs.sounds << 'sounds/button_click.wav'
     args.state.game_state.auto_planters << Automation.new(:planter)
     args.state.game_state.cash -= args.state.game_state.price[:planter]
+    true
   end
 
   # Saves the state of the game in a text file called game_state.txt
   def save(args)
-    args.gtk.write_file('savegame.txt', args.state)
+    $gtk.serialize_state('game_state.txt', args.state.game_state)
   end
 
   def load_save(args)
-    return nil unless File.exist?('savegame.txt')
+    # return nil unless File.exist?('game_state.txt')
+    args.state.game_state = Game.new(args)
+    data = $gtk.deserialize_state('game_state.txt')
+    data.each_key { |key| args.state.game_state.send("#{key}=", data[key]) }
+    args.state.game_state.send('loaded_from_save=', true)
+  end
 
-    args.state = 'savegame.txt'
+  def play_button_sound(type, args)
+    args.outputs.sounds << (type == true ? { input: 'sounds/button_click.wav', gain: 0.25 } : 'sounds/button_reject.wav')
   end
 
   # DragonRuby required methods

@@ -1,4 +1,4 @@
-* 000000 [Engine] Log started at 2024/7/17 12:17:48
+* 000000 [Engine] Log started at 2024/7/17 13:1:22
 * 000000 [Engine] DragonRuby Game Toolkit
 * 000000 [Engine]   Version: 5.32
 * 000000 [Engine]   Tier: Standard
@@ -34,7 +34,7 @@
 - 000000 [Render] Max texture size: 16384x16384 (system reported 16384x16384)
 - 000000 [Render] Logical render size: 1280x720
 - 000000 [Render] Native render size: 1280x720
-? 000000 [Engine] RNG seed has been set to 1721243869.
+? 000000 [Engine] RNG seed has been set to 1721246483.
 - 000000 [Engine] Janitor is using 4 threads.
-- 000017 [Game] State with length of 738 saved to file game_state.txt.
-* 000019 [Engine] Logging shutting down
+- 000016 [Game] State with length of 1625 saved to file game_state.txt.
+* 000037 [Engine] Logging shutting down

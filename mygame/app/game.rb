@@ -13,13 +13,13 @@ class Game
   attr_accessor :loaded_from_save, :plants, :seeds, :harvested_plants, :cash, :price, :auto_planters, :auto_harvesters,
                 :auto_sellers, :counter
 
-  def initialize(args, loaded = false)
-    @loaded_from_save = loaded
+  def initialize(args)
+    @loaded_from_save = false
     @garden = { x: 250, y: 50, w: 980, h: 620 }
     @plants = []
     @seeds = 500
     @harvested_plants = 0
-    @cash = 5
+    @cash = 500
     @price = { seed: 5, plant: 10, harvester: 150, planter: 150, seller: 50 }
     @auto_planters = []
     @auto_harvesters = []
