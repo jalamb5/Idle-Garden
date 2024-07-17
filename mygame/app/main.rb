@@ -8,6 +8,4 @@ require 'app/startup.rb'
 def tick(args)
   args.state.startup ||= Startup.new(args)
   args.state.startup.tick(args)
-  # args.state.game_state ||= Game.new(args)
-  # args.state.game_state.tick(args)
 end

@@ -44,7 +44,6 @@ class Startup
     }
   end
 
-
   # DragonRuby required methods
   def serialize
     { splash_state: @splash_state }

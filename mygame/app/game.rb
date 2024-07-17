@@ -10,11 +10,9 @@ require 'app/button.rb'
 
 # Handle game logic
 class Game
-  attr_accessor :splash_state, :plants, :seeds, :harvested_plants, :cash, :price, :auto_planters, :auto_harvesters,
-                :auto_sellers, :counter
+  attr_accessor :plants, :seeds, :harvested_plants, :cash, :price, :auto_planters, :auto_harvesters,:auto_sellers, :counter
 
   def initialize(args)
-    @splash_state = true
     @garden = { x: 250, y: 50, w: 980, h: 620 }
     @plants = []
     @seeds = 500
@@ -27,30 +25,15 @@ class Game
     @counter = 0
     @standard_buttons = generate_buttons(args)
     @standard_labels = generate_labels(args)
-    # play_music(args)
   end
 
   def tick(args)
     @counter += 1
 
-    # if @splash_state
-    #   splash(args)
-    # else
-      standard_display(args)
-    # end
+    standard_display(args)
   end
 
   private
-
-  # def splash(args)
-  #   args.outputs.sprites << { x: 0, y: 0, w: 1280, h: 720, path: 'sprites/splash.png' }
-  #   args.state.start_button ||= Button.new(:start, 540, 360, 'Start', 200, 50, :opaque)
-  #   args.state.start_button.display(args)
-  #   args.state.start_button.clicked?(args)
-  #   args.state.load_save_button ||= Button.new(:load_save, 540, 260, 'Load Save', 200, 50, :opaque)
-  #   args.state.load_save_button.display(args)
-  #   args.state.load_save_button.clicked?(args)
-  # end
 
   def standard_display(args)
     args.outputs.sprites << { x: 200, y: 0, w: 1080, h: 720, path: 'sprites/grass_background.png' }
@@ -67,14 +50,6 @@ class Game
 
     manage_automations(args)
   end
-
-  # def play_music(args)
-  #   args.audio[:music] = {
-  #     input: 'sounds/Garden_Melody.ogg',
-  #     gain: 0.25,
-  #     looping: true
-  #   }
-  # end
 
   def generate_buttons(_args)
     {
@@ -158,7 +133,7 @@ class Game
 
   # DragonRuby required methods
   def serialize
-    { splash_state: @splash_state, plants: @plants, seeds: @seeds, harvested_plants: @harvested_plants, cash: @cash,
+    { plants: @plants, seeds: @seeds, harvested_plants: @harvested_plants, cash: @cash,
       price: @price, auto_planters: @auto_planters, auto_harvesters: @auto_harvesters, auto_sellers: @auto_sellers, counter: @counter }
   end
 

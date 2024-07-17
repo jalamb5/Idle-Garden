@@ -68,7 +68,7 @@ class Button
   private
 
   def sell(args)
-    return false if args.state.game_state.harvested_plants.negative?
+    return false if args.state.game_state.harvested_plants <= 0
 
     args.state.game_state.cash += args.state.game_state.harvested_plants * args.state.game_state.price[:plant]
     args.state.game_state.harvested_plants = 0
@@ -109,17 +109,17 @@ class Button
 
   # Saves the state of the game in a text file called game_state.txt
   def save(args)
-    $gtk.serialize_state('save.txt', args.state.game_state)
+    $gtk.serialize_state('game_state.txt', args.state.game_state)
   end
 
   def load_save(args)
-    # return nil unless File.exist?('savegame.txt')
+    # return nil unless File.exist?('game_state.txt')
 
-    args.state.game_state = $gtk.deserialize_state('save.txt')
+    args.state.game_state = $gtk.deserialize_state('game_state.txt')
   end
 
   def play_button_sound(type, args)
-    args.outputs.sounds << (type == true ? 'sounds/button_click.wav' : 'sounds/button_reject.wav')
+    args.outputs.sounds << (type == true ? { input: 'sounds/button_click.wav', gain: 0.25 } : 'sounds/button_reject.wav')
   end
 
   # DragonRuby required methods
