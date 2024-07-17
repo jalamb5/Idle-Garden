@@ -14,7 +14,7 @@ class Plant
   WITHER = 1000
   WITHER_RATE = 0.2
   DEATH = 2000
-  SPRITES = { SEED: 'sprites/stages/0seed.png', GROWING: 'sprites/stages/1growing.png', FULL_GROWN: 'sprites/stages/2full_grown.png',
+  SPRITES = { SEED: 'sprites/stages/pixel/0seed.png', GROWING: 'sprites/stages/pixel/1growing.png', FULL_GROWN: 'sprites/stages/2full_grown.png',
               READY_TO_HARVEST: 'sprites/stages/3ready_to_harvest.png', WITHERED: 'sprites/stages/4withered.png' }.freeze
   STAGES = %w[seed growing full_grown ready_to_harvest withered].freeze
 
