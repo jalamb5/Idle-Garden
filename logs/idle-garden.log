@@ -1,4 +1,4 @@
-* 000000 [Engine] Log started at 2024/7/15 18:8:30
+* 000000 [Engine] Log started at 2024/7/16 19:9:11
 * 000000 [Engine] This copy of the engine is git hash 683cab3cde55985112f46049a17cbeeaadad4410, built on Jan 30 2023, at 14:33:27
 * 000000 [Engine] Platform: Mac OS X
 * 000000 [Engine] 
@@ -20,30 +20,30 @@
 ? 000000 [Engine] Loading cvars from file 'metadata/cvars.txt' ...
 ? 000000 [Engine] File 'metadata/cvars.txt' line 1 setting cvar 'log.filter_subsystems' to 'HTTPServer'
 ? 000000 [Engine] File 'metadata/cvars.txt' complete
-? 000000 [Engine] RNG seed has been set to 1721092110.
+? 000000 [Engine] RNG seed has been set to 1721182151.
 - 000000 [Engine] Janitor is using 4 threads.
 ? 000000 [Engine] Marked app/main.rb for reload. (-1)
-- 000005 [Game] Game state and exception will be written to logs/exceptions/game_state_259.txt and logs/exceptions/current.txt.
-- 000005 [Game] * EXCEPTION:
+- 000010 [Game] Game state and exception will be written to logs/exceptions/game_state_601.txt and logs/exceptions/current.txt.
+- 000010 [Game] * EXCEPTION:
 * ERROR - :__delete_thrash_count__! method missing on ~Game~.
 The method named
   :__delete_thrash_count__!
 doesn't exist on
-  [Game, #<Class:#<Game:0x12003a050>>, Game].
+  [Game, #<Class:#<Game:0x138032050>>, Game].
 #+begin_src ~Game#inspect~
-{:splash_state=>false, :plants=>[{:w=>31.90000000000017, :h=>31.90000000000017, :x=>479.0, :y=>423.0, :age=>119, :invalid=>false, :path=>"sprites/stages/0seed.png", :stage=>"seed", :a=>255}, {:w=>29.60000000000014, :h=>29.60000000000014, :x=>488.0, :y=>581.0, :age=>96, :invalid=>false, :path=>"sprites/stages/0seed.png", :stage=>"seed", :a=>255}, {:w=>26.10000000000009, :h=>26.10000000000009, :x=>360.0, :y=>320.0, :age=>61, :invalid=>false, :path=>"sprites/stages/0seed.png", :stage=>"seed", :a=>255}], :seeds=>497, :harvested_plants=>0, :cash=>5, :price=>{:seed=>5, :plant=>10, :harvester=>150, :planter=>150, :seller=>50}, :auto_planters=>[], :auto_harvesters=>[], :auto_sellers=>[], :counter=>35}
+{:splash_state=>false, :plants=>[], :seeds=>501, :harvested_plants=>0, :cash=>0, :price=>{:seed=>5, :plant=>10, :harvester=>150, :planter=>150, :seller=>50}, :auto_planters=>[], :auto_harvesters=>[], :auto_sellers=>[], :counter=>2}
 #+end_src ~Game#inspect~ for :__delete_thrash_count__! method missing on ~Game~
 
 ** Did you mean?
 Here's a list of methods that kind of look like :__delete_thrash_count__!.
 *** :counter, *** :counter=
 ** Backtrace:
-*** app/button.rb:111:in save
-*** app/button.rb:58:in clicked?
+*** app/button.rb:108:in save
+*** app/button.rb:59:in clicked?
 *** app/game.rb:98:in monitor_buttons
 *** app/game.rb:97:in monitor_buttons
 *** app/game.rb:60:in standard_display
 *** app/game.rb:39:in tick
 *** app/main.rb:10:in tick
-*** app/button.rb:9 (259)
-* 000012 [Engine] Logging shutting down
+*** app/button.rb:9 (601)
+* 000013 [Engine] Logging shutting down
