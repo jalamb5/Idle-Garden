@@ -3,6 +3,7 @@
 # DragonRuby requires extensions
 # rubocop:disable Style/RedundantFileExtensionInRequire
 require 'app/automation.rb'
+require 'app/game.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Create buttons
@@ -114,8 +115,9 @@ class Button
 
   def load_save(args)
     # return nil unless File.exist?('game_state.txt')
-
-    args.state.game_state = $gtk.deserialize_state('game_state.txt')
+    args.state.game_state = Game.new(args, true)
+    data = $gtk.deserialize_state('game_state.txt')
+    data.each_key { |key| args.state.game_state.send("#{key}=", data[key]) }
   end
 
   def play_button_sound(type, args)

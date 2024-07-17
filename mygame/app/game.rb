@@ -10,9 +10,11 @@ require 'app/button.rb'
 
 # Handle game logic
 class Game
-  attr_accessor :plants, :seeds, :harvested_plants, :cash, :price, :auto_planters, :auto_harvesters,:auto_sellers, :counter
+  attr_accessor :loaded_from_save, :plants, :seeds, :harvested_plants, :cash, :price, :auto_planters, :auto_harvesters,
+                :auto_sellers, :counter
 
-  def initialize(args)
+  def initialize(args, loaded = false)
+    @loaded_from_save = loaded
     @garden = { x: 250, y: 50, w: 980, h: 620 }
     @plants = []
     @seeds = 500
@@ -29,6 +31,7 @@ class Game
 
   def tick(args)
     @counter += 1
+    reconstruct_objects(args) if @loaded_from_save == true
 
     standard_display(args)
   end
@@ -131,9 +134,43 @@ class Game
     @counter = 0
   end
 
+  def reconstruct_objects(args)
+    reconstruct_plants(args) unless @plants.empty?
+    reconstruct_automations(:harvester) unless @auto_harvesters.empty?
+    reconstruct_automations(:planter) unless @auto_planters.empty?
+    reconstruct_automations(:seller) unless @auto_sellers.empty?
+
+    @loaded_from_save = false
+  end
+
+  def reconstruct_plants(args)
+    attributes = %i[x y w h age path stage a]
+
+    @plants.map! do |plant|
+      new_plant = Plant.new(args, 0, 0)
+      attributes.each do |attr|
+        new_plant.send("#{attr}=", plant.send(attr))
+      end
+      new_plant
+    end
+  end
+
+  def reconstruct_automations(automator)
+    attributes = %i[type harvest_cooldown planter_cooldown seller_cooldown]
+    types = { harvester: @auto_harvesters, planter: @auto_planters, seller: @auto_sellers }
+
+    types[automator].map! do |automation|
+      new_automation = Automation.new(automator)
+      attributes.each do |attr|
+        new_automation.send("#{attr}=", automation.send(attr))
+      end
+      new_automation
+    end
+  end
+
   # DragonRuby required methods
   def serialize
-    { plants: @plants, seeds: @seeds, harvested_plants: @harvested_plants, cash: @cash,
+    { loaded_from_save: @loaded_from_save, plants: @plants, seeds: @seeds, harvested_plants: @harvested_plants, cash: @cash,
       price: @price, auto_planters: @auto_planters, auto_harvesters: @auto_harvesters, auto_sellers: @auto_sellers, counter: @counter }
   end
 
