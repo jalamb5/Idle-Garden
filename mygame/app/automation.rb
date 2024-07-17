@@ -19,11 +19,11 @@ class Automation
     reduce_cooldowns
     case @type
     when :harvester
-      auto_harvester(args) if @harvest_cooldown <= 0 && args.state.plants.length.positive?
+      auto_harvester(args) if @harvest_cooldown <= 0 && args.state.game_state.plants.length.positive?
     when :planter
-      auto_planter(args) if @planter_cooldown <= 0 && args.state.seeds.positive?
+      auto_planter(args) if @planter_cooldown <= 0 && args.state.game_state.seeds.positive?
     when :seller
-      auto_seller(args) if @seller_cooldown <= 0 && args.state.harvested_plants.positive?
+      auto_seller(args) if @seller_cooldown <= 0 && args.state.game_state.harvested_plants.positive?
     end
   end
 
@@ -36,7 +36,7 @@ class Automation
   end
 
   def auto_harvester(args)
-    args.state.plants.each do |plant|
+    args.state.game_state.plants.each do |plant|
       next unless plant.stage == 'ready_to_harvest' || plant.stage == 'withered'
 
       plant.harvest(args, plant)
@@ -48,8 +48,8 @@ class Automation
   def auto_planter(args)
     x, y = coord_generator
     plant = Plant.new(args, x, y)
-    args.state.plants << plant
-    args.state.seeds -= 1
+    args.state.game_state.plants << plant
+    args.state.game_state.seeds -= 1
     @planter_cooldown = rand(10)
   end
 
@@ -63,8 +63,8 @@ class Automation
   end
 
   def auto_seller(args)
-    args.state.cash += args.state.harvested_plants * args.state.price[:plant]
-    args.state.harvested_plants = 0
+    args.state.game_state.cash += args.state.game_state.harvested_plants * args.state.game_state.price[:plant]
+    args.state.game_state.harvested_plants = 0
     @seller_cooldown = rand(10)
   end
 
