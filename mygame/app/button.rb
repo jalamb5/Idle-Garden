@@ -73,12 +73,12 @@ class Button
 
     tooltips = args.gtk.parse_json_file('data/tooltips.json')
     y_location = args.grid.h - 180
+    # Generate label for each string or substring, display substrings below each other.
+    # Max substring length is 28 characters.
     tooltips[@name.to_s].each do |string|
       Labels.new(5, y_location, '', string, 20, [0, 0, 255, 255]).display(args)
       y_location -= 20
     end
-
-    # Labels.new(5, args.grid.h - 180, 'Tip', tooltips[@name.to_s], 20, [0, 255, 255, 255]).display(args)
   end
 
   private
