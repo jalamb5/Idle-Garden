@@ -71,14 +71,10 @@ class Button
   def hover?(args)
     return false unless args.inputs.mouse.point.inside_rect?(@entity[:rect])
 
+    coords = [args.inputs.mouse.point.x, args.inputs.mouse.point.y]
     tooltips = args.gtk.parse_json_file('data/tooltips.json')
-    y_location = args.grid.h - 180
-    tooltips[@name.to_s].each do |string|
-      Labels.new(5, y_location, '', string, 20, [0, 0, 255, 255]).display(args)
-      y_location -= 20
-    end
 
-    # Labels.new(5, args.grid.h - 180, 'Tip', tooltips[@name.to_s], 20, [0, 255, 255, 255]).display(args)
+    Labels.new(coords[0], coords[1], 'Tip:', tooltips[@name.to_s], 20, [255, 255, 255, 255]).display(args)
   end
 
   private

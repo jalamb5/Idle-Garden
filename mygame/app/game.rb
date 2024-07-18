@@ -56,12 +56,12 @@ class Game
 
   def generate_buttons(_args)
     {
+      save: Button.new(:save, 0, 150, 'Save'),
       buy_seed: Button.new(:buy_seed, 100, 100, "Seed (#{@price[:seed]})"),
-      sell: Button.new(:sell, 0, 0, 'Sell', 200),
-      auto_harvester: Button.new(:auto_harvester, 0, 50, "Harvester (#{@price[:harvester]})"),
-      auto_seller: Button.new(:auto_seller, 100, 50, "Seller (#{@price[:seller]})"),
       auto_planter: Button.new(:auto_planter, 0, 100, "Planter (#{@price[:planter]})"),
-      save: Button.new(:save, 0, 150, 'Save')
+      auto_seller: Button.new(:auto_seller, 100, 50, "Seller (#{@price[:seller]})"),
+      auto_harvester: Button.new(:auto_harvester, 0, 50, "Harvester (#{@price[:harvester]})"),
+      sell: Button.new(:sell, 0, 0, 'Sell', 200)
     }
   end
 
@@ -74,18 +74,19 @@ class Game
   def monitor_buttons(args)
     @standard_buttons.each_value do |button|
       button.clicked?(args)
+      button.hover?(args)
     end
   end
 
   def generate_labels(args)
     {
-      seed: Labels.new(5, args.grid.h - 20, 'Seeds', @seeds),
-      growing: Labels.new(5, args.grid.h - 40, 'Growing', @plants.length),
-      harvested: Labels.new(5, args.grid.h - 60, 'Harvested', @harvested_plants),
-      cash: Labels.new(5, args.grid.h - 80, 'Cash', @cash),
-      auto_harvesters: Labels.new(5, args.grid.h - 100, 'Auto Harvesters', @auto_harvesters.length),
-      auto_planters: Labels.new(5, args.grid.h - 120, 'Auto Planters', @auto_planters.length),
-      auto_sellers: Labels.new(5, args.grid.h - 140, 'Auto Sellers', @auto_sellers.length)
+      seed: Labels.new(5, args.grid.h - 20, 'Seeds:', @seeds),
+      growing: Labels.new(5, args.grid.h - 40, 'Growing:', @plants.length),
+      harvested: Labels.new(5, args.grid.h - 60, 'Harvested:', @harvested_plants),
+      cash: Labels.new(5, args.grid.h - 80, 'Cash:', @cash),
+      auto_harvesters: Labels.new(5, args.grid.h - 100, 'Auto Harvesters:', @auto_harvesters.length),
+      auto_planters: Labels.new(5, args.grid.h - 120, 'Auto Planters:', @auto_planters.length),
+      auto_sellers: Labels.new(5, args.grid.h - 140, 'Auto Sellers:', @auto_sellers.length)
     }
   end
 

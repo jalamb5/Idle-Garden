@@ -72,13 +72,8 @@ class Button
     return false unless args.inputs.mouse.point.inside_rect?(@entity[:rect])
 
     tooltips = args.gtk.parse_json_file('data/tooltips.json')
-    y_location = args.grid.h - 180
-    tooltips[@name.to_s].each do |string|
-      Labels.new(5, y_location, '', string, 20, [0, 0, 255, 255]).display(args)
-      y_location -= 20
-    end
 
-    # Labels.new(5, args.grid.h - 180, 'Tip', tooltips[@name.to_s], 20, [0, 255, 255, 255]).display(args)
+    Labels.new(@x , @y + 30, 'Tip:', tooltips[@name.to_s], 20, [255, 255, 255, 255]).display(args)
   end
 
   private

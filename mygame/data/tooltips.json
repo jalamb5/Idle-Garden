@@ -1,0 +1,9 @@
+{
+  "buy_seed": ["Buy more seeds."],
+  "sell": ["Sell all harvested", "plants."],
+  "auto_harvester": ["Harvesters:", "auto harvest ripe", "or withered plants", "periodically."],
+  "auto_planter": ["Planters:", "auto plant", "seeds periodically."],
+  "auto_seller": ["Sellers:", "auto sell", "plants periodically."],
+  "save": ["Save your game.", "Previous save will", "be overwritten."]
+}
+

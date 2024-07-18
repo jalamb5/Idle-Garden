@@ -2,18 +2,19 @@
 
 # Create labels to display information
 class Labels
-  attr_accessor :x, :y, :text, :value, :size_px
+  attr_accessor :x, :y, :text, :value, :size_px, :r, :g, :b, :a
 
-  def initialize(x_coord, y_coord, text, value, size_px = 22)
+  def initialize(x_coord, y_coord, text, value, size_px = 22, rgba = [0, 0, 0, 255])
     @x = x_coord
     @y = y_coord
     @text = text
     @value = value
     @size_px = size_px
+    @r, @g, @b, @a = rgba
   end
 
   def display(args)
-    args.outputs.labels << { x: @x, y: @y, text: "#{@text}: #{@value}", size_px: @size_px }
+    args.outputs.labels << { x: @x, y: @y, text: "#{@text} #{@value}", size_px: @size_px, r: @r, g: @g, b: @b, a: @a }
   end
 
   def update(key, args)
