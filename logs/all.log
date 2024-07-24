@@ -1,0 +1,27 @@
+* Warning: Method invoked on nil.
+The method + was invoked on game_state within args.state, but game_state has
+a value of nil.
+
+Here are the details:
+
+object:
+{:entity_id=>3, :tick_count=>1105, :__thrash_count__=>{}, :startup=>{:splash_state=>false}, :start_button=>{:entity=>{:id=>:start, :rect=>{:x=>540, :y=>360, :w=>200, :h=>50}, :primitives=>[[541, 361, 198, 48, 255, 255, 204, 250], {:x=>540, :y=>360, :w=>200, :h=>50, :primitive_marker=>:border}, {:x=>545, :y=>390, :text=>"Start", :size_enum=>-4, :primitive_marker=>:label}]}}, :load_save_button=>{:entity=>{:id=>:load_save, :rect=>{:x=>540, :y=>260, :w=>200, :h=>50}, :primitives=>[[541, 261, 198, 48, 255, 255, 204, 250], {:x=>540, :y=>260, :w=>200, :h=>50, :primitive_marker=>:border}, {:x=>545, :y=>290, :text=>"Load Save", :size_enum=>-4, :primitive_marker=>:label}]}}, :game_state=>{:loaded_from_save=>false, :plants=>[{:w=>60.00000000000057, :h=>60.00000000000057, :x=>390.0, :y=>404.0, :age=>625, :invalid=>true, :path=>"sprites/stages/3ready_to_harvest.png", :stage=>"ready_to_harvest", :a=>255}, {:w=>60.00000000000057, :h=>60.00000000000057, :x=>359, :y=>35, :age=>600, :invalid=>false, :path=>"sprites/stages/3ready_to_harvest.png", :stage=>"ready_to_harvest", :a=>255}, {:w=>60.00000000000057, :h=>60.00000000000057, :x=>533.0, :y=>459.0, :age=>592, :invalid=>false, :path=>"sprites/stages/2full_grown.png", :stage=>"full_grown", :a=>255}, {:w=>60.00000000000057, :h=>60.00000000000057, :x=>672.0, :y=>484.0, :age=>559, :invalid=>false, :path=>"sprites/stages/2full_grown.png", :stage=>"full_grown", :a=>255}, {:w=>60.00000000000057, :h=>60.00000000000057, :x=>847.0, :y=>523.0, :age=>529, :invalid=>false, :path=>"sprites/stages/2full_grown.png", :stage=>"full_grown", :a=>255}, {:w=>60.00000000000057, :h=>60.00000000000057, :x=>968.0, :y=>541.0, :age=>497, :invalid=>false, :path=>"sprites/stages/2full_grown.png", :stage=>"full_grown", :a=>255}, {:w=>60.00000000000057, :h=>60.00000000000057, :x=>1012.0, :y=>338.0, :age=>446, :invalid=>false, :path=>"sprites/stages/2full_grown.png", :stage=>"full_grown", :a=>255}, {:w=>60.00000000000057, :h=>60.00000000000057, :x=>683.0, :y=>249.0, :age=>414, :invalid=>false, :path=>"sprites/stages/2full_grown.png", :stage=>"full_grown", :a=>255}, {:w=>58.20000000000054, :h=>58.20000000000054, :x=>467.0, :y=>191.0, :age=>382, :invalid=>false, :path=>"sprites/stages/pixel/1growing.png", :stage=>"growing", :a=>255}, {:w=>57.50000000000053, :h=>57.50000000000053, :x=>460, :y=>385, :age=>375, :invalid=>false, :path=>"sprites/stages/pixel/1growing.png", :stage=>"growing", :a=>255}, {:w=>55.0000000000005, :h=>55.0000000000005, :x=>295.0, :y=>224.0, :age=>350, :invalid=>false, :path=>"sprites/stages/pixel/1growing.png", :stage=>"growing", :a=>255}, {:w=>51.20000000000044, :h=>51.20000000000044, :x=>290.0, :y=>509.0, :age=>312, :invalid=>false, :path=>"sprites/stages/pixel/1growing.png", :stage=>"growing", :a=>255}, {:w=>47.50000000000039, :h=>47.50000000000039, :x=>576.0, :y=>560.0, :age=>275, :invalid=>false, :path=>"sprites/stages/pixel/1growing.png", :stage=>"growing", :a=>255}, {:w=>44.00000000000034, :h=>44.00000000000034, :x=>759.0, :y=>538.0, :age=>240, :invalid=>false, :path=>"sprites/stages/pixel/1growing.png", :stage=>"growing", :a=>255}], :seeds=>486, :harvested_plants=>1, :cash=>0, :price=>{:seed=>5, :plant=>10, :harvester=>150, :planter=>150, :seller=>50}, :auto_planters=>[{:type=>:planter, :harvest_cooldown=>-7, :planter_cooldown=>1, :seller_cooldown=>-7}], :auto_harvesters=>[{:type=>:harvester, :harvest_cooldown=>-7, :planter_cooldown=>-7, :seller_cooldown=>-7}, {:type=>:harvester, :harvest_cooldown=>-6, :planter_cooldown=>-6, :seller_cooldown=>-6}], :auto_sellers=>[{:type=>:seller, :harvest_cooldown=>-6, :planter_cooldown=>-6, :seller_cooldown=>-6}], :counter=>75, :score=>0}}
+
+member: +
+attribute: game_state
+args: [2]
+
+Set a default value for this property or you might get an exception later on.
+
+** app/automation.rb:42:in auto_harvester
+** app/automation.rb:39:in auto_harvester
+** app/automation.rb:22:in run
+** app/game.rb:128:in manage_automations
+** app/game.rb:127:in manage_automations
+** app/game.rb:55:in standard_display
+** app/game.rb:37:in tick
+** app/startup.rb:23:in tick
+** app/main.rb:10:in tick
+
+To track method invocations on ~nil~, add $gtk.trace_nil_punning! in =main.rb=.
+

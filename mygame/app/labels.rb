@@ -33,6 +33,8 @@ class Labels
       @value = args.state.game_state.auto_planters.length
     when :auto_sellers
       @value = args.state.game_state.auto_sellers.length
+    when :score
+      @value = args.state.game_state.score
     end
   end
 

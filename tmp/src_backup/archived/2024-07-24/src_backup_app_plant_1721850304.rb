@@ -54,7 +54,7 @@ class Plant
       args.state.game_state.seeds += rand(10)
       plant.invalid = true
       args.outputs.sounds << 'sounds/harvest_withered.wav'
-      args.state.game_state.score += 1
+      args.game_state.score += 1
     end
   end
 

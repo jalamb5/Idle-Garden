@@ -20,6 +20,11 @@ A gardening game built with DragonRuby GTK.
   - Withered plants may drop 0 to 10 seeds
   - Withered plants eventually die
 
+### Scoring
+- Harvest withered plant: 1 point
+- Harvest ripe plant: 2 points
+- Sell ripe plants: (number of plants) * 10
+
 ## To Play
 [Itch.io](https://jalamb5.itch.io/idle-garden)
 

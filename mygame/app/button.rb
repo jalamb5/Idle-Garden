@@ -87,6 +87,7 @@ class Button
     return false if args.state.game_state.harvested_plants <= 0
 
     args.state.game_state.cash += args.state.game_state.harvested_plants * args.state.game_state.price[:plant]
+    args.state.game_state.score += args.state.game_state.harvested_plants * 10
     args.state.game_state.harvested_plants = 0
     true
   end
