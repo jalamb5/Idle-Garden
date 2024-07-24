@@ -42,6 +42,8 @@ class Game
   def standard_display(args)
     args.outputs.sprites << { x: 200, y: 0, w: 1080, h: 720, path: 'sprites/grass_background.png' }
     args.outputs.sprites << { x: 250, y: 50, w: 980, h: 620, path: 'sprites/background.png' }
+    args.outputs.solids << { x: 5, y: 540, w: 150, h: 100,
+                      r: 0, g: 80, b: 40, a: 80 }
 
     display_buttons(args)
     monitor_buttons(args)

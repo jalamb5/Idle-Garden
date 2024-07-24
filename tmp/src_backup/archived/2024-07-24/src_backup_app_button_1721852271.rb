@@ -77,14 +77,14 @@ class Button
     # Max substring length is 28 characters.
     tooltips[@name.to_s].each do |string|
       args.outputs.solids << { x: 5,
-                               y: y_location - 24,
-                               w: 180,
-                               h: 20,
-                               r: 200,
-                               g: 213,
-                               b: 185,
-                               a: 100 }
-      Labels.new(5, y_location, '', string, 20, [0, 0, 0, 240]).display(args)
+                           y: y_location - 120,
+                           w: 150,
+                           h: y_location - 500,
+                           r: 0,
+                           g: 80,
+                           b: 40,
+                           a: 80 }
+      Labels.new(5, y_location, '', string, 20, [0, 0, 255, 255]).display(args)
       y_location -= 20
     end
   end
@@ -146,12 +146,7 @@ class Button
   end
 
   def play_button_sound(type, args)
-    args.outputs.sounds << (if type == true
-                              { input: 'sounds/button_click.wav',
-                                gain: 0.25 }
-                            else
-                              'sounds/button_reject.wav'
-                            end)
+    args.outputs.sounds << (type == true ? { input: 'sounds/button_click.wav', gain: 0.25 } : 'sounds/button_reject.wav')
   end
 
   # DragonRuby required methods

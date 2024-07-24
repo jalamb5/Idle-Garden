@@ -29,7 +29,7 @@ class Button
       primitives: [
         [@x + 2, @y + 1, @width - 4, @height - 2, COLORS[color]].solid,
         { x: @x + 2, y: @y + 1, w: @width - 4, h: @height - 2, r: 0, g: 0, b: 0, a: 80 }.border!,
-        { x: @x + 5, y: @y + 30, text: @text, size_enum: -4, alignment_enum: 2, vertical_alignment_enum: 1 }.label!
+        { x: @x + 5, y: @y + 30, text: @text, size_enum: -4, alignment_enum: 0, vertical_alignment_enum: 1 }.label!
       ]
     }
   end
@@ -76,7 +76,15 @@ class Button
     # Generate label for each string or substring, display substrings below each other.
     # Max substring length is 28 characters.
     tooltips[@name.to_s].each do |string|
-      Labels.new(5, y_location, '', string, 20, [0, 0, 255, 255]).display(args)
+      args.outputs.solids << { x: 5,
+                               y: y_location - 24,
+                               w: 180,
+                               h: 20,
+                               r: 200,
+                               g: 213,
+                               b: 185,
+                               a: 100 }
+      Labels.new(5, y_location, '', string, 20, [0, 0, 0, 240]).display(args)
       y_location -= 20
     end
   end
@@ -138,7 +146,12 @@ class Button
   end
 
   def play_button_sound(type, args)
-    args.outputs.sounds << (type == true ? { input: 'sounds/button_click.wav', gain: 0.25 } : 'sounds/button_reject.wav')
+    args.outputs.sounds << (if type == true
+                              { input: 'sounds/button_click.wav',
+                                gain: 0.25 }
+                            else
+                              'sounds/button_reject.wav'
+                            end)
   end
 
   # DragonRuby required methods

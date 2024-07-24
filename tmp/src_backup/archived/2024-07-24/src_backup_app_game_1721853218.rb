@@ -43,6 +43,7 @@ class Game
     args.outputs.sprites << { x: 200, y: 0, w: 1080, h: 720, path: 'sprites/grass_background.png' }
     args.outputs.sprites << { x: 250, y: 50, w: 980, h: 620, path: 'sprites/background.png' }
 
+
     display_buttons(args)
     monitor_buttons(args)
 

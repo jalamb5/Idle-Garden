@@ -84,7 +84,7 @@ class Button
                                g: 213,
                                b: 185,
                                a: 100 }
-      Labels.new(5, y_location, '', string, 20, [0, 0, 0, 240]).display(args)
+      Labels.new(5, y_location, '', string, 20, [0, 0, 255, 255]).display(args)
       y_location -= 20
     end
   end

@@ -81,7 +81,7 @@ class Game
 
   def generate_labels(args)
     {
-      score: Labels.new(5, args.grid.h, 'Score:', @score, 23, [240, 30, 30, 255]),
+      score: Labels.new(5, args.grid.h, 'Score:', @score, 23, [0, 30, 30, 255]),
       seed: Labels.new(5, args.grid.h - 20, 'Seeds:', @seeds),
       growing: Labels.new(5, args.grid.h - 40, 'Growing:', @plants.length),
       harvested: Labels.new(5, args.grid.h - 60, 'Harvested:', @harvested_plants),
