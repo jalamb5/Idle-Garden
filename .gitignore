@@ -1,2 +1,5 @@
-/builds/
-builds/**
+builds/
+.dragonruby/
+docs/
+logs/
+samples/
