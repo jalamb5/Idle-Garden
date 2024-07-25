@@ -1,1 +1,0 @@
-Contents moved to =logs/all.log=
