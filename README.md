@@ -1,7 +1,7 @@
 # Idle Garden
 A gardening game built with DragonRuby GTK.
 
-![Screenshot of game screen](./mygame/metadata/Idle_Garden_0.png)
+![Screenshot of game screen](./mygame/metadata/idle_garden_0.11.png)
 
 ## Gameplay
 - Plant seeds in the garden by clicking inside the garden
