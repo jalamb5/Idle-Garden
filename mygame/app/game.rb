@@ -6,6 +6,7 @@ require 'app/plant.rb'
 require 'app/automation.rb'
 require 'app/labels.rb'
 require 'app/button.rb'
+require 'app/levels.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Handle game logic
@@ -28,6 +29,7 @@ class Game
     @score = 0
     @standard_buttons = generate_buttons(args)
     @standard_labels = generate_labels(args)
+    @level = Levels.new
   end
 
   def tick(args)
@@ -145,6 +147,7 @@ class Game
     reconstruct_automations(:harvester) unless @auto_harvesters.empty?
     reconstruct_automations(:planter) unless @auto_planters.empty?
     reconstruct_automations(:seller) unless @auto_sellers.empty?
+    @level = Levels.new(@level.current_level) unless @level.instance_of?(Levels)
 
     @loaded_from_save = false
   end
@@ -178,7 +181,7 @@ class Game
   def serialize
     { loaded_from_save: @loaded_from_save, plants: @plants, seeds: @seeds, harvested_plants: @harvested_plants, cash: @cash,
       price: @price, auto_planters: @auto_planters, auto_harvesters: @auto_harvesters, auto_sellers: @auto_sellers,
-      counter: @counter, score: @score }
+      counter: @counter, score: @score, level: @level }
   end
 
   def inspect
