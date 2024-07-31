@@ -17,9 +17,9 @@ class Game
     @loaded_from_save = false
     @garden = { x: 250, y: 50, w: 980, h: 620 }
     @plants = []
-    @seeds = 500
+    @seeds = 5
     @harvested_plants = 0
-    @cash = 500
+    @cash = 0
     @price = { seed: 5, plant: 10, harvester: 150, planter: 150, seller: 50 }
     @auto_planters = []
     @auto_harvesters = []
@@ -46,6 +46,8 @@ class Game
     display_buttons(args)
     monitor_buttons(args)
 
+    args.outputs.sprites << { x: 170, y: args.grid.h - 30, w: 24, h: 24, path: 'sprites/save_icon.png' }
+
     display_labels(args)
     update_labels(args)
 
@@ -55,9 +57,9 @@ class Game
     manage_automations(args)
   end
 
-  def generate_buttons(_args)
+  def generate_buttons(args)
     {
-      save: Button.new(:save, 0, 150, 'Save'),
+      save: Button.new(:save, 170, args.grid.h - 30, '', 30, 30, :clear),
       buy_seed: Button.new(:buy_seed, 100, 100, "Seed (#{@price[:seed]})"),
       auto_planter: Button.new(:auto_planter, 0, 100, "Planter (#{@price[:planter]})"),
       auto_seller: Button.new(:auto_seller, 100, 50, "Seller (#{@price[:seller]})"),

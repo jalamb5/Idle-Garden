@@ -59,7 +59,7 @@ class Game
 
   def generate_buttons(args)
     {
-      save: Button.new(:save, 170, args.grid.h - 30, '', 30, 30, :clear),
+      save: Button.new(:save, 160, args.grid.h - 30, '', 30, 30, :clear),
       buy_seed: Button.new(:buy_seed, 100, 100, "Seed (#{@price[:seed]})"),
       auto_planter: Button.new(:auto_planter, 0, 100, "Planter (#{@price[:planter]})"),
       auto_seller: Button.new(:auto_seller, 100, 50, "Seller (#{@price[:seller]})"),

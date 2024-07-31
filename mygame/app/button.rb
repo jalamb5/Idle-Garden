@@ -13,7 +13,8 @@ class Button
 
   COLORS = {
     default: [200, 213, 185, 250],
-    opaque: [255, 255, 204, 250]
+    opaque: [255, 255, 204, 250],
+    clear: [0, 0, 0, 0]
   }.freeze
 
   def initialize(name, x_coord, y_coord, text, width = 100, height = 50, color = :default)
@@ -28,8 +29,10 @@ class Button
       rect: { x: @x, y: @y, w: @width, h: @height },
       primitives: [
         [@x + 2, @y + 1, @width - 4, @height - 2, COLORS[color]].solid,
-        { x: @x + 2, y: @y + 1, w: @width - 4, h: @height - 2, r: 0, g: 0, b: 0, a: 80 }.border!,
-        { x: @x + 5, y: @y + 30, text: @text, size_enum: -4, alignment_enum: 0, vertical_alignment_enum: 1 }.label!
+        { x: @x + 5, y: @y + 30, text: @text, size_enum: -4, alignment_enum: 0, vertical_alignment_enum: 1 }.label!,
+        unless color == :clear
+          { x: @x + 2, y: @y + 1, w: @width - 4, h: @height - 2, r: 0, g: 0, b: 0, a: 80 }.border!
+        end
       ]
     }
   end
