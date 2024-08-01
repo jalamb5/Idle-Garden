@@ -35,6 +35,8 @@ class Labels
       @value = args.state.game_state.auto_sellers.length
     when :score
       @value = args.state.game_state.score
+    when :level
+      @value = args.state.game_state.level.current_level
     end
   end
 

@@ -12,24 +12,25 @@ require 'app/levels.rb'
 # Handle game logic
 class Game
   attr_accessor :loaded_from_save, :plants, :seeds, :harvested_plants, :cash, :price, :auto_planters, :auto_harvesters,
-                :auto_sellers, :counter, :score
+                :auto_sellers, :counter, :score, :level, :unlock_buttons
 
   def initialize(args)
     @loaded_from_save = false
     @garden = { x: 250, y: 50, w: 980, h: 620 }
     @plants = []
-    @seeds = 5
+    @seeds = 500
     @harvested_plants = 0
-    @cash = 0
+    @cash = 5
     @price = { seed: 5, plant: 10, harvester: 150, planter: 150, seller: 50 }
     @auto_planters = []
     @auto_harvesters = []
     @auto_sellers = []
     @counter = 0
-    @score = 0
+    @score = 90
+    @level = Level.new
     @standard_buttons = generate_buttons(args)
+    @unlock_buttons = {}
     @standard_labels = generate_labels(args)
-    @level = Levels.new
   end
 
   def tick(args)
@@ -57,13 +58,15 @@ class Game
     manage_plants(args)
 
     manage_automations(args)
+
+    @level.tick(args)
   end
 
   def generate_buttons(args)
     {
       save: Button.new(:save, 170, args.grid.h - 30, '', 30, 30, :clear),
       buy_seed: Button.new(:buy_seed, 100, 100, "Seed (#{@price[:seed]})"),
-      auto_planter: Button.new(:auto_planter, 0, 100, "Planter (#{@price[:planter]})"),
+      # auto_planter: Button.new(:auto_planter, 0, 100, "Planter (#{@price[:planter]})"),
       auto_seller: Button.new(:auto_seller, 100, 50, "Seller (#{@price[:seller]})"),
       auto_harvester: Button.new(:auto_harvester, 0, 50, "Harvester (#{@price[:harvester]})"),
       sell: Button.new(:sell, 0, 0, 'Sell', 200)
@@ -71,13 +74,15 @@ class Game
   end
 
   def display_buttons(args)
-    @standard_buttons.each_value do |button|
+    all_buttons = @standard_buttons.merge(@unlock_buttons)
+    all_buttons.each_value do |button|
       button.display(args)
     end
   end
 
   def monitor_buttons(args)
-    @standard_buttons.each_value do |button|
+    all_buttons = @standard_buttons.merge(@unlock_buttons)
+    all_buttons.each_value do |button|
       button.clicked?(args)
       button.hover?(args)
     end
@@ -92,7 +97,8 @@ class Game
       cash: Labels.new(5, args.grid.h - 80, 'Cash:', @cash),
       auto_harvesters: Labels.new(5, args.grid.h - 100, 'Auto Harvesters:', @auto_harvesters.length),
       auto_planters: Labels.new(5, args.grid.h - 120, 'Auto Planters:', @auto_planters.length),
-      auto_sellers: Labels.new(5, args.grid.h - 140, 'Auto Sellers:', @auto_sellers.length)
+      auto_sellers: Labels.new(5, args.grid.h - 140, 'Auto Sellers:', @auto_sellers.length),
+      level: Labels.new(5, args.grid.h - 160, 'Level:', @level.current_level)
     }
   end
 
@@ -147,7 +153,7 @@ class Game
     reconstruct_automations(:harvester) unless @auto_harvesters.empty?
     reconstruct_automations(:planter) unless @auto_planters.empty?
     reconstruct_automations(:seller) unless @auto_sellers.empty?
-    @level = Levels.new(@level.current_level) unless @level.instance_of?(Levels)
+    @level = Level.new(@level.current_level) unless @level.instance_of?(Level)
 
     @loaded_from_save = false
   end
@@ -181,7 +187,7 @@ class Game
   def serialize
     { loaded_from_save: @loaded_from_save, plants: @plants, seeds: @seeds, harvested_plants: @harvested_plants, cash: @cash,
       price: @price, auto_planters: @auto_planters, auto_harvesters: @auto_harvesters, auto_sellers: @auto_sellers,
-      counter: @counter, score: @score, level: @level }
+      counter: @counter, score: @score, level: @level, unlock_buttons: @unlock_buttons }
   end
 
   def inspect

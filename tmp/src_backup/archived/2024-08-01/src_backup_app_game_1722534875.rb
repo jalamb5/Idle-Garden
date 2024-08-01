@@ -12,13 +12,13 @@ require 'app/levels.rb'
 # Handle game logic
 class Game
   attr_accessor :loaded_from_save, :plants, :seeds, :harvested_plants, :cash, :price, :auto_planters, :auto_harvesters,
-                :auto_sellers, :counter, :score, :level, :unlock_buttons
+                :auto_sellers, :counter, :score, :level
 
   def initialize(args)
     @loaded_from_save = false
     @garden = { x: 250, y: 50, w: 980, h: 620 }
     @plants = []
-    @seeds = 500
+    @seeds = 5
     @harvested_plants = 0
     @cash = 5
     @price = { seed: 5, plant: 10, harvester: 150, planter: 150, seller: 50 }
@@ -26,10 +26,9 @@ class Game
     @auto_harvesters = []
     @auto_sellers = []
     @counter = 0
-    @score = 90
+    @score = 0
     @level = Level.new
     @standard_buttons = generate_buttons(args)
-    @unlock_buttons = {}
     @standard_labels = generate_labels(args)
   end
 
@@ -75,9 +74,6 @@ class Game
 
   def display_buttons(args)
     @standard_buttons.each_value do |button|
-      button.display(args)
-    end
-    @unlock_buttons.each_value do |button|
       button.display(args)
     end
   end
