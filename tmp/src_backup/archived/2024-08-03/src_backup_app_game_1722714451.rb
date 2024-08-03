@@ -20,7 +20,7 @@ class Game
     @plants = []
     @seeds = 500
     @harvested_plants = 0
-    @cash = 500
+    @cash = 5
     @price = { seed: 5, plant: 10, harvester: 150, planter: 150, seller: 50 }
     @auto_planters = []
     @auto_harvesters = []

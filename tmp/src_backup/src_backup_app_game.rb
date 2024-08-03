@@ -20,13 +20,13 @@ class Game
     @plants = []
     @seeds = 500
     @harvested_plants = 0
-    @cash = 5
+    @cash = 500
     @price = { seed: 5, plant: 10, harvester: 150, planter: 150, seller: 50 }
     @auto_planters = []
     @auto_harvesters = []
     @auto_sellers = []
     @counter = 0
-    @score = 90
+    @score = 0
     @level = Level.new
     @standard_buttons = generate_buttons(args)
     @unlock_buttons = {}
@@ -74,16 +74,15 @@ class Game
   end
 
   def display_buttons(args)
-    @standard_buttons.each_value do |button|
-      button.display(args)
-    end
-    @unlock_buttons.each_value do |button|
+    all_buttons = @standard_buttons.merge(@unlock_buttons)
+    all_buttons.each_value do |button|
       button.display(args)
     end
   end
 
   def monitor_buttons(args)
-    @standard_buttons.each_value do |button|
+    all_buttons = @standard_buttons.merge(@unlock_buttons)
+    all_buttons.each_value do |button|
       button.clicked?(args)
       button.hover?(args)
     end
@@ -188,7 +187,7 @@ class Game
   def serialize
     { loaded_from_save: @loaded_from_save, plants: @plants, seeds: @seeds, harvested_plants: @harvested_plants, cash: @cash,
       price: @price, auto_planters: @auto_planters, auto_harvesters: @auto_harvesters, auto_sellers: @auto_sellers,
-      counter: @counter, score: @score, level: @level }
+      counter: @counter, score: @score, level: @level, unlock_buttons: @unlock_buttons }
   end
 
   def inspect

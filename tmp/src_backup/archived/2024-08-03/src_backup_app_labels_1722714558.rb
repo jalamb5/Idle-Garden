@@ -50,7 +50,7 @@ class Labels
 
     return if @cooldown.zero?
 
-    args.outputs.solids << { x: @x, y: @y - 25, w: 180, h: 20, r: 255, g: 255, b: 51, a: @cooldown }
+    args.outputs.solids << { x: @x, y: @y - 25, w: 180, h: 20, r: 255, g: 255, b: 185, a: 100 }
     @cooldown -= 1
   end
 

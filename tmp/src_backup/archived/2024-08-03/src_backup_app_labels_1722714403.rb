@@ -45,12 +45,12 @@ class Labels
 
   private
 
-  def flash(args, prev, value)
-    @cooldown = 50 if prev != value
+  def flash(args, prev, )
+    @cooldown = 50 if prev != @value
 
     return if @cooldown.zero?
 
-    args.outputs.solids << { x: @x, y: @y - 25, w: 180, h: 20, r: 255, g: 255, b: 51, a: @cooldown }
+    args.outputs.solids << { x: @x, y: @y, w: 180, h: 20, r: 200, g: 213, b: 185, a: 100 }
     @cooldown -= 1
   end
 

@@ -11,7 +11,7 @@ class Labels
     @value = value
     @size_px = size_px
     @r, @g, @b, @a = rgba
-    @cooldown = 0
+    @cooldown = 50
   end
 
   def display(args)
@@ -29,7 +29,7 @@ class Labels
     when :cash
       prev = @value
       @value = args.state.game_state.cash
-      flash(args, prev, @value)
+      flash(args) if prev != @value  @cooldown.positive?
     when :auto_harvesters
       @value = args.state.game_state.auto_harvesters.length
     when :auto_planters
@@ -45,12 +45,8 @@ class Labels
 
   private
 
-  def flash(args, prev, value)
-    @cooldown = 50 if prev != value
-
-    return if @cooldown.zero?
-
-    args.outputs.solids << { x: @x, y: @y - 25, w: 180, h: 20, r: 255, g: 255, b: 51, a: @cooldown }
+  def flash(args)
+    args.outputs.solids << { x: @x, y: @y, w: 180, h: 20, r: 200, g: 213, b: 185, a: 100 }
     @cooldown -= 1
   end
 
