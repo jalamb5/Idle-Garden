@@ -19,27 +19,35 @@ class Labels
   end
 
   def update(key, args)
+    prev = @value
     case key
     when :seed
       @value = args.state.game_state.seeds
+      flash(args, prev, @value)
     when :growing
       @value = args.state.game_state.plants.length
+      flash(args, prev, @value)
     when :harvested
       @value = args.state.game_state.harvested_plants
+      flash(args, prev, @value)
     when :cash
-      prev = @value
       @value = args.state.game_state.cash
       flash(args, prev, @value)
     when :auto_harvesters
       @value = args.state.game_state.auto_harvesters.length
+      flash(args, prev, @value)
     when :auto_planters
       @value = args.state.game_state.auto_planters.length
+      flash(args, prev, @value)
     when :auto_sellers
       @value = args.state.game_state.auto_sellers.length
+      flash(args, prev, @value)
     when :score
       @value = args.state.game_state.score
+      flash(args, prev, @value)
     when :level
       @value = args.state.game_state.level.current_level
+      flash(args, prev, @value)
     end
   end
 
