@@ -18,7 +18,7 @@ class Game
     @loaded_from_save = false
     @garden = { x: 250, y: 50, w: 980, h: 620 }
     @plants = []
-    @seeds = 5
+    @seeds = 50
     @harvested_plants = 0
     @cash = 5
     @price = { seed: 5, plant: 10, harvester: 150, planter: 150, seller: 50 }
@@ -65,10 +65,10 @@ class Game
   def generate_buttons(args)
     {
       save: Button.new(:save, 170, args.grid.h - 30, '', 30, 30, :clear),
-      buy_seed: Button.new(:buy_seed, 100, 100, "Seed (#{@price[:seed]})"),
+      buy_seed: Button.new(:buy_seed, 0, 50, "Seed (#{@price[:seed]})"),
       # auto_planter: Button.new(:auto_planter, 0, 100, "Planter (#{@price[:planter]})"),
-      auto_seller: Button.new(:auto_seller, 100, 50, "Seller (#{@price[:seller]})"),
-      auto_harvester: Button.new(:auto_harvester, 0, 50, "Harvester (#{@price[:harvester]})"),
+      # auto_seller: Button.new(:auto_seller, 100, 50, "Seller (#{@price[:seller]})"),
+      # auto_harvester: Button.new(:auto_harvester, 0, 50, "Harvester (#{@price[:harvester]})"),
       sell: Button.new(:sell, 0, 0, 'Sell', 200)
     }
   end
