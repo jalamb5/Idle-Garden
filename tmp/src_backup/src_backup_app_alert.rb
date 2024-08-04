@@ -11,16 +11,17 @@ class Alert
     @message = message
     @y_coord = y_coord
     @ttl = 120
-    @labels << generate_labels
-    @max_length = 28
+    @labels = []
+    @max_length = 20
+    generate_labels
   end
 
   def display(args)
     return if @ttl.zero?
 
-    args.outputs.solids << { x: 5, y: @y_coord - 24, w: 180, h: 20, r: 200, g: 213, b: 185, a: 100 }
     @labels.each do |label|
       label.display(args)
+      args.outputs.solids << { x: 5, y: label.y - 24, w: 180, h: 20, r: 200, g: 213, b: 185, a: 100 }
     end
     @ttl -= 1
   end
@@ -28,15 +29,15 @@ class Alert
   private
 
   def generate_labels
-    return Labels.new(5, @y_coord, '', @message, 20, [0, 0, 0, 240]) if @message.length <= @max_length
-
-    labels = []
-    lines = split_long_string
-    lines.each do |line|
-      labels << Labels.new(5, @y_coord, '', line, 20, [0, 0, 0, 240])
-      @y_coord -= 20
+    if @message.length <= @max_length
+      @labels << Labels.new(5, @y_coord, '', @message, 20, [0, 0, 0, 240])
+    else
+      lines = split_long_string
+      lines.each do |line|
+        @labels << Labels.new(5, @y_coord, '', line, 20, [0, 0, 0, 240])
+        @y_coord -= 20
+      end
     end
-    labels
   end
 
   def split_long_string
