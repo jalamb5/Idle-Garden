@@ -11,8 +11,8 @@ class Automation
   def initialize(type)
     @type = type
     @harvest_cooldown = 3
-    @planter_cooldown = 3
-    @seller_cooldown = 3
+    @planter_cooldown = 2
+    @seller_cooldown = 5
   end
 
   def run(args)

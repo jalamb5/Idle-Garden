@@ -19,7 +19,7 @@ class Game
     @loaded_from_save = false
     @garden = { x: 250, y: 50, w: 980, h: 620 }
     @plants = []
-    @seeds = 1
+    @seeds = 5
     @harvested_plants = 0
     @cash = 0
     @price = { seed: 5, plant: 10, planter: 150, harvester: 250, seller: 350 }
@@ -64,7 +64,7 @@ class Game
     @level.tick(args)
 
     debt_check(args)
-    display_alerts(args) if @alerts.any?
+    display_alerts(args)
   end
 
   def generate_buttons(args)
@@ -160,7 +160,7 @@ class Game
       # If player has no money, no seeds, no plants, and no harvests, debt is accrued.
       @seeds += 5
       @cash -= 30
-      @alerts << Alert.new('You have been given 5 seeds. You have incurred a debt of $30.')
+      @alerts << Alert.new('You have been given 5 seeds. You have incurred a debt of $30.').display(args)
     end
   end
 
