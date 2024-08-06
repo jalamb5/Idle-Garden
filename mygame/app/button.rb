@@ -5,6 +5,7 @@
 require 'app/automation.rb'
 require 'app/game.rb'
 require 'app/labels.rb'
+require 'app/alert.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Create buttons
@@ -79,15 +80,7 @@ class Button
     # Generate label for each string or substring, display substrings below each other.
     # Max substring length is 28 characters.
     tooltips[@name.to_s].each do |string|
-      args.outputs.solids << { x: 5,
-                               y: y_location - 24,
-                               w: 180,
-                               h: 20,
-                               r: 200,
-                               g: 213,
-                               b: 185,
-                               a: 100 }
-      Labels.new(5, y_location, '', string, 20, [0, 0, 0, 240]).display(args)
+      args.state.game_state.alerts << Alert.new(string, y_location, true)
       y_location -= 20
     end
   end

@@ -13,15 +13,15 @@ require 'app/alert.rb'
 # Handle game logic
 class Game
   attr_accessor :loaded_from_save, :plants, :seeds, :harvested_plants, :cash, :price, :auto_planters, :auto_harvesters,
-                :auto_sellers, :counter, :score, :level, :unlock_buttons
+                :auto_sellers, :counter, :score, :level, :unlock_buttons, :alerts
 
   def initialize(args)
     @loaded_from_save = false
     @garden = { x: 250, y: 50, w: 980, h: 620 }
     @plants = []
-    @seeds = 1
+    @seeds = 5
     @harvested_plants = 0
-    @cash = 0
+    @cash = 5
     @price = { seed: 5, plant: 10, planter: 150, harvester: 250, seller: 350 }
     @auto_planters = []
     @auto_harvesters = []
@@ -65,6 +65,7 @@ class Game
 
     debt_check(args)
     display_alerts(args) if @alerts.any?
+    cleanup_alerts
   end
 
   def generate_buttons(args)
@@ -120,6 +121,10 @@ class Game
     @alerts.each do |alert|
       alert.display(args)
     end
+  end
+
+  def cleanup_alerts
+    @alerts.reject! { |alert| alert.ttl.zero? }
   end
 
   def plant_harvest(args)
@@ -204,7 +209,7 @@ class Game
   def serialize
     { loaded_from_save: @loaded_from_save, plants: @plants, seeds: @seeds, harvested_plants: @harvested_plants, cash: @cash,
       price: @price, auto_planters: @auto_planters, auto_harvesters: @auto_harvesters, auto_sellers: @auto_sellers,
-      counter: @counter, score: @score, level: @level, unlock_buttons: @unlock_buttons }
+      counter: @counter, score: @score, level: @level, unlock_buttons: @unlock_buttons, alerts: @alerts }
   end
 
   def inspect

@@ -7,26 +7,25 @@ require 'app/labels.rb'
 
 # Show alerts in sidebar
 class Alert
-  attr_accessor :y_coord, :all_coords, :message, :ttl, :hover
+  attr_accessor :y_coord, :all_coords, :message, :ttl
 
-  def initialize(message, y_coord = 540, hover = false)
+  def initialize(message, y_coord = 540)
     @message = message
     @y_coord = y_coord
     @all_coords = []
-    @ttl = hover ? 1 : 120
+    @ttl = 120
     @labels = []
     @max_length = 20
-    @hover = hover
     generate_labels
   end
 
-  def display(args)
+  def display(args, hover = false)
     return if @ttl.zero?
 
-    # Move overlapping labels unless no other labels exist or for toolips on hover
-    handle_overlaps(args) unless args.state.game_state.alerts.empty?
+    handle_overlaps(args) unless args.state.game_state.alerts.empty? || hover
 
     @labels.each do |label|
+      args.outputs.solids << { x: 5, y: label.y - 24, w: 180, h: 20, r: 200, g: 213, b: 185, a: 255 }
       label.display(args)
       args.outputs.solids << { x: 5, y: label.y - 24, w: 180, h: 20, r: 200, g: 213, b: 185, a: 255 }
     end
@@ -79,7 +78,7 @@ class Alert
 
   # DragonRuby required methods
   def serialize
-    { y_coord: @y_coord, all_coords: @all_coords, message: @message, ttl: @ttl, hover: @hover }
+    { y_coord: @y_coord, all_coords: @all_coords, message: @message, ttl: @ttl }
   end
 
   def inspect
