@@ -13,7 +13,7 @@ class Alert
     @message = message
     @y_coord = y_coord
     @all_coords = []
-    @ttl = hover ? 1 : 120
+    @ttl = hover ? 1 : 180
     @labels = []
     @max_length = 20
     generate_labels

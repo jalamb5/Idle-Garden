@@ -63,7 +63,7 @@ class Game
 
     @level.tick(args)
 
-    debt_check(args)
+    debt_check
     display_alerts(args) if @alerts.any?
     cleanup_alerts
   end
@@ -160,13 +160,13 @@ class Game
     @counter = 0
   end
 
-  def debt_check(args)
-    if @cash <= 0 && @harvested_plants <= 0 && @seeds <= 0 && @plants.length <= 0
-      # If player has no money, no seeds, no plants, and no harvests, debt is accrued.
-      @seeds += 5
-      @cash -= 30
-      @alerts << Alert.new('You have been given 5 seeds. You have incurred a debt of $30.')
-    end
+  def debt_check
+    return unless @cash <= 0 && @harvested_plants <= 0 && @seeds <= 0 && @plants.length <= 0
+
+    # If player has no money, no seeds, no plants, and no harvests, debt is accrued.
+    @seeds += 5
+    @cash -= 30
+    @alerts << Alert.new('You have been given 5 seeds. You have incurred a debt of $30.')
   end
 
   # Load from save functions, reconstruct objects
