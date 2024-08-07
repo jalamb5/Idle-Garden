@@ -7,7 +7,7 @@ require 'app/spritesheet.rb'
 
 # Create new plants in garden
 class Plant
-  attr_accessor :x, :y, :w, :h, :age, :invalid, :stage, :a, :frame, :spritesheet, :sprite
+  attr_accessor :x, :y, :w, :h, :age, :invalid, :stage, :a, :frame, :spritesheet
 
   attr_sprite
 
@@ -22,7 +22,7 @@ class Plant
   SPRITES = { SEED: 'sprites/stages/0seed.png', GROWING: 'sprites/stages/1growing.png', FULL_GROWN: 'sprites/stages/2full_grown.png',
               READY_TO_HARVEST: 'sprites/stages/3ready_to_harvest.png', WITHERED: 'sprites/stages/4withered.png' }.freeze
   # STAGES = %w[seed growing full_grown ready_to_harvest withered].freeze
-  STAGES = { SEED: (0..10), GROWING: (11..20), FULL_GROWN: (21..35), READY_TO_HARVEST: (31..40), WITHERED: (41..55) }.freeze
+  STAGES = { SEED: [0..10], GROWING: [11..20], FULL_GROWN: [21..35], READY_TO_HARVEST: [31..40], WITHERED: [41..50] }.freeze
 
   def initialize(args, spritesheet, x_coord=args.inputs.mouse.x, y_coord=args.inputs.mouse.y)
     @x = x_coord - 15
@@ -34,14 +34,14 @@ class Plant
     # @path = SPRITES[:SEED]
     @stage = :SEED
     @a = 255
-    @frame = 0
+    @frame = 30
 
     @spritesheet = spritesheet
-    @sprite = update_sprite
+    @path = @spritesheet.get(@frame, @x, @y, 64, 64)
   end
 
-  def update_sprite
-    @sprite = @spritesheet.get(@frame, @x, @y, 100, 100)
+  def display
+    @path
   end
 
   def grow
@@ -50,29 +50,25 @@ class Plant
     case @stage
     when :SEED
       STAGES[:SEED].each do |i|
-        @frame = i if @age % 100 == 0
-        update_sprite
+        @frame = i if @age % 10 == 0
+        # @path = @spritesheet.get(@frame, @x, @y, 64, 64)
       end
     when :GROWING
       STAGES[:GROWING].each do |i|
-        @frame = i if @age % 100 == 0
-        update_sprite
+        @frame = i if @age % 10 == 0
       end
     when :FULL_GROWN
       STAGES[:FULL_GROWN].each do |i|
-        @frame = i if @age % 100 == 0
-        update_sprite
+        @frame = i if @age % 10 == 0
       end
     when :READY_TO_HARVEST
       STAGES[:READY_TO_HARVEST].each do |i|
-        @frame = i if @age % 100 == 0
-        update_sprite
+        @frame = i if @age % 10 == 0
       end
     when :WITHERED
       STAGES[:WITHERED].each do |i|
-        @frame = i if @age % 100 == 0
-        @sprite.a -= WITHER_RATE unless @sprite.a <= 80
-        update_sprite
+        @frame = i if @age % 10 == 0
+        @a -= WITHER_RATE unless @a <= 80
       end
     end
     @invalid = true if @age >= DEATH
@@ -132,7 +128,7 @@ class Plant
 
   # DragonRuby required methods
   def serialize
-    { w: @w, h: @h, x: @x, y: @y, age: @age, invalid: @invalid, stage: @stage, a: @a, frame: @frame, spritesheet: @spritesheet, sprite: @sprite }
+    { w: @w, h: @h, x: @x, y: @y, age: @age, invalid: @invalid, stage: @stage, a: @a, frame: @frame, spritesheet: @spritesheet }
   end
 
   def inspect

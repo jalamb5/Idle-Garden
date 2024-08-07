@@ -34,7 +34,7 @@ class Game
     @unlock_buttons = {}
     @standard_labels = generate_labels(args)
     @alerts = []
-    @spritesheets = [Spritesheet.new('sprites/flower_red.png', 200, 108, 56)]
+    @spritesheets = [Spritesheet.new('sprites/grass_background.png', 10, 300, 56)]
   end
 
   def tick(args)
@@ -149,7 +149,7 @@ class Game
 
   def display_plants(args)
     @plants.each do |plant|
-      args.outputs.sprites << plant.sprite
+      args.outputs.sprites << plant
     end
   end
 

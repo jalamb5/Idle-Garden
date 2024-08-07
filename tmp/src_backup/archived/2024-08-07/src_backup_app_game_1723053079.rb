@@ -34,7 +34,7 @@ class Game
     @unlock_buttons = {}
     @standard_labels = generate_labels(args)
     @alerts = []
-    @spritesheets = [Spritesheet.new('sprites/flower_red.png', 200, 108, 56)]
+    @spritesheets = [Spritesheet.new('sprites/flower_red.png', 175, 200, 56)]
   end
 
   def tick(args)

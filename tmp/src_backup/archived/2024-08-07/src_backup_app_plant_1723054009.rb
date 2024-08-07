@@ -65,12 +65,12 @@ class Plant
       end
     when :READY_TO_HARVEST
       STAGES[:READY_TO_HARVEST].each do |i|
-        @frame = i if @age % 100 == 0
+        @frame = i if @age % 10 == 0
         update_sprite
       end
     when :WITHERED
       STAGES[:WITHERED].each do |i|
-        @frame = i if @age % 100 == 0
+        @frame = i if @age % 10 == 0
         @sprite.a -= WITHER_RATE unless @sprite.a <= 80
         update_sprite
       end

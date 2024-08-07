@@ -1,46 +1,69 @@
 # frozen_string_literal: true
 
+# DragonRuby requires extensions
+# rubocop:disable Style/RedundantFileExtensionInRequire
+require 'app/spritesheet.rb'
+# rubocop:enable Style/RedundantFileExtensionInRequire
+
 # Create new plants in garden
 class Plant
-  attr_accessor :x, :y, :w, :h, :age, :invalid, :path, :stage, :a
+  attr_accessor :x, :y, :w, :h, :age, :invalid, :stage, :a, :frame, :spritesheet, :sprite
 
   attr_sprite
 
   # Growth Stages & Rates
   GROWTH_RATE = 0.1
-  GROWING = 200
-  FULL_GROWN = 400
-  READY_TO_HARVEST = 600
-  WITHER = 1000
+  GROWING = 2000
+  FULL_GROWN = 4000
+  READY_TO_HARVEST = 6000
+  WITHER = 10000
   WITHER_RATE = 0.2
-  DEATH = 2000
+  DEATH = 20000
   SPRITES = { SEED: 'sprites/stages/0seed.png', GROWING: 'sprites/stages/1growing.png', FULL_GROWN: 'sprites/stages/2full_grown.png',
               READY_TO_HARVEST: 'sprites/stages/3ready_to_harvest.png', WITHERED: 'sprites/stages/4withered.png' }.freeze
-  STAGES = %w[seed growing full_grown ready_to_harvest withered].freeze
+  # STAGES = %w[seed growing full_grown ready_to_harvest withered].freeze
+  STAGES = { SEED: (0..10), GROWING: (11..20), FULL_GROWN: (21..35), READY_TO_HARVEST: (31..40), WITHERED: (41..55) }.freeze
 
-  def initialize(args, x_coord=args.inputs.mouse.x, y_coord=args.inputs.mouse.y)
+  def initialize(args, spritesheet, x_coord=args.inputs.mouse.x, y_coord=args.inputs.mouse.y)
     @x = x_coord - 15
     @y = y_coord - 15
     @w = 20
     @h = 20
     @age = 0
     @invalid = occupied(args, [@x, @y, @w, @h])
-    @path = SPRITES[:SEED]
-    @stage = STAGES[0]
+    # @path = SPRITES[:SEED]
+    @stage = :SEED
     @a = 255
+    @frame = 0
+
+    @spritesheet = spritesheet
+    @sprite = update_sprite
+  end
+
+  def update_sprite
+    @sprite = @spritesheet.get(@frame, @x, @y, 200, 200)
   end
 
   def grow
     @age += 1
     set_growth_stage
-    if @age <= FULL_GROWN
-      @w += GROWTH_RATE
-      @h += GROWTH_RATE
-    elsif @age >= WITHER && @age < DEATH
-      @a -= WITHER_RATE unless @a <= 80
-    elsif @age >= DEATH
-      @invalid = true
+    if (@age % 100).zero?
+      case @stage
+      when :SEED
+        @frame += 1 unless @frame >= STAGES[:SEED].max
+      when :GROWING
+        @frame += 1 unless @frame >= STAGES[:GROWING].max
+      when :FULL_GROWN
+        @frame += 1 unless @frame >= STAGES[:FULL_GROWN].max
+      when :READY_TO_HARVEST
+        @frame += 1 unless @frame >= STAGES[:READY_TO_HARVEST].max
+      when :WITHERED
+        @frame += 1 unless @frame >= STAGES[:WITHERED].max
+        @sprite.a -= WITHER_RATE unless @sprite.a <= 80
+      end
+      update_sprite
     end
+    @invalid = true if @age >= DEATH
   end
 
   # Harvest plant if correct stage
@@ -62,17 +85,17 @@ class Plant
 
   def set_growth_stage
     if @age >= GROWING && @age < FULL_GROWN
-      @path = SPRITES[:GROWING]
-      @stage = STAGES[1]
+      # @path = SPRITES[:GROWING]
+      @stage = :GROWING
     elsif @age >= FULL_GROWN && @age < READY_TO_HARVEST
-      @path = SPRITES[:FULL_GROWN]
-      @stage = STAGES[2]
+      # @path = SPRITES[:FULL_GROWN]
+      @stage = :FULL_GROWN
     elsif @age >= READY_TO_HARVEST && @age < WITHER
-      @path = SPRITES[:READY_TO_HARVEST]
-      @stage = STAGES[3]
+      # @path = SPRITES[:READY_TO_HARVEST]
+      @stage = :READY_TO_HARVEST
     elsif @age >= WITHER && @age < DEATH
-      @path = SPRITES[:WITHERED]
-      @stage = STAGES[4]
+      # @path = SPRITES[:WITHERED]
+      @stage = :WITHERED
     end
   end
 
@@ -89,7 +112,7 @@ class Plant
 
   # DragonRuby required methods
   def serialize
-    { w: @w, h: @h, x: @x, y: @y, age: @age, invalid: @invalid, path: @path, stage: @stage, a: @a }
+    { w: @w, h: @h, x: @x, y: @y, age: @age, invalid: @invalid, stage: @stage, a: @a, frame: @frame, spritesheet: @spritesheet, sprite: @sprite }
   end
 
   def inspect

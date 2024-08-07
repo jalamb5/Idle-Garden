@@ -50,7 +50,7 @@ class Plant
     case @stage
     when :SEED
       STAGES[:SEED].each do |i|
-        @frame = i if @age % 100 == 0
+        # @frame = i if @age % 100 == 0
         update_sprite
       end
     when :GROWING

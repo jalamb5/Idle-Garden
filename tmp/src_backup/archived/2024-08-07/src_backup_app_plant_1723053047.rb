@@ -41,7 +41,7 @@ class Plant
   end
 
   def update_sprite
-    @sprite = @spritesheet.get(@frame, @x, @y, 100, 100)
+    @sprite = @spritesheet.get(@frame, @x, @y, 100, 300)
   end
 
   def grow
@@ -50,28 +50,28 @@ class Plant
     case @stage
     when :SEED
       STAGES[:SEED].each do |i|
-        @frame = i if @age % 100 == 0
+        @frame = i if @age % 10 == 0
         update_sprite
       end
     when :GROWING
       STAGES[:GROWING].each do |i|
-        @frame = i if @age % 100 == 0
+        @frame = i if @age % 10 == 0
         update_sprite
       end
     when :FULL_GROWN
       STAGES[:FULL_GROWN].each do |i|
-        @frame = i if @age % 100 == 0
+        @frame = i if @age % 10 == 0
         update_sprite
       end
     when :READY_TO_HARVEST
       STAGES[:READY_TO_HARVEST].each do |i|
-        @frame = i if @age % 100 == 0
+        @frame = i if @age % 10 == 0
         update_sprite
       end
     when :WITHERED
       STAGES[:WITHERED].each do |i|
-        @frame = i if @age % 100 == 0
-        @sprite.a -= WITHER_RATE unless @sprite.a <= 80
+        @frame = i if @age % 10 == 0
+        @a -= WITHER_RATE unless @a <= 80
         update_sprite
       end
     end
