@@ -20,7 +20,7 @@ class Game
     @loaded_from_save = false
     @garden = { x: 250, y: 50, w: 980, h: 620 }
     @plants = []
-    @seeds = 500
+    @seeds = 5
     @harvested_plants = 0
     @cash = 5
     @price = { seed: 5, plant: 10, planter: 150, harvester: 250, seller: 350 }
@@ -43,6 +43,7 @@ class Game
     reconstruct_objects(args) if @loaded_from_save == true
 
     standard_display(args)
+    dev_mode(args)
   end
 
   private
@@ -142,7 +143,7 @@ class Game
     @seeds -= 1
   end
 
-  def manage_plants(args)
+  def manage_plants(_args)
     @plants.reject!(&:invalid)
     @plants.each(&:grow)
   end
@@ -212,6 +213,14 @@ class Game
       end
       new_automation
     end
+  end
+
+  def dev_mode(args)
+    return unless args.inputs.keyboard.key_down.z && args.inputs.keyboard.key_down.q
+
+    @cash += 1000
+    @seeds += 500
+    @score = 400
   end
 
   # DragonRuby required methods
