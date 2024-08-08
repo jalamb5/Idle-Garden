@@ -27,7 +27,7 @@ class Plant
 
   def initialize(args, spritesheet, x_coord = args.inputs.mouse.x, y_coord = args.inputs.mouse.y)
     @x = x_coord - 25
-    @y = y_coord - 15
+    @y = y_coord - 25
     @w = 20
     @h = 20
     @age = 0

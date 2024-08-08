@@ -26,7 +26,7 @@ class Plant
              WITHERED: (41..55) }.freeze
 
   def initialize(args, spritesheet, x_coord = args.inputs.mouse.x, y_coord = args.inputs.mouse.y)
-    @x = x_coord - 25
+    @x = x_coord - 15
     @y = y_coord - 15
     @w = 20
     @h = 20
@@ -42,7 +42,7 @@ class Plant
   end
 
   def update_sprite
-    @sprite = @spritesheet.get(@frame, @x, @y, 64, 64)
+    @sprite = @spritesheet.get(@frame, @x, @y, 64, 32)
   end
 
   def grow

@@ -26,8 +26,8 @@ class Plant
              WITHERED: (41..55) }.freeze
 
   def initialize(args, spritesheet, x_coord = args.inputs.mouse.x, y_coord = args.inputs.mouse.y)
-    @x = x_coord - 25
-    @y = y_coord - 15
+    @x = x_coord
+    @y = y_coord 
     @w = 20
     @h = 20
     @age = 0

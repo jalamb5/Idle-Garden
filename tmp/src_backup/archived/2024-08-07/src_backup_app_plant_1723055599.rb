@@ -26,7 +26,7 @@ class Plant
              WITHERED: (41..55) }.freeze
 
   def initialize(args, spritesheet, x_coord = args.inputs.mouse.x, y_coord = args.inputs.mouse.y)
-    @x = x_coord - 25
+    @x = x_coord - 15
     @y = y_coord - 15
     @w = 20
     @h = 20
@@ -42,7 +42,7 @@ class Plant
   end
 
   def update_sprite
-    @sprite = @spritesheet.get(@frame, @x, @y, 64, 64)
+    @sprite = @spritesheet.get(@frame, @x, @y, 200, 200)
   end
 
   def grow
@@ -86,12 +86,16 @@ class Plant
 
   def set_growth_stage
     if @age >= GROWING && @age < FULL_GROWN
+      # @path = SPRITES[:GROWING]
       @stage = :GROWING
     elsif @age >= FULL_GROWN && @age < READY_TO_HARVEST
+      # @path = SPRITES[:FULL_GROWN]
       @stage = :FULL_GROWN
     elsif @age >= READY_TO_HARVEST && @age < WITHER
+      # @path = SPRITES[:READY_TO_HARVEST]
       @stage = :READY_TO_HARVEST
     elsif @age >= WITHER && @age < DEATH
+      # @path = SPRITES[:WITHERED]
       @stage = :WITHERED
     end
   end
