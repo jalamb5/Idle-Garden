@@ -219,10 +219,10 @@ class Game
   def dev_mode(args)
     return unless args.inputs.keyboard.key_down.z && args.inputs.keyboard.key_down.q
 
-    @alerts << Alert.new('Dev Mode Activated!')
+    alerts << Alert.new('Dev Mode Activated!')
     @cash += 1000
     @seeds += 500
-    @score += 400
+    @score = 400
   end
 
   # DragonRuby required methods
