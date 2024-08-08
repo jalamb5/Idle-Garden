@@ -215,9 +215,9 @@ class Game
     end
   end
 
-  # Enter dev mode if keys z and q are pressed
+  # Enter dev mode if keys d & e are held while v is pressed
   def dev_mode(args)
-    return unless args.inputs.keyboard.key_down.z && args.inputs.keyboard.key_down.q
+    return unless args.inputs.keyboard.key_held.d && args.inputs.keyboard.key_held.e && args.inputs.keyboard.key_down.v
 
     @alerts << Alert.new('Dev Mode Activated!')
     @cash += 1000
