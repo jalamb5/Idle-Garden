@@ -19,20 +19,16 @@ class Plant
   WITHER = 8000
   WITHER_RATE = 0.2
   DEATH = 10_000
-  SPRITES = { SEED: 'sprites/stages/0seed.png', GROWING: 'sprites/stages/1growing.png', FULL_GROWN: 'sprites/stages/2full_grown.png',
-              READY_TO_HARVEST: 'sprites/stages/3ready_to_harvest.png', WITHERED: 'sprites/stages/4withered.png' }.freeze
-  # STAGES = %w[seed growing full_grown ready_to_harvest withered].freeze
-  STAGES = { SEED: (0..10), GROWING: (11..20), FULL_GROWN: (21..35), READY_TO_HARVEST: (31..40),
-             WITHERED: (41..55) }.freeze
+  STAGES = { SEED: (0..13), GROWING: (14..25), FULL_GROWN: (26..29), READY_TO_HARVEST: (30..33),
+             WITHERED: (34..55) }.freeze
 
   def initialize(args, spritesheet, x_coord = args.inputs.mouse.x, y_coord = args.inputs.mouse.y)
     @x = x_coord - 25
-    @y = y_coord - 15
-    @w = 20
-    @h = 20
+    @y = y_coord - 10
+    @w = 64
+    @h = 64
     @age = 0
     @invalid = occupied(args, [@x, @y, @w, @h])
-    # @path = SPRITES[:SEED]
     @stage = :SEED
     @a = 255
     @frame = 0
@@ -42,7 +38,7 @@ class Plant
   end
 
   def update_sprite
-    @sprite = @spritesheet.get(@frame, @x, @y, 64, 64)
+    @sprite = @spritesheet.get(@frame, @x, @y, @w, @h)
   end
 
   def grow

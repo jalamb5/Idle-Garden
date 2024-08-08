@@ -34,7 +34,8 @@ class Game
     @unlock_buttons = {}
     @standard_labels = generate_labels(args)
     @alerts = []
-    @spritesheets = [Spritesheet.new('sprites/flower_red_16x16.png', 64, 64, 56)]
+    @spritesheets = [Spritesheet.new('sprites/flower_red_64x64.png', 64, 64, 56),
+                     Spritesheet.new('sprites/flower_blue_64x64.png', 64, 64, 56)]
   end
 
   def tick(args)
@@ -133,7 +134,7 @@ class Game
   def plant_harvest(args)
     return unless args.inputs.mouse.click && args.inputs.mouse.point.inside_rect?(@garden)
 
-    new_plant = Plant.new(args, @spritesheets[0])
+    new_plant = Plant.new(args, @spritesheets.sample)
 
     return unless @seeds.positive? && !new_plant.invalid
 
@@ -144,7 +145,6 @@ class Game
   def manage_plants(args)
     @plants.reject!(&:invalid)
     @plants.each(&:grow)
-    # @plants.each(&:display)
   end
 
   def display_plants(args)
