@@ -38,7 +38,7 @@ class Plant
   end
 
   def update_sprite(args)
-    @sprite = args.state.game_state.spritesheets[sheet].get(@frame, @x, @y, @w, @h)
+    @sprite = args.state.game_state.spritesheets[@sheet].get(@frame, @x, @y, @w, @h)
   end
 
   def grow(args)

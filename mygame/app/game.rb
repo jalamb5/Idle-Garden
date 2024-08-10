@@ -21,6 +21,7 @@ class Game
     @loaded_from_save = false
     @paused = false
     @garden = { x: 250, y: 50, w: 980, h: 620 }
+    @spritesheets = build_spritesheets
     @plants = []
     @seeds = 5
     @harvested_plants = 0
@@ -36,8 +37,6 @@ class Game
     @unlock_buttons = {}
     @standard_labels = generate_labels(args)
     @alerts = []
-    @spritesheets = [Spritesheet.new('sprites/flower_red_64x64.png', 64, 64, 56),
-                     Spritesheet.new('sprites/flower_blue_64x64.png', 64, 64, 56)]
   end
 
   def tick(args)
@@ -139,6 +138,7 @@ class Game
 
   def plant_harvest(args)
     return unless args.inputs.mouse.click && args.inputs.mouse.point.inside_rect?(@garden)
+
     sheet = [0, 1].sample
     new_plant = Plant.new(args, sheet)
 
@@ -189,22 +189,29 @@ class Game
     pause_screen.tick(args)
   end
 
+  def build_spritesheets
+    [Spritesheet.new('sprites/flower_red_64x64.png', 64, 64, 56),
+     Spritesheet.new('sprites/flower_blue_64x64.png', 64, 64, 56)]
+  end
+
   # Load from save functions, reconstruct objects
   def reconstruct_objects(args)
+    @unlock_buttons = {}
+    @spritesheets = build_spritesheets
+    @level = Level.new(@level.current_level) unless @level.instance_of?(Level)
     reconstruct_plants(args) unless @plants.empty?
     reconstruct_automations(:harvester) unless @auto_harvesters.empty?
     reconstruct_automations(:planter) unless @auto_planters.empty?
     reconstruct_automations(:seller) unless @auto_sellers.empty?
-    @level = Level.new(@level.current_level) unless @level.instance_of?(Level)
 
     @loaded_from_save = false
   end
 
   def reconstruct_plants(args)
-    attributes = %i[x y w h age path stage a]
+    attributes = %i[x y w h age stage a frame sheet]
 
     @plants.map! do |plant|
-      new_plant = Plant.new(args, 0, 0)
+      new_plant = Plant.new(args, 0, 0, 0)
       attributes.each do |attr|
         new_plant.send("#{attr}=", plant.send(attr))
       end
