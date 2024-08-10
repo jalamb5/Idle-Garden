@@ -70,6 +70,8 @@ class Button
       pause_game(args)
     when :mute
       args.audio[:music][:gain] = args.audio[:music][:gain].zero? ? 0.25 : 0
+    when :quit
+      $gtk.request_quit
     else
       false
     end
@@ -142,7 +144,6 @@ class Button
   end
 
   def pause_game(args)
-    # paused = args.state.game_state.paused
     args.state.game_state.paused == true ? (args.state.game_state.paused = false) : (args.state.game_state.paused = true)
   end
 
