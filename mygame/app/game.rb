@@ -59,7 +59,7 @@ class Game
     display_buttons(args)
     monitor_buttons(args)
 
-    args.outputs.sprites << { x: 170, y: args.grid.h - 30, w: 24, h: 24, path: 'sprites/save_icon.png' }
+    args.outputs.sprites << { x: 170, y: args.grid.h - 30, w: 20, h: 24, path: 'sprites/pause_icon.png' }
 
     display_labels(args)
     update_labels(args)
@@ -79,8 +79,8 @@ class Game
 
   def generate_buttons(args)
     {
-      save: Button.new(:save, 170, args.grid.h - 30, '', 30, 30, :clear),
-      pause: Button.new(:pause, 100, args.grid.h - 30, '||', 30, 30),
+      # save: Button.new(:save, 170, args.grid.h - 30, '', 30, 30, :clear),
+      pause: Button.new(:pause, 170, args.grid.h - 30, '', 30, 30, :clear),
       buy_seed: Button.new(:buy_seed, 0, 50, "Seed (#{@price[:seed]})"),
       sell: Button.new(:sell, 0, 0, 'Sell', 200)
     }

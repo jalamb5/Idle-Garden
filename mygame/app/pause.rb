@@ -25,7 +25,8 @@ class Pause
   def pause_buttons(_args)
     {
       unpause: Button.new(:pause, 540, 360, 'Close Menu', 200, 50, :opaque),
-      save: Button.new(:save, 540, 260, 'Save', 200, 50, :opaque)
+      save: Button.new(:save, 540, 260, 'Save', 200, 50, :opaque),
+      mute: Button.new(:mute, 540, 160, 'Mute/Unmute Music', 200, 50, :opaque)
     }
   end
 end

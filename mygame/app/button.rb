@@ -68,6 +68,8 @@ class Button
       args.state.startup.splash_state = false
     when :pause
       pause_game(args)
+    when :mute
+      args.audio[:music][:gain] = args.audio[:music][:gain].zero? ? 0.25 : 0
     else
       false
     end

@@ -34,7 +34,7 @@ A gardening game built with DragonRuby GTK.
 - Sound Effects: [jsfxr](https://sfxr.me/)
 - Background Track: [Suno](https://suno.com/)[^1]
 - Font: [Maname Regular](https://fonts.google.com/specimen/Maname)
-- Save Icon: [Yogi Aprelliyanto - Flaticon](https://www.flaticon.com/free-icon/diskette_2874091)
+- Save Icon: [Yogi Aprelliyanto - Flaticon](https://www.flaticon.com/free-icon/diskette_2874091) (CC BY 3.0)
 
 ## Footnotes
 [^1]: I've used AI to generate art for the sake of expediency and due to my own lack of artistic ability. But I'm not proud of it, if I'm able I'll replace this with legitimate art in the future.
