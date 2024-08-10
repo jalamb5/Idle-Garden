@@ -9,15 +9,17 @@ require 'app/button.rb'
 require 'app/levels.rb'
 require 'app/alert.rb'
 require 'app/spritesheet.rb'
+require 'app/pause.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Handle game logic
 class Game
   attr_accessor :loaded_from_save, :plants, :seeds, :harvested_plants, :cash, :price, :auto_planters, :auto_harvesters,
-                :auto_sellers, :counter, :score, :level, :unlock_buttons, :alerts
+                :auto_sellers, :counter, :score, :level, :unlock_buttons, :alerts, :paused
 
   def initialize(args)
     @loaded_from_save = false
+    @paused = false
     @garden = { x: 250, y: 50, w: 980, h: 620 }
     @plants = []
     @seeds = 5
@@ -39,6 +41,8 @@ class Game
   end
 
   def tick(args)
+    return pause_menu(args) if args.state.game_state.paused == true
+
     @counter += 1
     reconstruct_objects(args) if @loaded_from_save == true
 
@@ -76,6 +80,7 @@ class Game
   def generate_buttons(args)
     {
       save: Button.new(:save, 170, args.grid.h - 30, '', 30, 30, :clear),
+      pause: Button.new(:pause, 100, args.grid.h - 30, '||', 30, 30),
       buy_seed: Button.new(:buy_seed, 0, 50, "Seed (#{@price[:seed]})"),
       sell: Button.new(:sell, 0, 0, 'Sell', 200)
     }
@@ -179,6 +184,11 @@ class Game
     @alerts << Alert.new('You have been given 5 seeds. You have incurred a debt of $30.')
   end
 
+  def pause_menu(args)
+    pause_screen ||= Pause.new(args)
+    pause_screen.tick(args)
+  end
+
   # Load from save functions, reconstruct objects
   def reconstruct_objects(args)
     reconstruct_plants(args) unless @plants.empty?
@@ -229,7 +239,7 @@ class Game
   def serialize
     { loaded_from_save: @loaded_from_save, plants: @plants, seeds: @seeds, harvested_plants: @harvested_plants, cash: @cash,
       price: @price, auto_planters: @auto_planters, auto_harvesters: @auto_harvesters, auto_sellers: @auto_sellers,
-      counter: @counter, score: @score, level: @level, unlock_buttons: @unlock_buttons, alerts: @alerts }
+      counter: @counter, score: @score, level: @level, unlock_buttons: @unlock_buttons, alerts: @alerts, paused: @paused }
   end
 
   def inspect

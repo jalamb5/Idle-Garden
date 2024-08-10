@@ -66,6 +66,8 @@ class Button
     when :load_save
       load_save(args)
       args.state.startup.splash_state = false
+    when :pause
+      pause_game(args)
     else
       false
     end
@@ -134,6 +136,12 @@ class Button
     data = $gtk.deserialize_state('game_state.txt')
     data.each_key { |key| args.state.game_state.send("#{key}=", data[key]) }
     args.state.game_state.send('loaded_from_save=', true)
+    args.state.game_state.send('paused=', false)
+  end
+
+  def pause_game(args)
+    # paused = args.state.game_state.paused
+    args.state.game_state.paused == true ? (args.state.game_state.paused = false) : (args.state.game_state.paused = true)
   end
 
   def play_button_sound(type, args)
