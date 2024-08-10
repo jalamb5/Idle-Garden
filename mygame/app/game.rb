@@ -15,7 +15,7 @@ require 'app/pause.rb'
 # Handle game logic
 class Game
   attr_accessor :loaded_from_save, :plants, :seeds, :harvested_plants, :cash, :price, :auto_planters, :auto_harvesters,
-                :auto_sellers, :counter, :score, :level, :unlock_buttons, :alerts, :paused
+                :auto_sellers, :counter, :score, :level, :unlock_buttons, :alerts, :paused, :spritesheets
 
   def initialize(args)
     @loaded_from_save = false
@@ -139,8 +139,8 @@ class Game
 
   def plant_harvest(args)
     return unless args.inputs.mouse.click && args.inputs.mouse.point.inside_rect?(@garden)
-
-    new_plant = Plant.new(args, @spritesheets.sample)
+    sheet = [0, 1].sample
+    new_plant = Plant.new(args, sheet)
 
     return unless @seeds.positive? && !new_plant.invalid
 
@@ -148,9 +148,9 @@ class Game
     @seeds -= 1
   end
 
-  def manage_plants(_args)
+  def manage_plants(args)
     @plants.reject!(&:invalid)
-    @plants.each(&:grow)
+    @plants.each { |plant| plant.grow(args) }
   end
 
   def display_plants(args)
@@ -239,7 +239,7 @@ class Game
   def serialize
     { loaded_from_save: @loaded_from_save, plants: @plants, seeds: @seeds, harvested_plants: @harvested_plants, cash: @cash,
       price: @price, auto_planters: @auto_planters, auto_harvesters: @auto_harvesters, auto_sellers: @auto_sellers,
-      counter: @counter, score: @score, level: @level, unlock_buttons: @unlock_buttons, alerts: @alerts, paused: @paused }
+      counter: @counter, score: @score, level: @level, unlock_buttons: @unlock_buttons, alerts: @alerts, paused: @paused, spritesheets: @spritesheets }
   end
 
   def inspect

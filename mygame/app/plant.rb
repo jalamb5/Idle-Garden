@@ -7,7 +7,7 @@ require 'app/spritesheet.rb'
 
 # Create new plants in garden
 class Plant
-  attr_accessor :x, :y, :w, :h, :age, :invalid, :stage, :a, :frame, :spritesheet, :sprite
+  attr_accessor :x, :y, :w, :h, :age, :invalid, :stage, :a, :frame, :sheet, :sprite
 
   attr_sprite
 
@@ -22,7 +22,7 @@ class Plant
   STAGES = { SEED: (0..13), GROWING: (14..25), FULL_GROWN: (26..29), READY_TO_HARVEST: (30..33),
              WITHERED: (34..55) }.freeze
 
-  def initialize(args, spritesheet, x_coord = args.inputs.mouse.x, y_coord = args.inputs.mouse.y)
+  def initialize(args, sheet, x_coord = args.inputs.mouse.x, y_coord = args.inputs.mouse.y)
     @x = x_coord - 25
     @y = y_coord - 10
     @w = 64
@@ -32,16 +32,16 @@ class Plant
     @stage = :SEED
     @a = 255
     @frame = 0
+    @sheet = sheet
 
-    @spritesheet = spritesheet
-    @sprite = update_sprite
+    @sprite = update_sprite(args)
   end
 
-  def update_sprite
-    @sprite = @spritesheet.get(@frame, @x, @y, @w, @h)
+  def update_sprite(args)
+    @sprite = args.state.game_state.spritesheets[sheet].get(@frame, @x, @y, @w, @h)
   end
 
-  def grow
+  def grow(args)
     @age += 1
     set_growth_stage
     if (@age % 100).zero?
@@ -58,7 +58,7 @@ class Plant
         @frame += 1 unless @frame >= STAGES[:WITHERED].max
         @sprite.a -= WITHER_RATE unless @sprite.a <= 80
       end
-      update_sprite
+      update_sprite(args)
     end
     @invalid = true if @age >= DEATH
   end
@@ -106,7 +106,7 @@ class Plant
   # DragonRuby required methods
   def serialize
     { w: @w, h: @h, x: @x, y: @y, age: @age, invalid: @invalid, stage: @stage, a: @a, frame: @frame,
-      spritesheet: @spritesheet, sprite: @sprite }
+      sheet: @sheet, sprite: @sprite }
   end
 
   def inspect
