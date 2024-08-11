@@ -58,7 +58,7 @@ class Game
     display_buttons(args)
     monitor_buttons(args)
 
-    args.outputs.sprites << { x: 170, y: args.grid.h - 30, w: 20, h: 24, path: 'sprites/pause_icon.png' }
+    args.outputs.sprites << { x: 170, y: args.grid.h - 30, w: 24, h: 24, path: 'sprites/pause_icon.png' }
 
     display_labels(args)
     update_labels(args)
