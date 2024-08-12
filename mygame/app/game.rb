@@ -10,12 +10,13 @@ require 'app/levels.rb'
 require 'app/alert.rb'
 require 'app/spritesheet.rb'
 require 'app/pause.rb'
+require 'app/uimanager.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Handle game logic
 class Game
   attr_accessor :loaded_from_save, :plants, :seeds, :harvested_plants, :cash, :price, :auto_planters, :auto_harvesters,
-                :auto_sellers, :counter, :score, :level, :unlock_buttons, :alerts, :paused, :spritesheets
+                :auto_sellers, :counter, :score, :level, :unlock_buttons, :alerts, :paused, :spritesheets, :ui
 
   def initialize(args)
     @loaded_from_save = false
@@ -33,10 +34,9 @@ class Game
     @counter = 0
     @score = 0
     @level = Level.new
-    @standard_buttons = generate_buttons(args)
     @unlock_buttons = {}
-    @standard_labels = generate_labels(args)
     @alerts = []
+    @ui = UIManager.new(args, self)
   end
 
   def tick(args)
@@ -52,16 +52,7 @@ class Game
   private
 
   def standard_display(args)
-    args.outputs.sprites << { x: 200, y: 0, w: 1080, h: 720, path: 'sprites/grass_background.png' }
-    args.outputs.sprites << { x: 250, y: 50, w: 980, h: 620, path: 'sprites/background.png' }
-
-    display_buttons(args)
-    monitor_buttons(args)
-
-    args.outputs.sprites << { x: 170, y: args.grid.h - 30, w: 24, h: 24, path: 'sprites/pause_icon.png' }
-
-    display_labels(args)
-    update_labels(args)
+    @ui.tick(args)
 
     plant_harvest(args)
     manage_plants(args)
@@ -72,68 +63,6 @@ class Game
     @level.tick(args)
 
     debt_check
-    display_alerts(args) if @alerts.any?
-    cleanup_alerts
-  end
-
-  def generate_buttons(args)
-    {
-      # save: Button.new(:save, 170, args.grid.h - 30, '', 30, 30, :clear),
-      pause: Button.new(:pause, 170, args.grid.h - 30, '', 30, 30, :clear),
-      buy_seed: Button.new(:buy_seed, 0, 50, "Seed (#{@price[:seed]})"),
-      sell: Button.new(:sell, 0, 0, 'Sell', 200)
-    }
-  end
-
-  def display_buttons(args)
-    all_buttons = @standard_buttons.merge(@unlock_buttons)
-    all_buttons.each_value do |button|
-      button.display(args)
-    end
-  end
-
-  def monitor_buttons(args)
-    all_buttons = @standard_buttons.merge(@unlock_buttons)
-    all_buttons.each_value do |button|
-      button.clicked?(args)
-      button.hover?(args)
-    end
-  end
-
-  def generate_labels(args)
-    {
-      score: Labels.new(5, args.grid.h, 'Score:', @score, 23, [240, 30, 30, 255]),
-      seed: Labels.new(5, args.grid.h - 20, 'Seeds:', @seeds),
-      growing: Labels.new(5, args.grid.h - 40, 'Growing:', @plants.length),
-      harvested: Labels.new(5, args.grid.h - 60, 'Harvested:', @harvested_plants),
-      cash: Labels.new(5, args.grid.h - 80, 'Cash:', @cash),
-      auto_harvesters: Labels.new(5, args.grid.h - 100, 'Auto Harvesters:', @auto_harvesters.length),
-      auto_planters: Labels.new(5, args.grid.h - 120, 'Auto Planters:', @auto_planters.length),
-      auto_sellers: Labels.new(5, args.grid.h - 140, 'Auto Sellers:', @auto_sellers.length),
-      level: Labels.new(5, args.grid.h - 160, 'Level:', @level.current_level)
-    }
-  end
-
-  def display_labels(args)
-    @standard_labels.each_value do |label|
-      label.display(args)
-    end
-  end
-
-  def update_labels(args)
-    @standard_labels.each do |key, label|
-      label.update(key, args)
-    end
-  end
-
-  def display_alerts(args)
-    @alerts.each do |alert|
-      alert.display(args)
-    end
-  end
-
-  def cleanup_alerts
-    @alerts.reject! { |alert| alert.ttl.zero? }
   end
 
   def plant_harvest(args)
@@ -181,7 +110,7 @@ class Game
     # If player has no money, no seeds, no plants, and no harvests, debt is accrued.
     @seeds += 5
     @cash -= 30
-    @alerts << Alert.new('You have been given 5 seeds. You have incurred a debt of $30.')
+    @ui.alerts << Alert.new('You have been given 5 seeds. You have incurred a debt of $30.')
   end
 
   def pause_menu(args)
@@ -236,7 +165,7 @@ class Game
   def dev_mode(args)
     return unless args.inputs.keyboard.key_held.d && args.inputs.keyboard.key_held.e && args.inputs.keyboard.key_down.v
 
-    @alerts << Alert.new('Dev Mode Activated!')
+    @ui.alerts << Alert.new('Dev Mode Activated!')
     @cash += 1000
     @seeds += 500
     @score += 400
@@ -246,7 +175,7 @@ class Game
   def serialize
     { loaded_from_save: @loaded_from_save, plants: @plants, seeds: @seeds, harvested_plants: @harvested_plants, cash: @cash,
       price: @price, auto_planters: @auto_planters, auto_harvesters: @auto_harvesters, auto_sellers: @auto_sellers,
-      counter: @counter, score: @score, level: @level, unlock_buttons: @unlock_buttons, alerts: @alerts, paused: @paused, spritesheets: @spritesheets }
+      counter: @counter, score: @score, level: @level, unlock_buttons: @unlock_buttons, alerts: @alerts, paused: @paused, spritesheets: @spritesheets, ui: @ui }
   end
 
   def inspect

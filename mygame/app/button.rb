@@ -83,7 +83,7 @@ class Button
 
     tooltips = args.gtk.parse_json_file('data/tooltips.json')
     y_location = args.grid.h - 180
-    tooltips[@name.to_s].each { |string| args.state.game_state.alerts << Alert.new(string, y_location, true) }
+    tooltips[@name.to_s].each { |string| args.state.game_state.ui.alerts << Alert.new(string, y_location, true) }
   end
 
   private
