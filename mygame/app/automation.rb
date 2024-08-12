@@ -47,7 +47,8 @@ class Automation
 
   def auto_planter(args)
     x, y = coord_generator
-    plant = Plant.new(args, x, y)
+    sheet = [0, 1].sample
+    plant = Plant.new(args, sheet, x, y)
     args.state.game_state.plants << plant
     args.state.game_state.seeds -= 1
     @planter_cooldown = rand(10)

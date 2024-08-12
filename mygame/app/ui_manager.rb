@@ -53,9 +53,9 @@ class UIManager
       growing: Labels.new(5, args.grid.h - 40, 'Growing:', game.plants.length),
       harvested: Labels.new(5, args.grid.h - 60, 'Harvested:', game.harvested_plants),
       cash: Labels.new(5, args.grid.h - 80, 'Cash:', game.cash),
-      auto_harvesters: Labels.new(5, args.grid.h - 100, 'Auto Harvesters:', game.auto_harvesters.length),
-      auto_planters: Labels.new(5, args.grid.h - 120, 'Auto Planters:', game.auto_planters.length),
-      auto_sellers: Labels.new(5, args.grid.h - 140, 'Auto Sellers:', game.auto_sellers.length),
+      auto_harvesters: Labels.new(5, args.grid.h - 100, 'Auto Harvesters:', game.automations.auto_harvesters.length),
+      auto_planters: Labels.new(5, args.grid.h - 120, 'Auto Planters:', game.automations.auto_planters.length),
+      auto_sellers: Labels.new(5, args.grid.h - 140, 'Auto Sellers:', game.automations.auto_sellers.length),
       level: Labels.new(5, args.grid.h - 160, 'Level:', game.level.current_level)
     }
   end

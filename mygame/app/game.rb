@@ -4,19 +4,18 @@
 # rubocop:disable Style/RedundantFileExtensionInRequire
 require 'app/plant.rb'
 require 'app/automation.rb'
-require 'app/labels.rb'
-require 'app/button.rb'
 require 'app/levels.rb'
 require 'app/alert.rb'
 require 'app/spritesheet.rb'
 require 'app/pause.rb'
-require 'app/uimanager.rb'
+require 'app/ui_manager.rb'
+require 'app/automation_manager.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Handle game logic
 class Game
-  attr_accessor :loaded_from_save, :plants, :seeds, :harvested_plants, :cash, :price, :auto_planters, :auto_harvesters,
-                :auto_sellers, :counter, :score, :level, :paused, :spritesheets, :ui
+  attr_accessor :loaded_from_save, :plants, :seeds, :harvested_plants, :cash, :price, :score, :level, :paused,
+                :spritesheets, :ui, :automations
 
   def initialize(args)
     @loaded_from_save = false
@@ -28,19 +27,15 @@ class Game
     @harvested_plants = 0
     @cash = 5
     @price = { seed: 5, plant: 10, planter: 150, harvester: 250, seller: 350 }
-    @auto_planters = []
-    @auto_harvesters = []
-    @auto_sellers = []
-    @counter = 0
     @score = 0
     @level = Level.new
     @ui = UIManager.new(args, self)
+    @automations = AutomationManager.new
   end
 
   def tick(args)
     return pause_menu(args) if args.state.game_state.paused == true
 
-    @counter += 1
     reconstruct_objects(args) if @loaded_from_save == true
 
     standard_display(args)
@@ -56,7 +51,7 @@ class Game
     manage_plants(args)
     display_plants(args)
 
-    manage_automations(args)
+    @automations.tick(args)
 
     @level.tick(args)
 
@@ -84,22 +79,6 @@ class Game
     @plants.each do |plant|
       args.outputs.sprites << plant.sprite
     end
-  end
-
-  def manage_automations(args)
-    return if @counter % 75 != 0
-
-    @auto_harvesters.each do |automation|
-      automation.run(args)
-    end
-    @auto_planters.each do |automation|
-      automation.run(args)
-    end
-    @auto_sellers.each do |automation|
-      automation.run(args)
-    end
-
-    @counter = 0
   end
 
   def debt_check
@@ -171,9 +150,9 @@ class Game
 
   # DragonRuby required methods
   def serialize
-    { loaded_from_save: @loaded_from_save, plants: @plants, seeds: @seeds, harvested_plants: @harvested_plants, cash: @cash,
-      price: @price, auto_planters: @auto_planters, auto_harvesters: @auto_harvesters, auto_sellers: @auto_sellers,
-      counter: @counter, score: @score, level: @level, paused: @paused, spritesheets: @spritesheets, ui: @ui }
+    { loaded_from_save: @loaded_from_save, plants: @plants, seeds: @seeds, harvested_plants: @harvested_plants,
+      cash: @cash, price: @price, score: @score, level: @level, paused: @paused, spritesheets: @spritesheets, ui: @ui,
+      automations: @automations }
   end
 
   def inspect
