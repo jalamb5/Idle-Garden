@@ -24,7 +24,7 @@ class UIManager
   end
 
   def tick(args)
-    display_sprites(args)
+    display_images(args)
 
     unlock_buttons
     display_buttons(args)
@@ -93,7 +93,7 @@ class UIManager
     @alerts.reject! { |alert| alert.ttl.zero? }
   end
 
-  def display_sprites(args)
+  def display_images(args)
     @images.each { |image| args.outputs.sprites << image }
   end
 

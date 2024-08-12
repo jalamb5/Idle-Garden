@@ -16,7 +16,7 @@ require 'app/uimanager.rb'
 # Handle game logic
 class Game
   attr_accessor :loaded_from_save, :plants, :seeds, :harvested_plants, :cash, :price, :auto_planters, :auto_harvesters,
-                :auto_sellers, :counter, :score, :level, :unlock_buttons, :alerts, :paused, :spritesheets, :ui
+                :auto_sellers, :counter, :score, :level, :paused, :spritesheets, :ui
 
   def initialize(args)
     @loaded_from_save = false
@@ -34,8 +34,6 @@ class Game
     @counter = 0
     @score = 0
     @level = Level.new
-    @unlock_buttons = {}
-    @alerts = []
     @ui = UIManager.new(args, self)
   end
 
@@ -175,7 +173,7 @@ class Game
   def serialize
     { loaded_from_save: @loaded_from_save, plants: @plants, seeds: @seeds, harvested_plants: @harvested_plants, cash: @cash,
       price: @price, auto_planters: @auto_planters, auto_harvesters: @auto_harvesters, auto_sellers: @auto_sellers,
-      counter: @counter, score: @score, level: @level, unlock_buttons: @unlock_buttons, paused: @paused, spritesheets: @spritesheets, ui: @ui }
+      counter: @counter, score: @score, level: @level, paused: @paused, spritesheets: @spritesheets, ui: @ui }
   end
 
   def inspect

@@ -23,7 +23,7 @@ class Alert
     return if @ttl.zero?
 
     # Move overlapping labels unless no other labels exist
-    handle_overlaps(args) unless args.state.game_state.alerts.empty?
+    handle_overlaps(args) unless args.state.game_state.ui.alerts.empty?
 
     @labels.each do |label|
       label.display(args)
@@ -68,7 +68,7 @@ class Alert
   end
 
   def handle_overlaps(args)
-    args.state.game_state.alerts.each do |alert|
+    args.state.game_state.ui.alerts.each do |alert|
       if alert.all_coords.include?(@labels[0].y) && self != alert
         @all_coords.map!.with_index { |_coord, index| alert.all_coords[-1] - (index + 1) * 20 }
       end
