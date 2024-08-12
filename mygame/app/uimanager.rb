@@ -9,10 +9,11 @@ require 'app/alert.rb'
 
 # Manage display and updating of UI elements
 class UIManager
-  attr_accessor :buttons, :labels, :alerts, :images
+  attr_accessor :buttons, :unlocked_buttons, :labels, :alerts, :images
 
   def initialize(args, game)
     @buttons = generate_buttons(args, game)
+    @unlocked_buttons = []
     @labels = generate_labels(args, game)
     @alerts = []
     @images = [
@@ -25,6 +26,7 @@ class UIManager
   def tick(args)
     display_sprites(args)
 
+    unlock_buttons
     display_buttons(args)
     display_labels(args)
 
@@ -58,6 +60,12 @@ class UIManager
     }
   end
 
+  # Add any unlocked buttons to the full button array and clear the unlocked array
+  def unlock_buttons
+    @unlocked_buttons.each { |button| @buttons << button unless @buttons.include?(button) }
+    @unlocked_buttons.clear
+  end
+
   def display_buttons(args)
     @buttons.each_value { |button| button.display(args) }
   end
@@ -89,9 +97,9 @@ class UIManager
     @images.each { |image| args.outputs.sprites << image }
   end
 
-    # DragonRuby required methods
+  # DragonRuby required methods
   def serialize
-    { buttons: @buttons, labels: @labels, alerts: @alerts, images: @images }
+    { buttons: @buttons, unlocked_buttons: @unlocked_buttons, labels: @labels, alerts: @alerts, images: @images }
   end
 
   def inspect

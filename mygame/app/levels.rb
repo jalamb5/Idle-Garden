@@ -44,14 +44,15 @@ class Level
   def unlock_level(args, level)
     case level
     when 2
-      args.state.game_state.unlock_buttons[:auto_planter] ||=
-        Button.new(:auto_planter, 100, 50, "Planter (#{args.state.game_state.price[:planter]})")
+      args.state.game_state.ui.unlocked_buttons <<
+        { auto_planter: Button.new(:auto_planter, 100, 50, "Planter (#{args.state.game_state.price[:planter]})") }
     when 3
-      args.state.game_state.unlock_buttons[:auto_harvester] ||=
-        Button.new(:auto_harvester, 0, 100, "Harvester (#{args.state.game_state.price[:harvester]})")
+      args.state.game_state.ui.unlocked_buttons <<
+        { auto_harvester: Button.new(:auto_harvester, 0, 100,
+                                     "Harvester (#{args.state.game_state.price[:harvester]})") }
     when 4
-      args.state.game_state.unlock_buttons[:auto_seller] ||=
-        Button.new(:auto_seller, 100, 100, "Seller (#{args.state.game_state.price[:seller]})")
+      args.state.game_state.ui.unlocked_buttons <<
+        { auto_seller: Button.new(:auto_seller, 100, 100, "Seller (#{args.state.game_state.price[:seller]})") }
     end
   end
 

@@ -175,7 +175,7 @@ class Game
   def serialize
     { loaded_from_save: @loaded_from_save, plants: @plants, seeds: @seeds, harvested_plants: @harvested_plants, cash: @cash,
       price: @price, auto_planters: @auto_planters, auto_harvesters: @auto_harvesters, auto_sellers: @auto_sellers,
-      counter: @counter, score: @score, level: @level, unlock_buttons: @unlock_buttons, alerts: @alerts, paused: @paused, spritesheets: @spritesheets, ui: @ui }
+      counter: @counter, score: @score, level: @level, unlock_buttons: @unlock_buttons, paused: @paused, spritesheets: @spritesheets, ui: @ui }
   end
 
   def inspect

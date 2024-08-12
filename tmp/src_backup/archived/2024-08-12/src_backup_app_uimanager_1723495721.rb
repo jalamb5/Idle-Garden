@@ -9,7 +9,7 @@ require 'app/alert.rb'
 
 # Manage display and updating of UI elements
 class UIManager
-  attr_accessor :buttons, :unlocked_buttons, :labels, :alerts, :images
+  attr_accessor :buttons, : :labels, :alerts, :images
 
   def initialize(args, game)
     @buttons = generate_buttons(args, game)
