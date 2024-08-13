@@ -65,8 +65,8 @@ class Button
     when :save
       play_button_sound(save(args), args)
     when :load_save
-      load_save(args)
-      # LoadManager.new.load_save(args)
+      # load_save(args)
+      LoadManager.new.load_save(args)
       args.state.startup.splash_state = false
     when :pause
       pause_game(args)
@@ -102,7 +102,7 @@ class Button
   def buy_seed(args)
     return false if (args.state.game_state.cash - args.state.game_state.price[:seed]).negative?
 
-    args.state.game_state.plant_manager.seeds += 1
+    args.state.game_state.seeds += 1
     args.state.game_state.cash -= args.state.game_state.price[:seed]
     true
   end
@@ -138,12 +138,11 @@ class Button
 
   def load_save(args)
     # return nil unless File.exist?('game_state.txt')
-    # args.state.game_state = Game.new(args)
-    # data = $gtk.deserialize_state('game_state.txt')
-    # data.each_key { |key| args.state.game_state.send("#{key}=", data[key]) }
-    # args.state.game_state.send('loaded_from_save=', true)
-    # args.state.game_state.send('paused=', false)
-    args.state.load_state = LoadManager.new
+    args.state.game_state = Game.new(args)
+    data = $gtk.deserialize_state('game_state.txt')
+    data.each_key { |key| args.state.game_state.send("#{key}=", data[key]) }
+    args.state.game_state.send('loaded_from_save=', true)
+    args.state.game_state.send('paused=', false)
   end
 
   def pause_game(args)

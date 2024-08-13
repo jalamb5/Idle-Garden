@@ -6,7 +6,6 @@ require 'app/plant.rb'
 require 'app/automation.rb'
 require 'app/levels.rb'
 require 'app/alert.rb'
-require 'app/spritesheet.rb'
 require 'app/pause.rb'
 require 'app/ui_manager.rb'
 require 'app/automation_manager.rb'
@@ -15,11 +14,10 @@ require 'app/plant_manager.rb'
 
 # Handle game logic
 class Game
-  attr_accessor :loaded_from_save, :plant_manager, :harvested_plants, :cash, :price, :score, :level, :paused,
+  attr_accessor :plant_manager, :harvested_plants, :cash, :price, :score, :level, :paused,
                 :ui, :automations
 
   def initialize(args)
-    @loaded_from_save = false
     @paused = false
     @harvested_plants = 0
     @cash = 5
@@ -34,7 +32,7 @@ class Game
   def tick(args)
     return pause_menu(args) if args.state.game_state.paused == true
 
-    reconstruct_objects(args) if @loaded_from_save == true
+    args.state.load_state.load_save(args) if args.state.load_state.loaded_from_save == true
 
     standard_display(args)
     dev_mode(args)
@@ -55,10 +53,10 @@ class Game
   end
 
   def debt_check
-    return unless @cash <= 0 && @harvested_plants <= 0 && @seeds <= 0 && @plants.length <= 0
+    return unless @cash <= 0 && @harvested_plants <= 0 && @plant_manager.seeds <= 0 && @plant_manager.plants.length <= 0
 
     # If player has no money, no seeds, no plants, and no harvests, debt is accrued.
-    @seeds += 5
+    @plant_manager.seeds += 5
     @cash -= 30
     @ui.alerts << Alert.new('You have been given 5 seeds. You have incurred a debt of $30.')
   end
@@ -68,58 +66,20 @@ class Game
     pause_screen.tick(args)
   end
 
-  # Load from save functions, reconstruct objects
-  def reconstruct_objects(args)
-    @unlock_buttons = {}
-    @spritesheets = build_spritesheets
-    @level = Level.new(@level.current_level) unless @level.instance_of?(Level)
-    reconstruct_plants(args) unless @plants.empty?
-    reconstruct_automations(:harvester) unless @auto_harvesters.empty?
-    reconstruct_automations(:planter) unless @auto_planters.empty?
-    reconstruct_automations(:seller) unless @auto_sellers.empty?
-
-    @loaded_from_save = false
-  end
-
-  def reconstruct_plants(args)
-    attributes = %i[x y w h age stage a frame sheet]
-
-    @plants.map! do |plant|
-      new_plant = Plant.new(args, 0, 0, 0)
-      attributes.each do |attr|
-        new_plant.send("#{attr}=", plant.send(attr))
-      end
-      new_plant
-    end
-  end
-
-  def reconstruct_automations(automator)
-    attributes = %i[type harvest_cooldown planter_cooldown seller_cooldown]
-    types = { harvester: @auto_harvesters, planter: @auto_planters, seller: @auto_sellers }
-
-    types[automator].map! do |automation|
-      new_automation = Automation.new(automator)
-      attributes.each do |attr|
-        new_automation.send("#{attr}=", automation.send(attr))
-      end
-      new_automation
-    end
-  end
-
   # Enter dev mode if keys d & e are held while v is pressed
   def dev_mode(args)
     return unless args.inputs.keyboard.key_held.d && args.inputs.keyboard.key_held.e && args.inputs.keyboard.key_down.v
 
     @ui.alerts << Alert.new('Dev Mode Activated!')
     @cash += 1000
-    @seeds += 500
+    @plant_manager.seeds += 500
     @score += 400
   end
 
   # DragonRuby required methods
   def serialize
-    { loaded_from_save: @loaded_from_save, plant_manager: @plant_manager, harvested_plants: @harvested_plants,
-      cash: @cash, price: @price, score: @score, level: @level, paused: @paused, ui: @ui,
+    { plant_manager: @plant_manager, harvested_plants: @harvested_plants,
+      cash: @cash, score: @score, ui: @ui,
       automations: @automations }
   end
 

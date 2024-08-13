@@ -143,7 +143,7 @@ class Button
     # data.each_key { |key| args.state.game_state.send("#{key}=", data[key]) }
     # args.state.game_state.send('loaded_from_save=', true)
     # args.state.game_state.send('paused=', false)
-    args.state.load_state = LoadManager.new
+    args.LoadManager.new
   end
 
   def pause_game(args)

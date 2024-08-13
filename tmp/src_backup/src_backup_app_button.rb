@@ -5,6 +5,8 @@
 require 'app/automation.rb'
 require 'app/game.rb'
 require 'app/labels.rb'
+require 'app/alert.rb'
+require 'app/load_manager.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Create buttons
@@ -13,7 +15,8 @@ class Button
 
   COLORS = {
     default: [200, 213, 185, 250],
-    opaque: [255, 255, 204, 250]
+    opaque: [255, 255, 204, 250],
+    clear: [0, 0, 0, 0]
   }.freeze
 
   def initialize(name, x_coord, y_coord, text, width = 100, height = 50, color = :default)
@@ -28,8 +31,10 @@ class Button
       rect: { x: @x, y: @y, w: @width, h: @height },
       primitives: [
         [@x + 2, @y + 1, @width - 4, @height - 2, COLORS[color]].solid,
-        { x: @x + 2, y: @y + 1, w: @width - 4, h: @height - 2, r: 0, g: 0, b: 0, a: 80 }.border!,
-        { x: @x + 5, y: @y + 30, text: @text, size_enum: -4, alignment_enum: 0, vertical_alignment_enum: 1 }.label!
+        { x: @x + 5, y: @y + 30, text: @text, size_enum: -4, alignment_enum: 0, vertical_alignment_enum: 1 }.label!,
+        unless color == :clear
+          { x: @x + 2, y: @y + 1, w: @width - 4, h: @height - 2, r: 0, g: 0, b: 0, a: 80 }.border!
+        end
       ]
     }
   end
@@ -61,7 +66,14 @@ class Button
       play_button_sound(save(args), args)
     when :load_save
       load_save(args)
+      # LoadManager.new.load_save(args)
       args.state.startup.splash_state = false
+    when :pause
+      pause_game(args)
+    when :mute
+      args.audio[:music][:gain] = args.audio[:music][:gain].zero? ? 0.25 : 0
+    when :quit
+      $gtk.request_quit
     else
       false
     end
@@ -73,20 +85,7 @@ class Button
 
     tooltips = args.gtk.parse_json_file('data/tooltips.json')
     y_location = args.grid.h - 180
-    # Generate label for each string or substring, display substrings below each other.
-    # Max substring length is 28 characters.
-    tooltips[@name.to_s].each do |string|
-      args.outputs.solids << { x: 5,
-                               y: y_location - 24,
-                               w: 180,
-                               h: 20,
-                               r: 200,
-                               g: 213,
-                               b: 185,
-                               a: 100 }
-      Labels.new(5, y_location, '', string, 20, [0, 0, 0, 240]).display(args)
-      y_location -= 20
-    end
+    tooltips[@name.to_s].each { |string| args.state.game_state.ui.alerts << Alert.new(string, y_location, true) }
   end
 
   private
@@ -103,7 +102,7 @@ class Button
   def buy_seed(args)
     return false if (args.state.game_state.cash - args.state.game_state.price[:seed]).negative?
 
-    args.state.game_state.seeds += 1
+    args.state.game_state.plant_manager.seeds += 1
     args.state.game_state.cash -= args.state.game_state.price[:seed]
     true
   end
@@ -111,7 +110,7 @@ class Button
   def buy_auto_harvester(args)
     return false if (args.state.game_state.cash - args.state.game_state.price[:harvester]).negative?
 
-    args.state.game_state.auto_harvesters << Automation.new(:harvester)
+    args.state.game_state.automations.auto_harvesters << Automation.new(:harvester)
     args.state.game_state.cash -= args.state.game_state.price[:harvester]
     true
   end
@@ -119,7 +118,7 @@ class Button
   def buy_auto_seller(args)
     return false if (args.state.game_state.cash - args.state.game_state.price[:seller]).negative?
 
-    args.state.game_state.auto_sellers << Automation.new(:seller)
+    args.state.game_state.automations.auto_sellers << Automation.new(:seller)
     args.state.game_state.cash -= args.state.game_state.price[:seller]
     true
   end
@@ -127,7 +126,7 @@ class Button
   def buy_auto_planter(args)
     return false if (args.state.game_state.cash - args.state.game_state.price[:planter]).negative?
 
-    args.state.game_state.auto_planters << Automation.new(:planter)
+    args.state.game_state.automations.auto_planters << Automation.new(:planter)
     args.state.game_state.cash -= args.state.game_state.price[:planter]
     true
   end
@@ -139,10 +138,16 @@ class Button
 
   def load_save(args)
     # return nil unless File.exist?('game_state.txt')
-    args.state.game_state = Game.new(args)
-    data = $gtk.deserialize_state('game_state.txt')
-    data.each_key { |key| args.state.game_state.send("#{key}=", data[key]) }
-    args.state.game_state.send('loaded_from_save=', true)
+    # args.state.game_state = Game.new(args)
+    # data = $gtk.deserialize_state('game_state.txt')
+    # data.each_key { |key| args.state.game_state.send("#{key}=", data[key]) }
+    # args.state.game_state.send('loaded_from_save=', true)
+    # args.state.game_state.send('paused=', false)
+    args.state.load_state = LoadManager.new
+  end
+
+  def pause_game(args)
+    args.state.game_state.paused == true ? (args.state.game_state.paused = false) : (args.state.game_state.paused = true)
   end
 
   def play_button_sound(type, args)

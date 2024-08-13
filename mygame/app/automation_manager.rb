@@ -31,17 +31,20 @@ class AutomationManager
     automations.each { |automation| automation.run(args) }
   end
 
-  # def reconstruct_automations(type, automations)
-  #   attributes = %i[type harvest_cooldown planter_cooldown seller_cooldown]
+  def reconstruct
+    all_automations = [@auto_harvesters, @auto_planters, @auto_sellers]
+    attributes = %i[type harvest_cooldown planter_cooldown seller_cooldown]
 
-  #   automations.map! do |automation|
-  #     new_automation = Automation.new(type)
-  #     attributes.each do |attr|
-  #       new_automation.send("#{attr}=", automation.send(attr))
-  #     end
-  #     new_automation
-  #   end
-  # end
+    all_automations.each do |automations|
+      automations.map! do |automation|
+        new_automation = Automation.new(automation.type)
+        attributes.each do |attr|
+          new_automation.send("#{attr}=", automation.send(attr))
+        end
+        new_automation
+      end
+    end
+  end
 
   private
 

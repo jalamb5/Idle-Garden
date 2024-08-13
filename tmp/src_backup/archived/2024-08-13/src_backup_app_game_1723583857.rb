@@ -57,7 +57,7 @@ class Game
     return unless @cash <= 0 && @harvested_plants <= 0 && @seeds <= 0 && @plants.length <= 0
 
     # If player has no money, no seeds, no plants, and no harvests, debt is accrued.
-    @plant_manager.seeds += 5
+    @seeds += 5
     @cash -= 30
     @ui.alerts << Alert.new('You have been given 5 seeds. You have incurred a debt of $30.')
   end
@@ -111,7 +111,7 @@ class Game
 
     @ui.alerts << Alert.new('Dev Mode Activated!')
     @cash += 1000
-    @plant_manager.seeds += 500
+    @seeds += 500
     @score += 400
   end
 

@@ -23,6 +23,20 @@ class PlantManager
     display_plants(args)
   end
 
+  def reconstruct(args)
+    return if @plants.empty?
+
+    attributes = %i[x y w h age stage a frame sheet]
+
+    @plants.map! do |plant|
+      new_plant = Plant.new(args, :flower_red, 0, 0)
+      attributes.each do |attr|
+        new_plant.send("#{attr}=", plant.send(attr))
+      end
+      new_plant
+    end
+  end
+
   private
 
   def build_spritesheets
@@ -56,7 +70,7 @@ class PlantManager
 
   # DragonRuby required methods
   def serialize
-    { plants: @plants, seeds: @seeds, spritesheets: @spritesheets }
+    { plants: @plants, seeds: @seeds }
   end
 
   def inspect

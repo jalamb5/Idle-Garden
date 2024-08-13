@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
+# DragonRuby requires extensions
+# rubocop:disable Style/RedundantFileExtensionInRequire
 require 'app/plant.rb'
+# rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Create new automations for garden
 class Automation
   attr_accessor :type, :harvest_cooldown, :planter_cooldown, :seller_cooldown
 
-  attr_sprite
+  # attr_sprite
 
   def initialize(type)
     @type = type
@@ -19,9 +22,9 @@ class Automation
     reduce_cooldowns
     case @type
     when :harvester
-      auto_harvester(args) if @harvest_cooldown <= 0 && args.state.game_state.plants.length.positive?
+      auto_harvester(args) if @harvest_cooldown <= 0 && args.state.game_state.plant_manager.plants.length.positive?
     when :planter
-      auto_planter(args) if @planter_cooldown <= 0 && args.state.game_state.seeds.positive?
+      auto_planter(args) if @planter_cooldown <= 0 && args.state.game_state.plant_manager.seeds.positive?
     when :seller
       auto_seller(args) if @seller_cooldown <= 0 && args.state.game_state.harvested_plants.positive?
     end
@@ -36,7 +39,7 @@ class Automation
   end
 
   def auto_harvester(args)
-    args.state.game_state.plants.each do |plant|
+    args.state.game_state.plant_manager.plants.each do |plant|
       next unless plant.stage == 'ready_to_harvest' || plant.stage == 'withered'
 
       plant.harvest(args, plant)
@@ -47,10 +50,10 @@ class Automation
 
   def auto_planter(args)
     x, y = coord_generator
-    sheet = [0, 1].sample
+    sheet = %i[flower_red flower_blue].sample
     plant = Plant.new(args, sheet, x, y)
-    args.state.game_state.plants << plant
-    args.state.game_state.seeds -= 1
+    args.state.game_state.plant_manager.plants << plant
+    args.state.game_state.plant_manager.seeds -= 1
     @planter_cooldown = rand(10)
   end
 
