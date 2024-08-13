@@ -2,8 +2,6 @@
 
 # DragonRuby requires extensions
 # rubocop:disable Style/RedundantFileExtensionInRequire
-require 'app/plant.rb'
-require 'app/automation.rb'
 require 'app/levels.rb'
 require 'app/alert.rb'
 require 'app/pause.rb'
