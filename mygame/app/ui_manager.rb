@@ -49,8 +49,8 @@ class UIManager
   def generate_labels(args, game)
     {
       score: Labels.new(5, args.grid.h, 'Score:', game.score, 23, [240, 30, 30, 255]),
-      seed: Labels.new(5, args.grid.h - 20, 'Seeds:', game.seeds),
-      growing: Labels.new(5, args.grid.h - 40, 'Growing:', game.plants.length),
+      seed: Labels.new(5, args.grid.h - 20, 'Seeds:', game.plant_manager.seeds),
+      growing: Labels.new(5, args.grid.h - 40, 'Growing:', game.plant_manager.plants.length),
       harvested: Labels.new(5, args.grid.h - 60, 'Harvested:', game.harvested_plants),
       cash: Labels.new(5, args.grid.h - 80, 'Cash:', game.cash),
       auto_harvesters: Labels.new(5, args.grid.h - 100, 'Auto Harvesters:', game.automations.auto_harvesters.length),

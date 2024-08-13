@@ -22,9 +22,9 @@ class Labels
     prev = @value
     case key
     when :seed
-      @value = args.state.game_state.seeds
+      @value = args.state.game_state.plant_manager.seeds
     when :growing
-      @value = args.state.game_state.plants.length
+      @value = args.state.game_state.plant_manager.plants.length
     when :harvested
       @value = args.state.game_state.harvested_plants
     when :cash

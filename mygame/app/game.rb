@@ -10,20 +10,17 @@ require 'app/spritesheet.rb'
 require 'app/pause.rb'
 require 'app/ui_manager.rb'
 require 'app/automation_manager.rb'
+require 'app/plant_manager.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Handle game logic
 class Game
-  attr_accessor :loaded_from_save, :plants, :seeds, :harvested_plants, :cash, :price, :score, :level, :paused,
-                :spritesheets, :ui, :automations
+  attr_accessor :loaded_from_save, :plant_manager, :harvested_plants, :cash, :price, :score, :level, :paused,
+                :ui, :automations
 
   def initialize(args)
     @loaded_from_save = false
     @paused = false
-    @garden = { x: 250, y: 50, w: 980, h: 620 }
-    @spritesheets = build_spritesheets
-    @plants = []
-    @seeds = 5
     @harvested_plants = 0
     @cash = 5
     @price = { seed: 5, plant: 10, planter: 150, harvester: 250, seller: 350 }
@@ -31,6 +28,7 @@ class Game
     @level = Level.new
     @ui = UIManager.new(args, self)
     @automations = AutomationManager.new
+    @plant_manager = PlantManager.new
   end
 
   def tick(args)
@@ -47,38 +45,13 @@ class Game
   def standard_display(args)
     @ui.tick(args)
 
-    plant_harvest(args)
-    manage_plants(args)
-    display_plants(args)
+    @plant_manager.tick(args)
 
     @automations.tick(args)
 
     @level.tick(args)
 
     debt_check
-  end
-
-  def plant_harvest(args)
-    return unless args.inputs.mouse.click && args.inputs.mouse.point.inside_rect?(@garden)
-
-    sheet = [0, 1].sample
-    new_plant = Plant.new(args, sheet)
-
-    return unless @seeds.positive? && !new_plant.invalid
-
-    @plants << new_plant
-    @seeds -= 1
-  end
-
-  def manage_plants(args)
-    @plants.reject!(&:invalid)
-    @plants.each { |plant| plant.grow(args) }
-  end
-
-  def display_plants(args)
-    @plants.each do |plant|
-      args.outputs.sprites << plant.sprite
-    end
   end
 
   def debt_check
@@ -93,11 +66,6 @@ class Game
   def pause_menu(args)
     pause_screen ||= Pause.new(args)
     pause_screen.tick(args)
-  end
-
-  def build_spritesheets
-    [Spritesheet.new('sprites/flower_red_64x64.png', 64, 64, 56),
-     Spritesheet.new('sprites/flower_blue_64x64.png', 64, 64, 56)]
   end
 
   # Load from save functions, reconstruct objects
@@ -150,8 +118,8 @@ class Game
 
   # DragonRuby required methods
   def serialize
-    { loaded_from_save: @loaded_from_save, plants: @plants, seeds: @seeds, harvested_plants: @harvested_plants,
-      cash: @cash, price: @price, score: @score, level: @level, paused: @paused, spritesheets: @spritesheets, ui: @ui,
+    { loaded_from_save: @loaded_from_save, plant_manager: @plant_manager, harvested_plants: @harvested_plants,
+      cash: @cash, price: @price, score: @score, level: @level, paused: @paused, ui: @ui,
       automations: @automations }
   end
 

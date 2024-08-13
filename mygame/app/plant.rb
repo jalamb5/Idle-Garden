@@ -38,7 +38,7 @@ class Plant
   end
 
   def update_sprite(args)
-    @sprite = args.state.game_state.spritesheets[@sheet].get(@frame, @x, @y, @w, @h)
+    @sprite = args.state.game_state.plant_manager.spritesheets[@sheet].get(@frame, @x, @y, @w, @h)
   end
 
   def grow(args)
@@ -94,7 +94,7 @@ class Plant
 
   # sets @invalid to false if not occupied, attemps to harvest plant at location if occupied
   def occupied(args, new_plant)
-    args.state.game_state.plants.each do |plant|
+    args.state.game_state.plant_manager.plants.each do |plant|
       next unless args.geometry.intersect_rect?(plant, new_plant)
 
       harvest(args, plant)
