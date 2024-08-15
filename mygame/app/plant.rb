@@ -71,7 +71,7 @@ class Plant
       args.outputs.sounds << 'sounds/harvest_plant.wav'
       args.state.game_state.score += 2
     elsif plant.stage == :WITHERED
-      args.state.game_state.seeds += rand(10)
+      args.state.game_state.plant_manager.seeds += rand(10)
       plant.invalid = true
       args.outputs.sounds << 'sounds/harvest_withered.wav'
       args.state.game_state.score += 1

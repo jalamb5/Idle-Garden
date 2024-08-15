@@ -9,7 +9,7 @@ require 'app/plant.rb'
 class Automation
   attr_accessor :type, :cooldown
 
-  COOLDOWNS = { harvester: 300, planter: 200, seller: 500 }.freeze
+  COOLDOWNS = { harvester: 3, planter: 2, seller: 5 }.freeze
   SPRITES = { harvester: 'sprites/blue.png', planter: 'sprites/blue.png', seller: 'sprites/blue.png' }.freeze
 
   def initialize(type)
@@ -22,7 +22,7 @@ class Automation
 
   def run(args)
     display_sprite(args)
-    move_sprite if @cooldown <= 0
+    move_sprite
     @cooldown -= 1
     case @type
     when :harvester
@@ -44,7 +44,7 @@ class Automation
     return if @location == @target
 
     @location.each_with_index do |coord, i|
-      direction = (@target[i] - coord).negative? ? -1 : 1
+      direction = (@target[i] - coord).negative? ? -0.1 : 0.1
       @location[i] += direction if coord != @target[i]
     end
   end
@@ -60,13 +60,15 @@ class Automation
   end
 
   def auto_planter(args)
+    p [@location, @target]
     return unless @location == @target
 
+    # x, y = coord_generator
     sheet = %i[flower_red flower_blue].sample
     plant = Plant.new(args, sheet, @location[0], @location[1])
     args.state.game_state.plant_manager.plants << plant
     args.state.game_state.plant_manager.seeds -= 1
-    @cooldown = rand(1000)
+    @cooldown = rand(10)
     @target = coord_generator
   end
 

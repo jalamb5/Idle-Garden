@@ -18,7 +18,7 @@ class AutomationManager
 
   def tick(args)
     @counter += 1
-    return if @counter % 75 != 0
+    # return if @counter % 75 != 0
 
     all_automations = @auto_planters + @auto_harvesters + @auto_sellers
 
