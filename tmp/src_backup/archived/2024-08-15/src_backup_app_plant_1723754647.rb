@@ -29,7 +29,7 @@ class Plant
     @h = 64
     @age = 0
     @invalid = occupied(args, [@x, @y, @w, @h])
-    @stage = :SEED
+    @stage = :FULL_GROWN
     @a = 255
     @frame = 0
     @sheet = sheet

@@ -55,9 +55,8 @@ class Automation
     return unless @location == @target
 
     plant = args.state.game_state.plant_manager.plants.find { |i| i.x == @location[0] && i.y == @location[1] }
-    plant.harvest(args, plant) unless plant.nil?
+    plant.harvest(args, plant)
     @cooldown = rand(1000)
-    @target = nil
   end
 
   def auto_planter(args)
@@ -90,8 +89,9 @@ class Automation
   def harvest_generator(args)
     harvestable_plants = []
     args.state.game_state.plant_manager.plants.each do |plant|
-      harvestable_plants << plant if plant.stage == :READY_TO_HARVEST || plant.stage == :WITHERED
+      harvestable_plants << plant if plant.stage == 'full_grown' || plant.stage == 'withered'
     end
+    p harvestable_plants
     if harvestable_plants.empty?
       nil
     else

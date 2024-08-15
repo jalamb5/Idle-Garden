@@ -35,6 +35,7 @@ class Plant
     @sheet = sheet
 
     @sprite = update_sprite(args)
+
   end
 
   def update_sprite(args)

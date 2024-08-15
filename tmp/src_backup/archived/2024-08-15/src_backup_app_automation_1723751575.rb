@@ -10,14 +10,14 @@ class Automation
   attr_accessor :type, :cooldown
 
   COOLDOWNS = { harvester: 300, planter: 200, seller: 500 }.freeze
-  SPRITES = { harvester: 'sprites/green.png', planter: 'sprites/blue.png', seller: 'sprites/blue.png' }.freeze
+  SPRITES = { harvester: 'sprites/blue.png', planter: 'sprites/blue.png', seller: 'sprites/blue.png' }.freeze
 
   def initialize(type)
     @type = type
     @cooldown = COOLDOWNS[type]
     @sprite = SPRITES[type]
     @location = [250, 50]
-    @target = target_generator
+    @target = coord_generator
   end
 
   def run(args)
@@ -41,7 +41,7 @@ class Automation
   end
 
   def move_sprite
-    return if @location == @target || @target.nil?
+    return if @location == @target
 
     @location.each_with_index do |coord, i|
       direction = (@target[i] - coord).negative? ? -1 : 1
@@ -50,14 +50,13 @@ class Automation
   end
 
   def auto_harvester(args)
-    @target = harvest_generator(args) if @target.nil?
+    args.state.game_state.plant_manager.plants.each do |plant|
+      next unless plant.stage == 'ready_to_harvest' || plant.stage == 'withered'
 
-    return unless @location == @target
-
-    plant = args.state.game_state.plant_manager.plants.find { |i| i.x == @location[0] && i.y == @location[1] }
-    plant.harvest(args, plant) unless plant.nil?
-    @cooldown = rand(1000)
-    @target = nil
+      plant.harvest(args, plant)
+      @cooldown = rand(15)
+      break
+    end
   end
 
   def auto_planter(args)
@@ -72,10 +71,10 @@ class Automation
   end
 
   def coord_generator
-    # x 250-1200, y 50-650
-    x = rand(1200)
+    # x 250-980, y 50-620
+    x = rand(120)
     x += 250 if x < 250
-    y = rand(650)
+    y = rand(620)
     y += 50 if y < 50
     [x, y]
   end
@@ -85,30 +84,6 @@ class Automation
     args.state.game_state.score += args.state.game_state.harvested_plants * 10
     args.state.game_state.harvested_plants = 0
     @cooldown = rand(10)
-  end
-
-  def harvest_generator(args)
-    harvestable_plants = []
-    args.state.game_state.plant_manager.plants.each do |plant|
-      harvestable_plants << plant if plant.stage == :READY_TO_HARVEST || plant.stage == :WITHERED
-    end
-    if harvestable_plants.empty?
-      nil
-    else
-      target_plant = harvestable_plants.sample
-      [target_plant.x, target_plant.y]
-    end
-  end
-
-  def target_generator
-    case @type
-    when :harvester
-      nil
-    when :planter
-      coord_generator
-    when :seller
-      [150, 400]
-    end
   end
 
   # DragonRuby required methods

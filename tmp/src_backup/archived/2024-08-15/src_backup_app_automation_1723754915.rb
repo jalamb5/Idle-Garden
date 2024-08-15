@@ -57,7 +57,6 @@ class Automation
     plant = args.state.game_state.plant_manager.plants.find { |i| i.x == @location[0] && i.y == @location[1] }
     plant.harvest(args, plant) unless plant.nil?
     @cooldown = rand(1000)
-    @target = nil
   end
 
   def auto_planter(args)
