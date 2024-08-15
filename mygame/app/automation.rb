@@ -7,7 +7,7 @@ require 'app/plant.rb'
 
 # Create new automations for garden
 class Automation
-  attr_accessor :type, :harvest_cooldown, :planter_cooldown, :seller_cooldown
+  attr_accessor :type, :cooldown
 
   COOLDOWNS = { harvester: 3, planter: 2, seller: 5 }.freeze
 
