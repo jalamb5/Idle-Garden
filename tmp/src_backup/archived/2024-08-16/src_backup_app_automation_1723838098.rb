@@ -23,7 +23,7 @@ class Automation
 
   def run(args)
     update_sprite(args)
-    move_sprite if @cooldown <= 0 || @type == :seller
+    move_sprite if @cooldown <= 0
     update_frame(args) if @counter % 10 == 0
     @cooldown -= 1
     @counter += 1
@@ -33,8 +33,7 @@ class Automation
     when :planter
       auto_planter(args) if @cooldown <= 0 && args.state.game_state.plant_manager.seeds.positive?
     when :seller
-      move_auto_seller(args)
-      auto_seller(args) if args.state.game_state.harvested_plants.positive?
+      auto_seller(args) if @cooldown <= 0 && args.state.game_state.harvested_plants.positive?
     end
   end
 
@@ -89,24 +88,19 @@ class Automation
   end
 
   def auto_seller(args)
-    return unless @location == [150, 720]
-
-    args.state.game_state.cash += args.state.game_state.harvested_plants * args.state.game_state.price[:plant]
-    args.state.game_state.score += args.state.game_state.harvested_plants * 10
-    args.state.game_state.harvested_plants = 0
-    @cooldown = rand(1000)
-  end
-
-  def move_auto_seller(args)
     off_screen = [150, 720]
     home = [args.state.game_state.ui.labels[:harvested].x + 125, args.state.game_state.ui.labels[:harvested].y - 30]
 
     if @location == off_screen
+      args.state.game_state.cash += args.state.game_state.harvested_plants * args.state.game_state.price[:plant]
+      args.state.game_state.score += args.state.game_state.harvested_plants * 10
+      args.state.game_state.harvested_plants = 0
       @target = home
-    elsif @location == home && args.state.game_state.harvested_plants.positive? && @cooldown <= 0
+      @cooldown = rand(1000)
+    elsif @location == home
       @target = off_screen
     else
-      @target
+      
     end
   end
 
