@@ -10,7 +10,6 @@ class Automation
   attr_accessor :type, :cooldown, :sprite
 
   COOLDOWNS = { harvester: 300, planter: 200, seller: 500 }.freeze
-  # SPRITES = { harvester: 'sprites/green.png', planter: 'sprites/blue.png', seller: 'sprites/blue.png' }.freeze
 
   def initialize(type, args)
     @type = type

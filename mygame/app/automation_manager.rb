@@ -14,20 +14,14 @@ class AutomationManager
     @auto_planters = []
     @auto_harvesters = []
     @auto_sellers = []
-    # @counter = 0
     @spritesheets = build_spritesheets
   end
 
   def tick(args)
-    # @counter += 1
-    # return if @counter % 75 != 0
-
     all_automations = @auto_planters + @auto_harvesters + @auto_sellers
 
     run_automations(args, all_automations)
     display_automations(args, all_automations)
-
-    # @counter = 0
   end
 
   def run_automations(args, automations)
