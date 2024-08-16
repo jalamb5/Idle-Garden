@@ -110,7 +110,7 @@ class Button
   def buy_auto_harvester(args)
     return false if (args.state.game_state.cash - args.state.game_state.price[:harvester]).negative?
 
-    args.state.game_state.automations.auto_harvesters << Automation.new(:harvester)
+    args.state.game_state.automations.auto_harvesters << Automation.new(:harvester, args)
     args.state.game_state.cash -= args.state.game_state.price[:harvester]
     true
   end
@@ -118,7 +118,7 @@ class Button
   def buy_auto_seller(args)
     return false if (args.state.game_state.cash - args.state.game_state.price[:seller]).negative?
 
-    args.state.game_state.automations.auto_sellers << Automation.new(:seller)
+    args.state.game_state.automations.auto_sellers << Automation.new(:seller, args)
     args.state.game_state.cash -= args.state.game_state.price[:seller]
     true
   end
@@ -126,7 +126,7 @@ class Button
   def buy_auto_planter(args)
     return false if (args.state.game_state.cash - args.state.game_state.price[:planter]).negative?
 
-    args.state.game_state.automations.auto_planters << Automation.new(:planter)
+    args.state.game_state.automations.auto_planters << Automation.new(:planter, args)
     args.state.game_state.cash -= args.state.game_state.price[:planter]
     true
   end

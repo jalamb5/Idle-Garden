@@ -25,7 +25,6 @@ class Automation
   def run(args)
     update_sprite(args)
     move_sprite if @cooldown <= 0
-    update_frame(args) if @counter % 10 == 0
     @cooldown -= 1
     @counter += 1
     case @type
@@ -42,10 +41,13 @@ class Automation
 
   def update_sprite(args)
     @sprite = args.state.game_state.automations.spritesheets[@type].get(@frame, @location[0], @location[1], 32, 32)
-  end
+    return unless @counter % 25 == 0
 
-  def update_frame(args)
-    @frame = @frame < args.state.game_state.automations.spritesheets[@type].num_tiles - 1 ? @frame + 1 : 0
+    if @frame < args.state.game_state.automations.spritesheets[@type].num_tiles - 1
+      @frame += 1
+    else
+      @frame = 0
+    end
   end
 
   def move_sprite

@@ -19,15 +19,12 @@ class Automation
     @target = target_generator
     @sprite = update_sprite(args)
     @frame = 0
-    @counter = 0
   end
 
   def run(args)
     update_sprite(args)
     move_sprite if @cooldown <= 0
-    update_frame(args) if @counter % 10 == 0
     @cooldown -= 1
-    @counter += 1
     case @type
     when :harvester
       auto_harvester(args) if @cooldown <= 0 && args.state.game_state.plant_manager.plants.length.positive?
@@ -41,11 +38,9 @@ class Automation
   private
 
   def update_sprite(args)
+    @frame += 1 if args.state.tick_count % 100
+    @frame = 0 if @frame > 3
     @sprite = args.state.game_state.automations.spritesheets[@type].get(@frame, @location[0], @location[1], 32, 32)
-  end
-
-  def update_frame(args)
-    @frame = @frame < args.state.game_state.automations.spritesheets[@type].num_tiles - 1 ? @frame + 1 : 0
   end
 
   def move_sprite
@@ -121,7 +116,7 @@ class Automation
 
   # DragonRuby required methods
   def serialize
-    { type: @type, cooldown: @cooldown, sprite: @sprite }
+    { type: @type, cooldown: @cooldown }
   end
 
   def inspect
