@@ -46,9 +46,9 @@ class AutomationManager
   private
 
   def build_spritesheets
-    { harvester: Spritesheet.new('sprites/green.png', 64, 64, 3),
+    { harvester: Spritesheet.new('sprites/harvester_blue_32x32.png', 32, 32, 4),
       planter: Spritesheet.new('sprites/planter_pink_32x32.png', 32, 32, 4),
-      seller: Spritesheet.new('sprites/blue.png', 64, 64, 3) }
+      seller: Spritesheet.new('sprites/seller_purple_32x32.png', 32, 32, 4) }
   end
 
   def display_automations(args, automations)
