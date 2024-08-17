@@ -30,22 +30,22 @@ class Pause
   def pause_buttons
     {
       unpause: Button.new(:pause, 400, 360, 'Return to Garden', 200, 50, :opaque),
-      save: Button.new(:save, 700, 360, 'Save', 200, 50, :opaque),
+      save: Button.new(:save, 600, 360, 'Save', 200, 50, :opaque),
       quit: Button.new(:quit, 540, 60, 'Quit Game', 200, 50, :opaque)
     }
   end
 
   def mute_buttons(args)
     {
-      mute_sfx: create_mute_button(:mute_sfx, 400, args.state.startup.sound_manager.sfx_gain, 'Unmute Sound Effects',
+      mute_sfx: create_mute_button(:mute_sfx, 160, args.state.startup.sound_manager.sfx_gain, 'Unmute Sound Effects',
                                    'Mute Sound Effects'),
-      mute_music: create_mute_button(:mute_music, 700, args.state.startup.sound_manager.music_gain, 'Unmute Music',
+      mute_music: create_mute_button(:mute_music, 260, args.state.startup.sound_manager.music_gain, 'Unmute Music',
                                      'Mute Music')
     }
   end
 
-  def create_mute_button(type, x_coord, gain, unmute_label, mute_label)
+  def create_mute_button(type, y_coord, gain, unmute_label, mute_label)
     label = gain.zero? ? unmute_label : mute_label
-    Button.new(type, x_coord, 260, label, 200, 50, :opaque)
+    Button.new(type, 540, y_coord, label, 200, 50, :opaque)
   end
 end

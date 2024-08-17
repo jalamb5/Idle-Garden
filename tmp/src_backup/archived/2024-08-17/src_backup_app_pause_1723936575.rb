@@ -37,9 +37,9 @@ class Pause
 
   def mute_buttons(args)
     {
-      mute_sfx: create_mute_button(:mute_sfx, 400, args.state.startup.sound_manager.sfx_gain, 'Unmute Sound Effects',
+      mute_sfx: create_mute_button(:mute_sfx, 160, args.state.startup.sound_manager.sfx_gain, 'Unmute Sound Effects',
                                    'Mute Sound Effects'),
-      mute_music: create_mute_button(:mute_music, 700, args.state.startup.sound_manager.music_gain, 'Unmute Music',
+      mute_music: create_mute_button(:mute_music, 260, args.state.startup.sound_manager.music_gain, 'Unmute Music',
                                      'Mute Music')
     }
   end

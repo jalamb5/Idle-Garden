@@ -37,15 +37,15 @@ class Pause
 
   def mute_buttons(args)
     {
-      mute_sfx: create_mute_button(:mute_sfx, 400, args.state.startup.sound_manager.sfx_gain, 'Unmute Sound Effects',
+      mute_sfx: create_mute_button(:mute_sfx, 160, args.state.startup.sound_manager.sfx_gain, 'Unmute Sound Effects',
                                    'Mute Sound Effects'),
-      mute_music: create_mute_button(:mute_music, 700, args.state.startup.sound_manager.music_gain, 'Unmute Music',
+      mute_music: create_mute_button(:mute_music, 260, args.state.startup.sound_manager.music_gain, 'Unmute Music',
                                      'Mute Music')
     }
   end
 
   def create_mute_button(type, x_coord, gain, unmute_label, mute_label)
     label = gain.zero? ? unmute_label : mute_label
-    Button.new(type, x_coord, 260, label, 200, 50, :opaque)
+    Button.new(type, x_coord, label, 200, 50, :opaque)
   end
 end
