@@ -44,7 +44,7 @@ class Automation
 
   def clicked?(args)
     return false unless args.inputs.mouse.click && args.inputs.mouse.point.inside_rect?(@sprite)
-    
+
     args.state.startup.sound_manager.play_effect(@type, args)
 
     # Prevent clicking automator from planting or harvesting
