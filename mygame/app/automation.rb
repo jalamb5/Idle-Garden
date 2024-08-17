@@ -3,11 +3,12 @@
 # DragonRuby requires extensions
 # rubocop:disable Style/RedundantFileExtensionInRequire
 require 'app/plant.rb'
+require 'app/alert.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Create new automations for garden
 class Automation
-  attr_accessor :type, :cooldown, :sprite
+  attr_accessor :type, :cooldown, :sprite, :name
 
   COOLDOWNS = { harvester: 300, planter: 200, seller: 500 }.freeze
 
@@ -19,6 +20,8 @@ class Automation
     @sprite = update_sprite(args)
     @frame = 0
     @counter = 0
+    @name = name_generator(args)
+    @work_completed = 0
   end
 
   def run(args)
@@ -36,6 +39,19 @@ class Automation
       move_auto_seller(args)
       auto_seller(args) if args.state.game_state.harvested_plants.positive?
     end
+  end
+
+  def clicked?(args)
+    return false unless args.inputs.mouse.click && args.inputs.mouse.point.inside_rect?(@sprite)
+
+    # Prevent clicking automator from planting or harvesting
+    args.state.game_state.block_click = true
+    messages = { harvester: ['has harvested', 'plants'],
+                 planter: ['has planted', 'seeds'],
+                 seller: ['has made', 'cash from the garden'] }
+    args.state.game_state.ui.alerts << Alert.new(
+      "#{@name} #{messages[@type][0]} #{@work_completed} #{messages[@type][1]}", color: :blue
+    )
   end
 
   private
@@ -63,7 +79,7 @@ class Automation
     return unless @location == @target
 
     plant = args.state.game_state.plant_manager.plants.find { |i| i.x == @location[0] && i.y == @location[1] }
-    plant.harvest(args, plant) unless plant.nil?
+    plant.harvest(args, plant) && @work_completed += 1 unless plant.nil?
     @cooldown = rand(1000)
     @target = nil
   end
@@ -75,10 +91,12 @@ class Automation
     plant = Plant.new(args, sheet, @location[0], @location[1])
     args.state.game_state.plant_manager.plants << plant
     args.state.game_state.plant_manager.seeds -= 1
+    @work_completed += 1
     @cooldown = rand(1000)
     @target = coord_generator
   end
 
+  # Generate random coordinate within the garden
   def coord_generator
     # x 250-1200, y 50-650
     x = rand(1200)
@@ -88,15 +106,19 @@ class Automation
     [x, y]
   end
 
+  # Sell harvest if the auto seller has moved off screen
   def auto_seller(args)
     return unless @location == [150, 720]
 
-    args.state.game_state.cash += args.state.game_state.harvested_plants * args.state.game_state.price[:plant]
+    profit = args.state.game_state.harvested_plants * args.state.game_state.price[:plant]
+    args.state.game_state.cash += profit
     args.state.game_state.score += args.state.game_state.harvested_plants * 10
     args.state.game_state.harvested_plants = 0
+    @work_completed += profit
     @cooldown = rand(1000)
   end
 
+  # Auto sellers move differently than other automations and are not in the garden, they require special logic
   def move_auto_seller(args)
     off_screen = [150, 720]
     home = [args.state.game_state.ui.labels[:harvested].x + 125, args.state.game_state.ui.labels[:harvested].y - 30]
@@ -110,6 +132,7 @@ class Automation
     end
   end
 
+  # Find a harvestable plant for the auto harvester
   def harvest_generator(args)
     harvestable_plants = []
     args.state.game_state.plant_manager.plants.each do |plant|
@@ -123,6 +146,7 @@ class Automation
     end
   end
 
+  # Generate a starting target for each automation
   def target_generator(args)
     case @type
     when :harvester
@@ -135,9 +159,17 @@ class Automation
     end
   end
 
+  # Give each automation a unique name
+  def name_generator(args)
+    names = args.gtk.parse_json_file('data/names.json')
+    sampled_name = names[@type.to_s].sample
+    sampled_name = names[@type.to_s].sample while args.state.game_state.automations.register.include?(sampled_name)
+    @name = sampled_name
+  end
+
   # DragonRuby required methods
   def serialize
-    { type: @type, cooldown: @cooldown, sprite: @sprite }
+    { type: @type, cooldown: @cooldown, sprite: @sprite, name: @name }
   end
 
   def inspect

@@ -94,6 +94,8 @@ class Plant
 
   # sets @invalid to false if not occupied, attemps to harvest plant at location if occupied
   def occupied(args, new_plant)
+    return true if args.state.game_state.block_click
+
     args.state.game_state.plant_manager.plants.each do |plant|
       next unless args.geometry.intersect_rect?(plant, new_plant)
 

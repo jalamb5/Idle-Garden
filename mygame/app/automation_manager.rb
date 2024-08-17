@@ -8,13 +8,15 @@ require 'app/spritesheet.rb'
 
 # Handle running of automations
 class AutomationManager
-  attr_accessor :auto_planters, :auto_harvesters, :auto_sellers, :spritesheets
+  attr_accessor :auto_planters, :auto_harvesters, :auto_sellers, :spritesheets, :register
 
   def initialize
     @auto_planters = []
     @auto_harvesters = []
     @auto_sellers = []
     @spritesheets = build_spritesheets
+    # Hold automation names to prevent duplication
+    @register = []
   end
 
   def tick(args)
@@ -22,6 +24,7 @@ class AutomationManager
 
     run_automations(args, all_automations)
     display_automations(args, all_automations)
+    monitor_automations(args, all_automations)
   end
 
   def run_automations(args, automations)
@@ -54,6 +57,12 @@ class AutomationManager
   def display_automations(args, automations)
     automations.each do |automation|
       args.outputs.sprites << automation.sprite
+    end
+  end
+
+  def monitor_automations(args, automations)
+    automations.each do |automation|
+      automation.clicked?(args)
     end
   end
 

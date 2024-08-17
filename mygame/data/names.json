@@ -1,0 +1,23 @@
+{
+  "planter": [
+    "Pelorin", "Pryndel", "Pavros", "Perlith", "Phaelin", "Pyrris", "Pindara", "Palith", "Povari", "Prylia",
+    "Pallor", "Pellin", "Praxil", "Prydwen", "Pyldor", "Pherin", "Pylith", "Parven", "Perrin", "Prythe",
+    "Palenor", "Pindrel", "Poleris", "Pythos", "Pelios", "Peryn", "Pylos", "Pondera", "Prylar", "Polian",
+    "Pavril", "Plynor", "Perlon", "Prylla", "Panthor", "Pylaris", "Pyndel", "Povos", "Pellor", "Pallin",
+    "Pylor", "Pevros", "Phalor", "Pelran", "Pytris", "Pryven", "Pindor", "Pallon", "Pryska", "Polryn"
+  ],
+  "harvester": [
+    "Havron", "Helian", "Hesper", "Haldis", "Hiriel", "Hylas", "Horan", "Hedra", "Hyfrid", "Heska",
+    "Haldor", "Hylen", "Helmir", "Havros", "Hylor", "Horeth", "Hyren", "Harris", "Herlin", "Hylith",
+    "Haldric", "Halion", "Hyrald", "Hedron", "Halvor", "Hestus", "Helmar", "Hylon", "Horyn", "Halven",
+    "Heral", "Halon", "Hirden", "Hyrris", "Hervin", "Haldan", "Helvin", "Hovan", "Herion", "Hylorn",
+    "Hesdor", "Horys", "Haldan", "Hylven", "Harmis", "Hirlin", "Helros", "Havian", "Hortin", "Hysel"
+  ],
+  "seller": [
+    "Sylros", "Sarin", "Selian", "Sivros", "Sareth", "Solmar", "Syndra", "Sorven", "Selvik", "Syrena",
+    "Salvor", "Selyr", "Synor", "Soril", "Sylen", "Syrin", "Selvor", "Sarrin", "Sylvor", "Sorith",
+    "Syllen", "Selmar", "Sorvin", "Sylar", "Syril", "Solrin", "Seryn", "Sylra", "Sornis", "Sylvan",
+    "Sarlen", "Soryn", "Solmir", "Synla", "Seldor", "Sovran", "Syldor", "Sarrith", "Saldor", "Sylorn",
+    "Sorlyn", "Syras", "Selvor", "Syrven", "Solyra", "Sarvin", "Sylorin", "Sorvil", "Synith", "Syrin"
+  ]
+}

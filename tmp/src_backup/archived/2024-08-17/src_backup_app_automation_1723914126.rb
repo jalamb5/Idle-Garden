@@ -19,7 +19,7 @@ class Automation
     @sprite = update_sprite(args)
     @frame = 0
     @counter = 0
-    @name = generate_name(args)
+    @name = args.gtk.parse_json_file('data/names.json')[type].sample
   end
 
   def run(args)
@@ -134,12 +134,6 @@ class Automation
       harvested = args.state.game_state.ui.labels[:harvested]
       [harvested.x + 125, harvested.y - 30]
     end
-  end
-
-  def generate_name(args)
-    names = args.gtk.parse_json_file('data/names.json')
-    @name = names[@type.to_s].sample
-    p @name
   end
 
   # DragonRuby required methods

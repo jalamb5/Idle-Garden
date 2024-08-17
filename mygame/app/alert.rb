@@ -9,10 +9,17 @@ require 'app/labels.rb'
 class Alert
   attr_accessor :y_coord, :all_coords, :message, :ttl
 
-  def initialize(message, y_coord = 540, hover = false)
+  COLORS = {
+    default: { r: 200, g: 213, b: 185, a: 255 },
+    pink: { r: 244, g: 187, b: 211, a: 255 },
+    blue: { r: 99, g: 176, b: 205, a: 255 }
+  }.freeze
+
+  def initialize(message, y_coord: 540, hover: false, color: :default)
     @message = message
     @y_coord = y_coord
     @all_coords = []
+    @color = COLORS[color]
     @ttl = hover ? 1 : 180
     @labels = []
     @max_length = 20
@@ -27,7 +34,8 @@ class Alert
 
     @labels.each do |label|
       label.display(args)
-      args.outputs.solids << { x: 5, y: label.y - 24, w: 180, h: 20, r: 200, g: 213, b: 185, a: 255 }
+      args.outputs.solids << { x: 5, y: label.y - 24, w: 180, h: 20,
+                               r: @color[:r], g: @color[:g], b: @color[:b], a: @color[:a] }
     end
     @ttl -= 1
   end

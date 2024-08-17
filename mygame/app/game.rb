@@ -13,10 +13,11 @@ require 'app/plant_manager.rb'
 # Handle game logic
 class Game
   attr_accessor :plant_manager, :harvested_plants, :cash, :price, :score, :level, :paused,
-                :ui, :automations
+                :ui, :automations, :block_click
 
   def initialize(args)
     @paused = false
+    @block_click = false
     @harvested_plants = 0
     @cash = 5
     @price = { seed: 5, plant: 10, planter: 150, harvester: 250, seller: 350 }
@@ -41,13 +42,14 @@ class Game
   def standard_display(args)
     @ui.tick(args)
 
-    @plant_manager.tick(args)
-
     @automations.tick(args)
+
+    @plant_manager.tick(args)
 
     @level.tick(args)
 
     debt_check
+    @block_click = false
   end
 
   def debt_check
@@ -56,7 +58,7 @@ class Game
     # If player has no money, no seeds, no plants, and no harvests, debt is accrued.
     @plant_manager.seeds += 5
     @cash -= 30
-    @ui.alerts << Alert.new('You have been given 5 seeds. You have incurred a debt of $30.')
+    @ui.alerts << Alert.new('You have been given 5 seeds. You have incurred a debt of $30.', color: :pink)
   end
 
   def pause_menu(args)

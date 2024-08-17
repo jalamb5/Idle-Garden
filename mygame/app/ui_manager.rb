@@ -4,7 +4,6 @@
 # rubocop:disable Style/RedundantFileExtensionInRequire
 require 'app/labels.rb'
 require 'app/button.rb'
-require 'app/alert.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Manage display and updating of UI elements

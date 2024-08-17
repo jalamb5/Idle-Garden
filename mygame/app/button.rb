@@ -66,7 +66,6 @@ class Button
       play_button_sound(save(args), args)
     when :load_save
       load_save(args)
-      # LoadManager.new.load_save(args)
       args.state.startup.splash_state = false
     when :pause
       pause_game(args)
@@ -85,7 +84,7 @@ class Button
 
     tooltips = args.gtk.parse_json_file('data/tooltips.json')
     y_location = args.grid.h - 180
-    tooltips[@name.to_s].each { |string| args.state.game_state.ui.alerts << Alert.new(string, y_location, true) }
+    tooltips[@name.to_s].each { |string| args.state.game_state.ui.alerts << Alert.new(string, y_coord: y_location, hover: true) }
   end
 
   private
@@ -110,24 +109,30 @@ class Button
   def buy_auto_harvester(args)
     return false if (args.state.game_state.cash - args.state.game_state.price[:harvester]).negative?
 
-    args.state.game_state.automations.auto_harvesters << Automation.new(:harvester, args)
+    auto_harvester = Automation.new(:harvester, args)
+    args.state.game_state.automations.auto_harvesters << auto_harvester
     args.state.game_state.cash -= args.state.game_state.price[:harvester]
+    args.state.game_state.ui.alerts << Alert.new("#{auto_harvester.name} is helping in the garden!", color: :blue)
     true
   end
 
   def buy_auto_seller(args)
     return false if (args.state.game_state.cash - args.state.game_state.price[:seller]).negative?
 
-    args.state.game_state.automations.auto_sellers << Automation.new(:seller, args)
+    auto_seller = Automation.new(:seller, args)
+    args.state.game_state.automations.auto_sellers << auto_seller
     args.state.game_state.cash -= args.state.game_state.price[:seller]
+    args.state.game_state.ui.alerts << Alert.new("#{auto_seller.name} is helping to sell your harvest!", color: :blue)
     true
   end
 
   def buy_auto_planter(args)
     return false if (args.state.game_state.cash - args.state.game_state.price[:planter]).negative?
 
-    args.state.game_state.automations.auto_planters << Automation.new(:planter, args)
+    auto_planter = Automation.new(:planter, args)
+    args.state.game_state.automations.auto_planters << auto_planter
     args.state.game_state.cash -= args.state.game_state.price[:planter]
+    args.state.game_state.ui.alerts << Alert.new("#{auto_planter.name} is helping in the garden!", color: :blue)
     true
   end
 
@@ -137,12 +142,6 @@ class Button
   end
 
   def load_save(args)
-    # return nil unless File.exist?('game_state.txt')
-    # args.state.game_state = Game.new(args)
-    # data = $gtk.deserialize_state('game_state.txt')
-    # data.each_key { |key| args.state.game_state.send("#{key}=", data[key]) }
-    # args.state.game_state.send('loaded_from_save=', true)
-    # args.state.game_state.send('paused=', false)
     args.state.load_state = LoadManager.new
   end
 
