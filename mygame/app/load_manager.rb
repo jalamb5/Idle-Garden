@@ -22,6 +22,7 @@ class LoadManager
   private
 
   def reconstruct_objects(args, game_state, save_data)
+    set_volume(args, save_data)
     game_state.harvested_plants = save_data[:harvested_plants]
     game_state.cash = save_data[:cash]
     game_state.score = save_data[:score]
@@ -29,6 +30,12 @@ class LoadManager
     reconstruct_plants(args, game_state, save_data)
 
     @loaded_from_save = false
+  end
+
+  def set_volume(args, save_data)
+    args.state.startup.sound_manager.sfx_gain = save_data[:sound_volume][:sfx_gain]
+    args.state.startup.sound_manager.music_gain = save_data[:sound_volume][:music_gain]
+    args.audio[:music][:gain] = save_data[:sound_volume][:music_gain]
   end
 
   def reconstruct_automations(game_state, save_data)

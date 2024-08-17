@@ -4,15 +4,17 @@
 # rubocop:disable Style/RedundantFileExtensionInRequire
 require 'app/game.rb'
 require 'app/button.rb'
+require 'app/sound_manager.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Handle splash screen and start / load game
 class Startup
-  attr_accessor :splash_state
+  attr_accessor :splash_state, :sound_manager
 
   def initialize(args)
     @splash_state = true
-    play_music(args)
+    @sound_manager = SoundManager.new
+    @sound_manager.play_music(:garden_melody, args)
   end
 
   def tick(args)
@@ -34,14 +36,6 @@ class Startup
     args.state.load_save_button ||= Button.new(:load_save, 540, 260, 'Load Save', 200, 50, :opaque)
     args.state.load_save_button.display(args)
     args.state.load_save_button.clicked?(args)
-  end
-
-  def play_music(args)
-    args.audio[:music] = {
-      input: 'sounds/Garden_Melody.ogg',
-      gain: 0.25,
-      looping: true
-    }
   end
 
   # DragonRuby required methods

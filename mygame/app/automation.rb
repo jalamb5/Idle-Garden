@@ -22,6 +22,7 @@ class Automation
     @counter = 0
     @name = name_generator(args)
     @work_completed = 0
+    args.state.startup.sound_manager.play_effect(@type, args)
   end
 
   def run(args)
@@ -43,6 +44,8 @@ class Automation
 
   def clicked?(args)
     return false unless args.inputs.mouse.click && args.inputs.mouse.point.inside_rect?(@sprite)
+    
+    args.state.startup.sound_manager.play_effect(@type, args)
 
     # Prevent clicking automator from planting or harvesting
     args.state.game_state.block_click = true

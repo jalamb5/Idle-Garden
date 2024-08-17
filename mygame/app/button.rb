@@ -69,8 +69,13 @@ class Button
       args.state.startup.splash_state = false
     when :pause
       pause_game(args)
-    when :mute
+    when :mute_music
+      play_button_sound(true, args)
       args.audio[:music][:gain] = args.audio[:music][:gain].zero? ? 0.25 : 0
+      args.state.startup.sound_manager.music_gain = args.state.startup.sound_manager.music_gain.zero? ? 0.25 : 0
+    when :mute_sfx
+      play_button_sound(true, args)
+      args.state.startup.sound_manager.sfx_gain = args.state.startup.sound_manager.sfx_gain.zero? ? 0.25 : 0
     when :quit
       $gtk.request_quit
     else
@@ -84,7 +89,9 @@ class Button
 
     tooltips = args.gtk.parse_json_file('data/tooltips.json')
     y_location = args.grid.h - 180
-    tooltips[@name.to_s].each { |string| args.state.game_state.ui.alerts << Alert.new(string, y_coord: y_location, hover: true) }
+    tooltips[@name.to_s].each do |string|
+      args.state.game_state.ui.alerts << Alert.new(string, y_coord: y_location, hover: true)
+    end
   end
 
   private
@@ -138,6 +145,10 @@ class Button
 
   # Saves the state of the game in a text file called game_state.txt
   def save(args)
+    # Collect data not stored in game_state
+    args.state.game_state.sound_volume = { sfx_gain: args.state.startup.sound_manager.sfx_gain,
+                                           music_gain: args.state.startup.sound_manager.music_gain }
+    # Write save file
     $gtk.serialize_state('game_state.txt', args.state.game_state)
   end
 
@@ -150,12 +161,11 @@ class Button
   end
 
   def play_button_sound(type, args)
-    args.outputs.sounds << (if type == true
-                              { input: 'sounds/button_click.wav',
-                                gain: 0.25 }
-                            else
-                              'sounds/button_reject.wav'
-                            end)
+    if type == true
+      args.state.startup.sound_manager.play_effect(:button_click, args)
+    else
+      args.state.startup.sound_manager.play_effect(:button_reject, args)
+    end
   end
 
   # DragonRuby required methods

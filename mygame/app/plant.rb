@@ -68,12 +68,14 @@ class Plant
     if plant.stage == :READY_TO_HARVEST
       args.state.game_state.harvested_plants += 1
       plant.invalid = true
-      args.outputs.sounds << 'sounds/harvest_plant.wav'
+      # args.outputs.sounds << 'sounds/harvest_plant.wav'
+      args.state.startup.sound_manager.play_effect(:harvest_plant, args)
       args.state.game_state.score += 2
     elsif plant.stage == :WITHERED
       args.state.game_state.plant_manager.seeds += rand(10)
       plant.invalid = true
-      args.outputs.sounds << 'sounds/harvest_withered.wav'
+      # args.outputs.sounds << 'sounds/harvest_withered.wav'
+      args.state.startup.sound_manager.play_effect(:harvest_withered, args)
       args.state.game_state.score += 1
     end
   end

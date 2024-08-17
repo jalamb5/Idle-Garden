@@ -13,7 +13,7 @@ require 'app/plant_manager.rb'
 # Handle game logic
 class Game
   attr_accessor :plant_manager, :harvested_plants, :cash, :price, :score, :level, :paused,
-                :ui, :automations, :block_click
+                :ui, :automations, :block_click, :sound_volume
 
   def initialize(args)
     @paused = false
@@ -26,6 +26,7 @@ class Game
     @ui = UIManager.new(args, self)
     @automations = AutomationManager.new
     @plant_manager = PlantManager.new
+    @sound_volume = {}
   end
 
   def tick(args)
@@ -80,7 +81,7 @@ class Game
   def serialize
     { plant_manager: @plant_manager, harvested_plants: @harvested_plants,
       cash: @cash, score: @score, ui: @ui,
-      automations: @automations }
+      automations: @automations, sound_volume: @sound_volume }
   end
 
   def inspect
