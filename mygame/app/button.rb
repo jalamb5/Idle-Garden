@@ -7,6 +7,7 @@ require 'app/game.rb'
 require 'app/labels.rb'
 require 'app/alert.rb'
 require 'app/load_manager.rb'
+require 'app/button_actions.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Create buttons
@@ -17,6 +18,21 @@ class Button
     default: [200, 213, 185, 250],
     opaque: [255, 255, 204, 250],
     clear: [0, 0, 0, 0]
+  }.freeze
+
+  BUTTON_ACTIONS = {
+    sell: ->(args) { ButtonActions.sell(args.state.game_state) },
+    buy_seed: ->(args) { ButtonActions.buy_seed(args.state.game_state) },
+    buy_auto_harvester: ->(args) { ButtonActions.buy_auto_harvester(args) },
+    buy_auto_seller: ->(args) { ButtonActions.buy_auto_seller(args) },
+    buy_auto_planter: ->(args) { ButtonActions.buy_auto_planter(args) },
+    save: ->(args) { ButtonActions.save(args) },
+    load_save: ->(args) { ButtonActions.load_save(args.state) },
+    pause_game: ->(args) { ButtonActions.pause_game(args.state.game_state) },
+    start: ->(args) { ButtonActions.start(args.state.startup) },
+    mute_music: ->(args) { ButtonActions.mute_music(args) },
+    mute_sfx: ->(args) { ButtonActions.mute_sfx(args.state.startup.sound_manager) },
+    quit: ->(_args) { ButtonActions.quit }
   }.freeze
 
   def initialize(name, x_coord, y_coord, text, width = 100, height = 50, color = :default)
@@ -48,39 +64,8 @@ class Button
   def clicked?(args)
     return false unless args.inputs.mouse.click && args.inputs.mouse.point.inside_rect?(@entity[:rect])
 
-    case @name
-    when :sell
-      play_button_sound(sell(args), args)
-    when :buy_seed
-      play_button_sound(buy_seed(args), args)
-    when :auto_harvester
-      play_button_sound(buy_auto_harvester(args), args)
-    when :auto_seller
-      play_button_sound(buy_auto_seller(args), args)
-    when :auto_planter
-      play_button_sound(buy_auto_planter(args), args)
-    when :start
-      args.state.startup.splash_state = false
-      play_button_sound(true, args)
-    when :save
-      play_button_sound(save(args), args)
-    when :load_save
-      load_save(args)
-      args.state.startup.splash_state = false
-    when :pause
-      pause_game(args)
-    when :mute_music
-      play_button_sound(true, args)
-      args.audio[:music][:gain] = args.audio[:music][:gain].zero? ? 0.25 : 0
-      args.state.startup.sound_manager.music_gain = args.state.startup.sound_manager.music_gain.zero? ? 0.25 : 0
-    when :mute_sfx
-      play_button_sound(true, args)
-      args.state.startup.sound_manager.sfx_gain = args.state.startup.sound_manager.sfx_gain.zero? ? 0.25 : 0
-    when :quit
-      $gtk.request_quit
-    else
-      false
-    end
+    result = BUTTON_ACTIONS[@name]&.call(args)
+    play_button_sound(result, args)
   end
 
   # Display tooltips on hover
@@ -95,70 +80,6 @@ class Button
   end
 
   private
-
-  def sell(args)
-    return false if args.state.game_state.harvested_plants <= 0
-
-    args.state.game_state.cash += args.state.game_state.harvested_plants * args.state.game_state.price[:plant]
-    args.state.game_state.score += args.state.game_state.harvested_plants * 10
-    args.state.game_state.harvested_plants = 0
-    true
-  end
-
-  def buy_seed(args)
-    return false if (args.state.game_state.cash - args.state.game_state.price[:seed]).negative?
-
-    args.state.game_state.plant_manager.seeds += 1
-    args.state.game_state.cash -= args.state.game_state.price[:seed]
-    true
-  end
-
-  def buy_auto_harvester(args)
-    return false if (args.state.game_state.cash - args.state.game_state.price[:harvester]).negative?
-
-    auto_harvester = Automation.new(:harvester, args)
-    args.state.game_state.automations.auto_harvesters << auto_harvester
-    args.state.game_state.cash -= args.state.game_state.price[:harvester]
-    args.state.game_state.ui.alerts << Alert.new("#{auto_harvester.name} is helping in the garden!", color: :blue)
-    true
-  end
-
-  def buy_auto_seller(args)
-    return false if (args.state.game_state.cash - args.state.game_state.price[:seller]).negative?
-
-    auto_seller = Automation.new(:seller, args)
-    args.state.game_state.automations.auto_sellers << auto_seller
-    args.state.game_state.cash -= args.state.game_state.price[:seller]
-    args.state.game_state.ui.alerts << Alert.new("#{auto_seller.name} is helping to sell your harvest!", color: :blue)
-    true
-  end
-
-  def buy_auto_planter(args)
-    return false if (args.state.game_state.cash - args.state.game_state.price[:planter]).negative?
-
-    auto_planter = Automation.new(:planter, args)
-    args.state.game_state.automations.auto_planters << auto_planter
-    args.state.game_state.cash -= args.state.game_state.price[:planter]
-    args.state.game_state.ui.alerts << Alert.new("#{auto_planter.name} is helping in the garden!", color: :blue)
-    true
-  end
-
-  # Saves the state of the game in a text file called game_state.txt
-  def save(args)
-    # Collect data not stored in game_state
-    args.state.game_state.sound_volume = { sfx_gain: args.state.startup.sound_manager.sfx_gain,
-                                           music_gain: args.state.startup.sound_manager.music_gain }
-    # Write save file
-    $gtk.serialize_state('game_state.txt', args.state.game_state)
-  end
-
-  def load_save(args)
-    args.state.load_state = LoadManager.new
-  end
-
-  def pause_game(args)
-    args.state.game_state.paused == true ? (args.state.game_state.paused = false) : (args.state.game_state.paused = true)
-  end
 
   def play_button_sound(type, args)
     if type == true

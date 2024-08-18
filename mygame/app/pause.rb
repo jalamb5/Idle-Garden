@@ -29,7 +29,7 @@ class Pause
 
   def pause_buttons
     {
-      unpause: Button.new(:pause, 400, 360, 'Return to Garden', 200, 50, :opaque),
+      pause_game: Button.new(:pause_game, 400, 360, 'Return to Garden', 200, 50, :opaque),
       save: Button.new(:save, 700, 360, 'Save', 200, 50, :opaque),
       quit: Button.new(:quit, 540, 60, 'Quit Game', 200, 50, :opaque)
     }
