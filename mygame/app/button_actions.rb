@@ -6,7 +6,7 @@ require 'app/automation.rb'
 require 'app/game.rb'
 require 'app/labels.rb'
 require 'app/alert.rb'
-require 'app/load_manager.rb'
+require 'app/managers/load_manager.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Manage logic for clicking buttons

@@ -4,7 +4,7 @@
 # rubocop:disable Style/RedundantFileExtensionInRequire
 require 'app/game.rb'
 require 'app/button.rb'
-require 'app/sound_manager.rb'
+require 'app/managers/sound_manager.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Handle splash screen and start / load game

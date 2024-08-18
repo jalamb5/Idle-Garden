@@ -5,9 +5,9 @@
 require 'app/levels.rb'
 require 'app/alert.rb'
 require 'app/pause.rb'
-require 'app/ui_manager.rb'
-require 'app/automation_manager.rb'
-require 'app/plant_manager.rb'
+require 'app/managers/ui_manager.rb'
+require 'app/managers/automation_manager.rb'
+require 'app/managers/plant_manager.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Handle game logic
