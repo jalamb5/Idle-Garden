@@ -30,10 +30,10 @@ class Startup
 
   def splash(args)
     args.outputs.sprites << { x: 0, y: 0, w: 1280, h: 720, path: 'sprites/splash.png' }
-    args.state.start_button ||= Button.new(:start, 540, 360, 'Start', 200, 50, :opaque)
+    args.state.start_button ||= Button.new(:start, [540, 360], 'Start', [200, 50], :opaque)
     args.state.start_button.display(args)
     args.state.start_button.clicked?(args)
-    args.state.load_save_button ||= Button.new(:load_save, 540, 260, 'Load Save', 200, 50, :opaque)
+    args.state.load_save_button ||= Button.new(:load_save, [540, 260], 'Load Save', [200, 50], :opaque)
     args.state.load_save_button.display(args)
     args.state.load_save_button.clicked?(args)
   end

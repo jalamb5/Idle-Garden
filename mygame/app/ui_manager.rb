@@ -39,9 +39,9 @@ class UIManager
 
   def generate_buttons(args, game)
     {
-      pause_game: Button.new(:pause_game, 170, args.grid.h - 30, '', 30, 30, :clear),
-      buy_seed: Button.new(:buy_seed, 0, 50, "Seed (#{game.price[:seed]})"),
-      sell: Button.new(:sell, 0, 0, 'Sell', 200)
+      pause_game: Button.new(:pause_game, [170, args.grid.h - 30], '', [30, 30], :clear),
+      buy_seed: Button.new(:buy_seed, [0, 50], "Seed (#{game.price[:seed]})"),
+      sell: Button.new(:sell, [0, 0], 'Sell', [200, 50])
     }
   end
 

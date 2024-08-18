@@ -1,10 +1,10 @@
 {
-  "buy_seed": ["Buy more seeds."],
-  "sell": ["Sell all harvested plants."],
-  "buy_auto_harvester": ["Hire a harvester to collect ripe or withered plants periodically."],
-  "buy_auto_planter": ["Hire a planter to plant seeds periodically."],
-  "buy_auto_seller": ["Hire a seller to sell plants periodically."],
-  "save": ["Save your game. Previous save will be overwritten."],
-  "pause_game": ["Pause your game."]
+  "buy_seed": "Buy more seeds.",
+  "sell": "Sell all harvested plants.",
+  "buy_auto_harvester": "Hire a harvester to collect ripe or withered plants periodically.",
+  "buy_auto_planter": "Hire a planter to plant seeds periodically.",
+  "buy_auto_seller": "Hire a seller to sell plants periodically.",
+  "save": "Save your game. Previous save will be overwritten.",
+  "pause_game": "Pause your game."
 }
 

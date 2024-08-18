@@ -29,9 +29,9 @@ class Pause
 
   def pause_buttons
     {
-      pause_game: Button.new(:pause_game, 400, 360, 'Return to Garden', 200, 50, :opaque),
-      save: Button.new(:save, 700, 360, 'Save', 200, 50, :opaque),
-      quit: Button.new(:quit, 540, 60, 'Quit Game', 200, 50, :opaque)
+      pause_game: Button.new(:pause_game, [400, 360], 'Return to Garden', [200, 50], :opaque),
+      save: Button.new(:save, [700, 360], 'Save', [200, 50], :opaque),
+      quit: Button.new(:quit, [540, 60], 'Quit Game', [200, 50], :opaque)
     }
   end
 
@@ -46,6 +46,6 @@ class Pause
 
   def create_mute_button(type, x_coord, gain, unmute_label, mute_label)
     label = gain.zero? ? unmute_label : mute_label
-    Button.new(type, x_coord, 260, label, 200, 50, :opaque)
+    Button.new(type, [x_coord, 260], label, [200, 50], :opaque)
   end
 end

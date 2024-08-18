@@ -2,11 +2,7 @@
 
 # DragonRuby requires extensions
 # rubocop:disable Style/RedundantFileExtensionInRequire
-require 'app/automation.rb'
-require 'app/game.rb'
-require 'app/labels.rb'
 require 'app/alert.rb'
-require 'app/load_manager.rb'
 require 'app/button_actions.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
@@ -35,24 +31,16 @@ class Button
     quit: ->(_args) { ButtonActions.quit }
   }.freeze
 
-  def initialize(name, x_coord, y_coord, text, width = 100, height = 50, color = :default)
+  def initialize(name, coords, text, size = [100, 50], color = :default)
     @name = name
-    @x = x_coord
-    @y = y_coord
+    @x = coords[0]
+    @y = coords[1]
     @text = text
-    @width = width
-    @height = height
-    @entity = {
-      id: @name,
-      rect: { x: @x, y: @y, w: @width, h: @height },
-      primitives: [
-        [@x + 2, @y + 1, @width - 4, @height - 2, COLORS[color]].solid,
-        { x: @x + 5, y: @y + 30, text: @text, size_enum: -4, alignment_enum: 0, vertical_alignment_enum: 1 }.label!,
-        unless color == :clear
-          { x: @x + 2, y: @y + 1, w: @width - 4, h: @height - 2, r: 0, g: 0, b: 0, a: 80 }.border!
-        end
-      ]
-    }
+    @width = size[0]
+    @height = size[1]
+    @color = COLORS[color]
+    @border = true unless color == :clear
+    @entity = construct_entity
   end
 
   # show button on screen
@@ -73,20 +61,26 @@ class Button
     return false unless args.inputs.mouse.point.inside_rect?(@entity[:rect])
 
     tooltips = args.gtk.parse_json_file('data/tooltips.json')
-    y_location = args.grid.h - 180
-    tooltips[@name.to_s].each do |string|
-      args.state.game_state.ui.alerts << Alert.new(string, y_coord: y_location, hover: true)
-    end
+    args.state.game_state.ui.alerts << Alert.new(tooltips[@name.to_s], y_coord: (args.grid.h - 180), hover: true)
   end
 
   private
 
+  def construct_entity
+    {
+      id: @name,
+      rect: { x: @x, y: @y, w: @width, h: @height },
+      primitives: [
+        [@x + 2, @y + 1, @width - 4, @height - 2, @color].solid,
+        { x: @x + 5, y: @y + 30, text: @text, size_enum: -4, alignment_enum: 0, vertical_alignment_enum: 1 }.label!,
+        ({ x: @x + 2, y: @y + 1, w: @width - 4, h: @height - 2, r: 0, g: 0, b: 0, a: 80 }.border! if @border)
+      ]
+    }
+  end
+
   def play_button_sound(type, args)
-    if type == true
-      args.state.startup.sound_manager.play_effect(:button_click, args)
-    else
-      args.state.startup.sound_manager.play_effect(:button_reject, args)
-    end
+    sound = type ? :button_click : :button_reject
+    args.state.startup.sound_manager.play_effect(sound, args)
   end
 
   # DragonRuby required methods
