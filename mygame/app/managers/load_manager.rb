@@ -15,39 +15,40 @@ class LoadManager
 
   def load_save(args)
     args.state.game_state = Game.new(args)
-    save_data = $gtk.deserialize_state('game_state.txt')
-    reconstruct_objects(args, args.state.game_state, save_data)
+    saved_state = $gtk.deserialize_state('game_state.txt')
+    reconstruct_objects(args, args.state.game_state, saved_state)
   end
 
   private
 
-  def reconstruct_objects(args, game_state, save_data)
-    set_volume(args, save_data)
-    game_state.harvested_plants = save_data[:harvested_plants]
-    game_state.cash = save_data[:cash]
-    game_state.score = save_data[:score]
-    reconstruct_automations(game_state, save_data)
-    reconstruct_plants(args, game_state, save_data)
+  def reconstruct_objects(args, game_state, saved_state)
+    set_volume(args, saved_state)
+    args.state.startup.tutorial = saved_state.save_data.tutorial
+    game_state.harvested_plants = saved_state[:harvested_plants]
+    game_state.cash = saved_state[:cash]
+    game_state.score = saved_state[:score]
+    reconstruct_automations(game_state, saved_state)
+    reconstruct_plants(args, game_state, saved_state)
 
     @loaded_from_save = false
   end
 
-  def set_volume(args, save_data)
-    args.state.startup.sound_manager.sfx_gain = save_data[:sound_volume][:sfx_gain]
-    args.state.startup.sound_manager.music_gain = save_data[:sound_volume][:music_gain]
-    args.audio[:music][:gain] = save_data[:sound_volume][:music_gain]
+  def set_volume(args, saved_state)
+    args.state.startup.sound_manager.sfx_gain = saved_state.save_data.sfx_gain
+    args.state.startup.sound_manager.music_gain = saved_state.save_data.music_gain
+    args.audio[:music][:gain] = saved_state.save_data.music_gain
   end
 
-  def reconstruct_automations(game_state, save_data)
-    game_state.automations.auto_harvesters = save_data[:automations][:auto_harvesters]
-    game_state.automations.auto_planters = save_data[:automations][:auto_planters]
-    game_state.automations.auto_sellers = save_data[:automations][:auto_sellers]
+  def reconstruct_automations(game_state, saved_state)
+    game_state.automations.auto_harvesters = saved_state[:automations][:auto_harvesters]
+    game_state.automations.auto_planters = saved_state[:automations][:auto_planters]
+    game_state.automations.auto_sellers = saved_state[:automations][:auto_sellers]
     game_state.automations.reconstruct
   end
 
-  def reconstruct_plants(args, game_state, save_data)
-    game_state.plant_manager.plants = save_data[:plant_manager][:plants]
-    game_state.plant_manager.seeds = save_data[:plant_manager][:seeds]
+  def reconstruct_plants(args, game_state, saved_state)
+    game_state.plant_manager.plants = saved_state[:plant_manager][:plants]
+    game_state.plant_manager.seeds = saved_state[:plant_manager][:seeds]
     game_state.plant_manager.reconstruct(args)
   end
 end

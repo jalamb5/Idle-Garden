@@ -10,7 +10,7 @@ require 'app/labels.rb'
 
 # Handle splash screen and start / load game
 class Startup
-  attr_accessor :splash_state, :sound_manager, :tutorial
+  attr_accessor :splash_state, :sound_manager
 
   def initialize(args)
     @splash_state = true
@@ -42,7 +42,6 @@ class Startup
   end
 
   def show_tutorial(args)
-    args.state.game_state.block_click = true
     labels = []
     coords = [350, 500]
     intro_message = ['Welcome to Idle Garden!',
@@ -60,7 +59,7 @@ class Startup
       coords[1] -= 40
     end
     labels.each { |label| label.display(args) }
-    @tutorial = false && args.state.game_state.save_data[:tutorial] = false if args.inputs.keyboard.key_down.space
+    @tutorial = false if args.inputs.keyboard.key_down.space
   end
 
   # DragonRuby required methods

@@ -66,8 +66,9 @@ module ButtonActions
   # Saves the state of the game in a text file called game_state.txt
   def self.save(args)
     # Collect data not stored in game_state
-    args.state.game_state.sound_volume = { sfx_gain: args.state.startup.sound_manager.sfx_gain,
-                                music_gain: args.state.startup.sound_manager.music_gain }
+    args.state.game_state.save_data = { sfx_gain: args.state.startup.sound_manager.sfx_gain,
+                                        music_gain: args.state.startup.sound_manager.music_gain,
+                                        save_version: 1 }
     # Write save file
     $gtk.serialize_state('game_state.txt', args.state.game_state)
     true
