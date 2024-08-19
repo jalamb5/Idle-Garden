@@ -8,7 +8,7 @@ require 'app/alert.rb'
 
 # Create new automations for garden
 class Automation
-  attr_accessor :type, :cooldown, :sprite, :name
+  attr_accessor :type, :cooldown, :sprite, :name, :work_completed, :location, :target, :counter
 
   COOLDOWNS = { harvester: 300, planter: 200, seller: 500 }.freeze
 
@@ -22,7 +22,7 @@ class Automation
     @counter = 0
     @name = name_generator(args)
     @work_completed = 0
-    args.state.startup.sound_manager.play_effect(@type, args)
+    args.state.startup.sound_manager.play_effect(@type, args) unless args.state.load_state.loaded_from_save == true
   end
 
   def run(args)
@@ -172,7 +172,7 @@ class Automation
 
   # DragonRuby required methods
   def serialize
-    { type: @type, cooldown: @cooldown, sprite: @sprite, name: @name }
+    { type: @type, cooldown: @cooldown, sprite: @sprite, name: @name, work_completed: @work_completed, location: @location, target: @target, counter: @counter }
   end
 
   def inspect

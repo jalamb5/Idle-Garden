@@ -27,7 +27,7 @@ class LoadManager
     game_state.harvested_plants = saved_state[:harvested_plants]
     game_state.cash = saved_state[:cash]
     game_state.score = saved_state[:score]
-    reconstruct_automations(game_state, saved_state)
+    reconstruct_automations(args, game_state, saved_state)
     reconstruct_plants(args, game_state, saved_state)
 
     @loaded_from_save = false
@@ -39,11 +39,11 @@ class LoadManager
     args.audio[:music][:gain] = saved_state.save_data.music_gain
   end
 
-  def reconstruct_automations(game_state, saved_state)
+  def reconstruct_automations(args, game_state, saved_state)
     game_state.automations.auto_harvesters = saved_state[:automations][:auto_harvesters]
     game_state.automations.auto_planters = saved_state[:automations][:auto_planters]
     game_state.automations.auto_sellers = saved_state[:automations][:auto_sellers]
-    game_state.automations.reconstruct
+    game_state.automations.reconstruct(args)
   end
 
   def reconstruct_plants(args, game_state, saved_state)
