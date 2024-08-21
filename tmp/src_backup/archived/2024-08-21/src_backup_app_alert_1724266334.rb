@@ -34,7 +34,7 @@ class Alert
 
     @labels.each do |label|
       label.display(args)
-      args.outputs.solids << { x: 5, y: label.y - 20, w: 180, h: 20,
+      args.outputs.solids << { x: 5, y: label.y - 35, w: 180, h: 20,
                                r: @color[:r], g: @color[:g], b: @color[:b], a: @color[:a] }
     end
     @ttl -= 1
