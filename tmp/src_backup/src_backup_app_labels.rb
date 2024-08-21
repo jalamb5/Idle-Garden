@@ -15,32 +15,32 @@ class Labels
   end
 
   def display(args)
-    args.outputs.labels << { x: @x, y: @y, text: "#{@text} #{@value}", size_px: @size_px, r: @r, g: @g, b: @b, a: @a }
+    args.outputs.labels << { x: @x, y: @y, text: "#{@text} #{@value}", size_px: @size_px, r: @r, g: @g, b: @b, a: @a, font: 'fonts/Tiny5.ttf' }
   end
 
   def update(key, args)
+    prev = @value
     case key
     when :seed
-      @value = args.state.game_state.seeds
+      @value = args.state.game_state.plant_manager.seeds
     when :growing
-      @value = args.state.game_state.plants.length
+      @value = args.state.game_state.plant_manager.plants.length
     when :harvested
       @value = args.state.game_state.harvested_plants
     when :cash
-      prev = @value
       @value = args.state.game_state.cash
-      flash(args, prev, @value)
     when :auto_harvesters
-      @value = args.state.game_state.auto_harvesters.length
+      @value = args.state.game_state.automations.auto_harvesters.length
     when :auto_planters
-      @value = args.state.game_state.auto_planters.length
+      @value = args.state.game_state.automations.auto_planters.length
     when :auto_sellers
-      @value = args.state.game_state.auto_sellers.length
+      @value = args.state.game_state.automations.auto_sellers.length
     when :score
       @value = args.state.game_state.score
     when :level
       @value = args.state.game_state.level.current_level
     end
+    flash(args, prev, @value)
   end
 
   private

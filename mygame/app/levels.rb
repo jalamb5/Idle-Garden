@@ -25,11 +25,13 @@ class Level
     case args.state.game_state.score
     when 0..100
       @current_level = 1
-    when 101..200
+    when 101..400
       @current_level = 2
-    when 201..300
+    when 401..800
       @current_level = 3
-    when 301..400
+    when 801..1500
+      @current_level = 4
+    else
       @current_level = 4
     end
   end

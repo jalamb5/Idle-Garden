@@ -74,7 +74,7 @@ class Game
     @ui.alerts << Alert.new('Dev Mode Activated!')
     @cash += 1000
     @plant_manager.seeds += 500
-    @score += 400
+    @score += 9000
   end
 
   # DragonRuby required methods

@@ -124,7 +124,7 @@ class Automation
   # Auto sellers move differently than other automations and are not in the garden, they require special logic
   def move_auto_seller(args)
     off_screen = [150, 720]
-    home = [args.state.game_state.ui.labels[:harvested].x + 125, args.state.game_state.ui.labels[:harvested].y - 15]
+    home = [args.state.game_state.ui.labels[:harvested].x + 125, args.state.game_state.ui.labels[:harvested].y - 25]
 
     if @location == off_screen
       @target = home
@@ -158,7 +158,7 @@ class Automation
       coord_generator
     when :seller
       harvested = args.state.game_state.ui.labels[:harvested]
-      [harvested.x + 125, harvested.y - 25]
+      [harvested.x + 125, harvested.y - 30]
     end
   end
 
