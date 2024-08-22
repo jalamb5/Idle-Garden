@@ -64,7 +64,8 @@ module ButtonActions
   end
 
   def self.shed(args)
-    p 'shed clicked'
+    args.state.game_state.shed.open == false ? (args.state.game_state.shed.open = true) : (args.state.game_state.shed.open = false)
+    true
   end
 
   # Saves the state of the game in a text file called game_state.txt

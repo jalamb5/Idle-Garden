@@ -33,6 +33,7 @@ class UIManager
     update_labels(args)
 
     handle_alerts(args) if @alerts.any?
+    display_shed(args) if args.state.game_state.shed.open
   end
 
   private
@@ -95,6 +96,10 @@ class UIManager
 
   def display_images(args)
     @images.each { |image| args.outputs.sprites << image }
+  end
+
+  def display_shed(args)
+    args.state.game_state.shed.tick(args)
   end
 
   # DragonRuby required methods

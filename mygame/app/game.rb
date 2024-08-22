@@ -14,7 +14,7 @@ require 'app/managers/plant_manager.rb'
 # Handle game logic
 class Game
   attr_accessor :plant_manager, :harvested_plants, :cash, :price, :score, :level, :paused,
-                :ui, :automations, :block_click, :save_data
+                :ui, :automations, :block_click, :shed, :save_data
 
   def initialize(args)
     @paused = false
@@ -83,7 +83,7 @@ class Game
   def serialize
     { plant_manager: @plant_manager, harvested_plants: @harvested_plants,
       cash: @cash, score: @score, ui: @ui,
-      automations: @automations, save_data: @save_data }
+      automations: @automations, shed: @shed, save_data: @save_data }
   end
 
   def inspect
