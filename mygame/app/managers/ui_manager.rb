@@ -18,7 +18,8 @@ class UIManager
     @images = [
       { x: 200, y: 0, w: 1080, h: 720, path: 'sprites/grass_background.png' },
       { x: 250, y: 50, w: 980, h: 620, path: 'sprites/background.png' },
-      { x: 170, y: args.grid.h - 30, w: 24, h: 24, path: 'sprites/pause_icon.png' }
+      { x: 170, y: args.grid.h - 30, w: 24, h: 24, path: 'sprites/pause_icon.png' },
+      { x: 10, y: 175, w: 50, h: 50, path: 'sprites/shed.png' }
     ]
   end
 
@@ -43,7 +44,7 @@ class UIManager
       pause_game: Button.new(:pause_game, [170, args.grid.h - 30], '', [30, 30], :clear),
       buy_seed: Button.new(:buy_seed, [0, 50], "Seed (#{game.price[:seed]})"),
       sell: Button.new(:sell, [0, 0], 'Sell', [200, 50]),
-      shed: Button.new(:shed, [0, 150], 'Shed', [100, 100])
+      shed: Button.new(:shed, [0, 150], 'Shed', [100, 100], :clear)
     }
   end
 
