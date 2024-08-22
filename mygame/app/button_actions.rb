@@ -63,6 +63,10 @@ module ButtonActions
     true
   end
 
+  def self.shed(args)
+    p 'shed clicked'
+  end
+
   # Saves the state of the game in a text file called game_state.txt
   def self.save(args)
     # Collect data not stored in game_state

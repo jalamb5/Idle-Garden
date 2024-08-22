@@ -22,6 +22,7 @@ class Button
     buy_auto_harvester: ->(args) { ButtonActions.buy_auto_harvester(args) },
     buy_auto_seller: ->(args) { ButtonActions.buy_auto_seller(args) },
     buy_auto_planter: ->(args) { ButtonActions.buy_auto_planter(args) },
+    shed: ->(args) { ButtonActions.shed(args) },
     save: ->(args) { ButtonActions.save(args) },
     load_save: ->(args) { ButtonActions.load_save(args.state) },
     pause_game: ->(args) { ButtonActions.pause_game(args.state.game_state) },

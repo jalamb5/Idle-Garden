@@ -5,6 +5,7 @@
 require 'app/levels.rb'
 require 'app/alert.rb'
 require 'app/pause.rb'
+require 'app/shed.rb'
 require 'app/managers/ui_manager.rb'
 require 'app/managers/automation_manager.rb'
 require 'app/managers/plant_manager.rb'
@@ -26,6 +27,7 @@ class Game
     @ui = UIManager.new(args, self)
     @automations = AutomationManager.new
     @plant_manager = PlantManager.new
+    @shed = Shed.new
     @save_data = {}
   end
 
