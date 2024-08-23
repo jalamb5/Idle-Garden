@@ -8,7 +8,7 @@ require 'app/button.rb'
 
 # Create a garden shed to store seeds and harvested plants
 class Shed
-  attr_accessor :harvested_plants, :open, :frame
+  attr_accessor :harvested_plants, :open
 
   def initialize
     @open = false
@@ -21,8 +21,8 @@ class Shed
   def tick(args)
     args.state.game_state.block_click = true
     draw_shed(args)
-    handle_labels(args) if @open
-    # handle_buttons(args)
+    handle_labels(args)
+    handle_buttons(args)
   end
 
   private
@@ -47,16 +47,8 @@ class Shed
   end
 
   def draw_shed(args)
-    animate_shed
+    @frame += 2 unless @frame >= 1080
     args.outputs.primitives << { x: 100, y: 0, w: @frame, h: 520, r: 0, g: 0, b: 0, a: 155, primitive_marker: :solid }
-  end
-
-  def animate_shed
-    if @open && @frame <= 1000
-      @frame += 100
-    elsif !@open && @frame.positive?
-      @frame -= 100
-    end
   end
 
   # DragonRuby required methods

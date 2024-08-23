@@ -34,7 +34,7 @@ class UIManager
     update_labels(args)
 
     handle_alerts(args) if @alerts.any?
-    display_shed(args) if args.state.game_state.shed.open
+    display_shed(args)
   end
 
   private
@@ -44,7 +44,7 @@ class UIManager
       pause_game: Button.new(:pause_game, [170, args.grid.h - 30], '', [30, 30], :clear),
       buy_seed: Button.new(:buy_seed, [0, 50], "Seed (#{game.price[:seed]})"),
       sell: Button.new(:sell, [0, 0], 'Sell', [200, 50]),
-      shed: Button.new(:shed, [0, 150], 'Shed', [100, 100], :clear)
+      shed: Button.new(:shed, [0, 150], '', [100, 100], :clear)
     }
   end
 
@@ -100,7 +100,11 @@ class UIManager
   end
 
   def display_shed(args)
-    args.state.game_state.shed.tick(args)
+    shed = args.state.game_state.shed
+    # Don't tick if the shed is closed and frame is zero
+    return if !shed.open && shed.frame.zero?
+
+    shed.tick(args)
   end
 
   # DragonRuby required methods
