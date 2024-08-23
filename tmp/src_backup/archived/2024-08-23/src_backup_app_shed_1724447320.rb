@@ -37,7 +37,7 @@ class Shed
 
   def generate_labels
     labels = {}
-    y = 500
+    y = 400
     @harvested_plants.each do |key, value|
       labels[key] = Labels.new(250, y, '', value, 20, [255, 255, 255, 255])
       y -= 50
@@ -47,8 +47,8 @@ class Shed
 
   def manual_labels
     {
-      title: Labels.new(650, 650, 'Garden Shed', '', 30, [255, 255, 255, 255]),
-      harvest: Labels.new(250, 550, 'Harvested', '', 20, [255, 255, 255, 255])
+      title: Labels.new(600, 500, 'Garden Shed', '', 30, [255, 255, 255, 255]),
+      harvest: Labels.new(250, 450, 'Harvested', '', 20, [255, 255, 255, 255])
     }
   end
 
@@ -83,7 +83,7 @@ class Shed
 
   def handle_images(args)
     plant_spritesheets = args.state.game_state.plant_manager.spritesheets
-    coords = [215, 480]
+    coords = [215, 380]
     @harvested_plants.each_key do |key|
       if plant_spritesheets.include?(key)
         args.outputs.sprites << plant_spritesheets[key].get(30, coords[0], coords[1], 25,

@@ -14,6 +14,7 @@ class Shed
     @open = false
     @frame = 0
     @harvested_plants = {
+      Harvest: '',
       flower_red: 0,
       flower_blue: 0
     }
@@ -37,18 +38,17 @@ class Shed
 
   def generate_labels
     labels = {}
-    y = 500
+    y = 450
     @harvested_plants.each do |key, value|
-      labels[key] = Labels.new(250, y, '', value, 20, [255, 255, 255, 255])
+      labels[key] = Labels.new(250, y, key.to_s, value, 20, [255, 255, 255, 255])
       y -= 50
     end
-    labels.merge(manual_labels)
+    labels + manual_labels
   end
 
   def manual_labels
     {
-      title: Labels.new(650, 650, 'Garden Shed', '', 30, [255, 255, 255, 255]),
-      harvest: Labels.new(250, 550, 'Harvested', '', 20, [255, 255, 255, 255])
+      
     }
   end
 
@@ -70,7 +70,7 @@ class Shed
   def draw_shed(args)
     animate_shed
     # args.outputs.primitives << { x: 100, y: 0, w: @frame, h: 520, r: 0, g: 0, b: 0, a: 155, primitive_marker: :solid }
-    args.outputs.sprites << { x: 200, y: 0, w: @frame, h: 720, a: 240, path: 'sprites/shed_background.png' }
+    args.outputs.sprites << { x: 200, y: 0, w: @frame, h: 520, a: 240, path: 'sprites/shed_background.png' }
   end
 
   def animate_shed
@@ -83,7 +83,7 @@ class Shed
 
   def handle_images(args)
     plant_spritesheets = args.state.game_state.plant_manager.spritesheets
-    coords = [215, 480]
+    coords = [215, 425]
     @harvested_plants.each_key do |key|
       if plant_spritesheets.include?(key)
         args.outputs.sprites << plant_spritesheets[key].get(30, coords[0], coords[1], 25,

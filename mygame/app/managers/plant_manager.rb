@@ -20,7 +20,7 @@ class PlantManager
   def tick(args)
     plant_harvest(args)
     manage_plants(args)
-    display_plants(args)
+    display_plants(args) unless args.state.game_state.shed.open
   end
 
   def reconstruct(args)

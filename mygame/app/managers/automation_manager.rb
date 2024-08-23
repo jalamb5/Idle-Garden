@@ -23,7 +23,7 @@ class AutomationManager
     all_automations = @auto_planters + @auto_harvesters + @auto_sellers
 
     run_automations(args, all_automations)
-    display_automations(args, all_automations)
+    display_automations(args, all_automations) unless args.state.game_state.shed.open
     monitor_automations(args, all_automations)
   end
 
