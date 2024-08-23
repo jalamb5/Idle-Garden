@@ -14,7 +14,6 @@ class Shed
     @open = false
     @frame = 0
     @harvested_plants = {
-      Harvest: '',
       flower_red: 0,
       flower_blue: 0
     }
@@ -71,7 +70,9 @@ class Shed
 
   # DragonRuby required methods
   def serialize
-    { open: @open, frame: @frame, harvested_plants: @harvested_plants }
+    { plant_manager: @plant_manager, harvested_plants: @harvested_plants,
+      cash: @cash, score: @score, ui: @ui,
+      automations: @automations, save_data: @save_data }
   end
 
   def inspect

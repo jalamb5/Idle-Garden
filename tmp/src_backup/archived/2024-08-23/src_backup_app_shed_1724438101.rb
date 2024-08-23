@@ -14,7 +14,6 @@ class Shed
     @open = false
     @frame = 0
     @harvested_plants = {
-      Harvest: '',
       flower_red: 0,
       flower_blue: 0
     }
@@ -33,12 +32,13 @@ class Shed
 
   def generate_labels
     labels = {}
-    y = 450
+    y = 500
     @harvested_plants.each do |key, value|
       labels[key] = Labels.new(150, y, key.to_s, value, 20, [255, 255, 255, 255])
       y -= 50
     end
     labels
+    # { harvested: Labels.new(150, 200, 'Harvested:', @harvested_plants, 20, [255, 255, 255, 255]) }
   end
 
   def handle_labels(args)
@@ -71,7 +71,9 @@ class Shed
 
   # DragonRuby required methods
   def serialize
-    { open: @open, frame: @frame, harvested_plants: @harvested_plants }
+    { plant_manager: @plant_manager, harvested_plants: @harvested_plants,
+      cash: @cash, score: @score, ui: @ui,
+      automations: @automations, save_data: @save_data }
   end
 
   def inspect

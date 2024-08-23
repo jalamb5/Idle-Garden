@@ -67,6 +67,7 @@ class Plant
   def harvest(args, plant)
     if plant.stage == :READY_TO_HARVEST
       args.state.game_state.harvested_plants += 1
+      args.state.game_state.shed.harvested_plants[plant.sheet] += 1
       plant.invalid = true
       args.state.startup.sound_manager.play_effect(:harvest_plant, args)
       args.state.game_state.score += 2
