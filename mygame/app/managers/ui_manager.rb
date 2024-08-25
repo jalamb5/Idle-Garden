@@ -4,6 +4,7 @@
 # rubocop:disable Style/RedundantFileExtensionInRequire
 require 'app/labels.rb'
 require 'app/button.rb'
+require 'app/spritesheet.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Manage display and updating of UI elements
@@ -19,7 +20,8 @@ class UIManager
       { x: 200, y: 0, w: 1080, h: 720, path: 'sprites/grass_background.png' },
       { x: 250, y: 50, w: 980, h: 620, path: 'sprites/background.png' },
       { x: 170, y: args.grid.h - 30, w: 24, h: 24, path: 'sprites/pause_icon.png' },
-      { x: 10, y: 175, w: 50, h: 50, path: 'sprites/shed.png' }
+      # { x: 10, y: 175, w: 50, h: 50, path: 'sprites/shed.png' },
+      args.state.game_state.shed.spritesheet.get(0, 10, 175, 64, 64)
     ]
   end
 
@@ -101,9 +103,11 @@ class UIManager
 
   def display_shed(args)
     shed = args.state.game_state.shed
+    args.outputs.sprites << shed.spritesheet.get(0, 10, 175, 64, 64) unless shed.open
     # Don't tick if the shed is closed and frame is zero
     return if !shed.open && shed.frame.zero?
 
+    args.outputs.sprites << shed.spritesheet.get(1, 10, 175, 64, 64)
     shed.tick(args)
   end
 

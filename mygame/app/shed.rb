@@ -4,11 +4,12 @@
 # rubocop:disable Style/RedundantFileExtensionInRequire
 require 'app/labels.rb'
 require 'app/button.rb'
+require 'app/spritesheet.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Create a garden shed to store seeds and harvested plants
 class Shed
-  attr_accessor :harvested_plants, :open, :frame
+  attr_accessor :harvested_plants, :open, :frame, :spritesheet
 
   def initialize
     @open = false
@@ -19,6 +20,7 @@ class Shed
     }
     @labels = generate_labels
     @buttons = generate_buttons
+    @spritesheet = Spritesheet.new('sprites/shed_sheet.png', 64, 64, 2)
   end
 
   def tick(args)
