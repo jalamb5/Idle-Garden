@@ -27,9 +27,9 @@ class Plant
     @y = y_coord - 10
     @w = 64
     @h = 64
-    @age = 0
+    @age = 30
     @invalid = occupied(args, [@x, @y, @w, @h])
-    @stage = :SEED
+    @stage = :READY_TO_HARVEST
     @a = 255
     @frame = 0
     @sheet = sheet

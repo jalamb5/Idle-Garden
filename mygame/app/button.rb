@@ -17,22 +17,22 @@ class Button
   }.freeze
 
   BUTTON_ACTIONS = {
-    sell: ->(args) { ButtonActions.sell(args.state.game_state) },
-    buy_seed: ->(args) { ButtonActions.buy_seed(args.state.game_state) },
-    buy_auto_harvester: ->(args) { ButtonActions.buy_auto_harvester(args) },
-    buy_auto_seller: ->(args) { ButtonActions.buy_auto_seller(args) },
-    buy_auto_planter: ->(args) { ButtonActions.buy_auto_planter(args) },
-    shed: ->(args) { ButtonActions.shed(args) },
-    save: ->(args) { ButtonActions.save(args) },
-    load_save: ->(args) { ButtonActions.load_save(args.state) },
-    pause_game: ->(args) { ButtonActions.pause_game(args.state.game_state) },
-    start: ->(args) { ButtonActions.start(args.state.startup) },
-    mute_music: ->(args) { ButtonActions.mute_music(args) },
-    mute_sfx: ->(args) { ButtonActions.mute_sfx(args.state.startup.sound_manager) },
-    quit: ->(_args) { ButtonActions.quit }
+    sell: ->(args, type) { ButtonActions.sell(args.state.game_state, type) },
+    buy_seed: ->(args, _type) { ButtonActions.buy_seed(args.state.game_state) },
+    buy_auto_harvester: ->(args, _type) { ButtonActions.buy_auto_harvester(args) },
+    buy_auto_seller: ->(args, _type) { ButtonActions.buy_auto_seller(args) },
+    buy_auto_planter: ->(args, _type) { ButtonActions.buy_auto_planter(args) },
+    shed: ->(args, _type) { ButtonActions.shed(args) },
+    save: ->(args, _type) { ButtonActions.save(args) },
+    load_save: ->(args, _type) { ButtonActions.load_save(args.state) },
+    pause_game: ->(args, _type) { ButtonActions.pause_game(args.state.game_state) },
+    start: ->(args, _type) { ButtonActions.start(args.state.startup) },
+    mute_music: ->(args, _type) { ButtonActions.mute_music(args) },
+    mute_sfx: ->(args, _type) { ButtonActions.mute_sfx(args.state.startup.sound_manager) },
+    quit: ->(_args, _type) { ButtonActions.quit }
   }.freeze
 
-  def initialize(name, coords, text, size = [100, 50], color = :default)
+  def initialize(name, coords, text, size = [100, 50], color = :default, type = nil)
     @name = name
     @x = coords[0]
     @y = coords[1]
@@ -40,6 +40,7 @@ class Button
     @width = size[0]
     @height = size[1]
     @color = COLORS[color]
+    @type = type
     @border = true unless color == :clear
     @entity = construct_entity
   end
@@ -53,7 +54,7 @@ class Button
   def clicked?(args)
     return false unless args.inputs.mouse.click && args.inputs.mouse.point.inside_rect?(@entity[:rect])
 
-    result = BUTTON_ACTIONS[@name]&.call(args)
+    result = BUTTON_ACTIONS[@name]&.call(args, @type)
     play_button_sound(result, args)
   end
 

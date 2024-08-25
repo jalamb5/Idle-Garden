@@ -16,12 +16,12 @@ module ButtonActions
     true
   end
 
-  def self.sell(game_state)
-    return false if game_state.harvested_plants <= 0
+  def self.sell(game_state, type)
+    return false if game_state.shed.harvested_plants[type] <= 0
 
-    game_state.cash += game_state.harvested_plants * game_state.price[:plant]
-    game_state.score += game_state.harvested_plants * 10
-    game_state.harvested_plants = 0
+    game_state.cash += game_state.shed.harvested_plants[type] * game_state.price[type]
+    game_state.score += game_state.shed.harvested_plants[type] * 10
+    game_state.shed.harvested_plants[type] = 0
     true
   end
 

@@ -30,7 +30,7 @@ class Shed
     handle_images(args)
 
     # handle_labels(args) if @open
-    # handle_buttons(args)
+    handle_buttons(args)
   end
 
   private
@@ -60,7 +60,10 @@ class Shed
   end
 
   def generate_buttons
-    { shed: Button.new(:shed, [900, 400], 'Close', [100, 100]) }
+    {
+      sell_red: Button.new(:sell, [400, 470], 'Sell', [60, 50], :default, :flower_red),
+      sell_blue: Button.new(:sell, [400, 420], 'Sell', [60, 50], :default, :flower_blue)
+    }
   end
 
   def handle_buttons(args)

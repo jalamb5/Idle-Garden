@@ -21,7 +21,7 @@ class Game
     @block_click = false
     @harvested_plants = 0
     @cash = 5
-    @price = { seed: 5, plant: 10, planter: 150, harvester: 250, seller: 350 }
+    @price = { seed: 5, flower_red: 10, flower_blue: 15, planter: 150, harvester: 250, seller: 350 }
     @score = 0
     @level = Level.new
     @ui = UIManager.new(args, self)
