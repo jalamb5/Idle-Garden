@@ -43,7 +43,7 @@ class UIManager
     {
       pause_game: Button.new(:pause_game, [170, args.grid.h - 30], '', [30, 30], :clear),
       buy_seed: Button.new(:buy_seed, [0, 50], "Seed (#{game.price[:seed]})"),
-      sell: Button.new(:sell, [0, 0], 'Sell', [200, 50]),
+      # sell: Button.new(:sell, [0, 0], 'Sell', [200, 50]),
       shed: Button.new(:shed, [0, 150], '', [100, 100], :clear)
     }
   end

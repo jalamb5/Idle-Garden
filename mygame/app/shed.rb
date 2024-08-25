@@ -28,8 +28,6 @@ class Shed
 
     handle_labels(args)
     handle_images(args)
-
-    # handle_labels(args) if @open
     handle_buttons(args)
   end
 
@@ -60,10 +58,13 @@ class Shed
   end
 
   def generate_buttons
-    {
-      sell_red: Button.new(:sell, [400, 470], 'Sell', [60, 50], :default, :flower_red),
-      sell_blue: Button.new(:sell, [400, 420], 'Sell', [60, 50], :default, :flower_blue)
-    }
+    buttons = {}
+    y = 470
+    @harvested_plants.each_key do |key|
+      buttons[key] = Button.new(:sell, [300, y], 'Sell', [60, 50], :default, key)
+      y -= 50
+    end
+    buttons
   end
 
   def handle_buttons(args)
@@ -72,7 +73,6 @@ class Shed
 
   def draw_shed(args)
     animate_shed
-    # args.outputs.primitives << { x: 100, y: 0, w: @frame, h: 520, r: 0, g: 0, b: 0, a: 155, primitive_marker: :solid }
     args.outputs.sprites << { x: 200, y: 0, w: @frame, h: 720, a: 240, path: 'sprites/shed_background.png' }
   end
 
