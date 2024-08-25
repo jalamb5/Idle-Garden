@@ -19,9 +19,7 @@ class UIManager
     @images = [
       { x: 200, y: 0, w: 1080, h: 720, path: 'sprites/grass_background.png' },
       { x: 250, y: 50, w: 980, h: 620, path: 'sprites/background.png' },
-      { x: 170, y: args.grid.h - 30, w: 24, h: 24, path: 'sprites/pause_icon.png' },
-      # { x: 10, y: 175, w: 50, h: 50, path: 'sprites/shed.png' },
-      args.state.game_state.shed.spritesheet.get(0, 10, 175, 64, 64)
+      { x: 170, y: args.grid.h - 30, w: 24, h: 24, path: 'sprites/pause_icon.png' }
     ]
   end
 

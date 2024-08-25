@@ -24,10 +24,10 @@ class Game
     @price = { seed: 5, flower_red: 10, flower_blue: 15, planter: 150, harvester: 250, seller: 350 }
     @score = 0
     @level = Level.new
+    @shed = Shed.new
     @ui = UIManager.new(args, self)
     @automations = AutomationManager.new
     @plant_manager = PlantManager.new
-    @shed = Shed.new
     @save_data = {}
   end
 
