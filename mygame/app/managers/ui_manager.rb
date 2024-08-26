@@ -14,13 +14,22 @@ class UIManager
   def initialize(args, game)
     @buttons = generate_buttons(args, game)
     @unlocked_buttons = []
-    @labels = generate_labels(args, game)
     @alerts = []
     @images = [
       { x: 200, y: 0, w: 1080, h: 720, path: 'sprites/grass_background.png' },
       { x: 250, y: 50, w: 980, h: 620, path: 'sprites/background.png' },
       { x: 170, y: args.grid.h - 30, w: 24, h: 24, path: 'sprites/pause_icon.png' }
     ]
+    @label_details = { score: ['Score:', args.state.game_state.score, 23, [240, 30, 30, 255]],
+                       seed: ['Seeds:', args.state.game_state.plant_manager.seeds],
+                       growing: ['Growing:', args.state.game_state.plant_manager.plants.length],
+                      #  harvested: ['Harvested:', args.state.game_state.harvested_plants],
+                       cash: ['Cash:', args.state.game_state.cash],
+                      #  auto_harvesters: ['Auto Harvesters:', args.state.game_state.automations.auto_harvesters.length],
+                      #  auto_planters: ['Auto Planters:', args.state.game_state.automations.auto_planters.length],
+                      #  auto_sellers: ['Auto Sellers:', args.state.game_state.automations.auto_sellers.length],
+                       level: ['Level:', args.state.game_state.level.current_level] }
+    @labels = generate_labels(args)
   end
 
   def tick(args)
@@ -48,18 +57,21 @@ class UIManager
     }
   end
 
-  def generate_labels(args, game)
-    {
-      score: Labels.new(5, args.grid.h, 'Score:', game.score, 23, [240, 30, 30, 255]),
-      seed: Labels.new(5, args.grid.h - 20, 'Seeds:', game.plant_manager.seeds),
-      growing: Labels.new(5, args.grid.h - 40, 'Growing:', game.plant_manager.plants.length),
-      harvested: Labels.new(5, args.grid.h - 60, 'Harvested:', game.harvested_plants),
-      cash: Labels.new(5, args.grid.h - 80, 'Cash:', game.cash),
-      auto_harvesters: Labels.new(5, args.grid.h - 100, 'Auto Harvesters:', game.automations.auto_harvesters.length),
-      auto_planters: Labels.new(5, args.grid.h - 120, 'Auto Planters:', game.automations.auto_planters.length),
-      auto_sellers: Labels.new(5, args.grid.h - 140, 'Auto Sellers:', game.automations.auto_sellers.length),
-      level: Labels.new(5, args.grid.h - 160, 'Level:', game.level.current_level)
-    }
+  def generate_labels(args)
+    labels = {}
+    coords = [5, args.grid.h]
+    @label_details.each do |key, value|
+      case value.length
+      when 2
+        labels[key] = Labels.new(coords[0], coords[1], value[0], value[1])
+      when 3
+        labels[key] = Labels.new(coords[0], coords[1], value[0], value[1], value[2])
+      when 4
+        labels[key] = Labels.new(coords[0], coords[1], value[0], value[1], value[2], value[3])
+      end
+      coords[1] -= 20
+    end
+    labels
   end
 
   # Add any unlocked buttons to the full button array and clear the unlocked array
@@ -102,7 +114,7 @@ class UIManager
   def display_shed(args)
     shed = args.state.game_state.shed
     args.outputs.sprites << shed.spritesheet.get(0, 10, 175, 64, 64) unless shed.open
-    # Don't tick if the shed is closed and frame is zero
+    # Don't tick if the shed is closed and the animation has completed
     return if !shed.open && shed.frame.zero?
 
     args.outputs.sprites << shed.spritesheet.get(1, 10, 175, 64, 64)

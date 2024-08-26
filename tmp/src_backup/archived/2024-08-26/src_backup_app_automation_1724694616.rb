@@ -38,7 +38,7 @@ class Automation
       auto_planter(args) if @cooldown <= 0 && args.state.game_state.plant_manager.seeds.positive?
     when :seller
       move_auto_seller(args)
-      auto_seller(args.state.game_state) if args.state.game_state.shed.harvested_plants.any? { |_key, value| value.positive? }
+      auto_seller(args.state.game_state) if args.state.game_state.harvested_plants.positive?
     end
   end
 
@@ -113,23 +113,23 @@ class Automation
   def auto_seller(game_state)
     return unless @location == [150, 720]
 
-    game_state.shed.harvested_plants.each do |key, value|
-      profit = game_state.shed.harvested_plants[key] * game_state.price[key]
-      game_state.cash += profit
-      game_state.score += game_state.shed.harvested_plants[key] * 10
-      game_state.shed.harvested_plants[key] = 0
-      @work_completed += profit
-    end
+    game_state.shed.harvested_plants.each 
+    profit = args.state.game_state.harvested_plants * args.state.game_state.price[:plant]
+    args.state.game_state.cash += profit
+    args.state.game_state.score += args.state.game_state.harvested_plants * 10
+    args.state.game_state.harvested_plants = 0
+    @work_completed += profit
     @cooldown = rand(1000)
   end
 
   # Auto sellers move differently than other automations and are not in the garden, they require special logic
   def move_auto_seller(args)
     off_screen = [150, 720]
+    # home = [args.state.game_state.ui.labels[:harvested].x + 125, args.state.game_state.ui.labels[:harvested].y - 25]
     home = [75, 175]
     if @location == off_screen
       @target = home
-    elsif @location == home && args.state.game_state.shed.harvested_plants.any? { |_key, value| value.positive? } && @cooldown <= 0
+    elsif @location == home && args.state.game_state.harvested_plants.positive? && @cooldown <= 0
       @target = off_screen
     else
       @target

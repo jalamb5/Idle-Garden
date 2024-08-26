@@ -101,7 +101,7 @@ class UIManager
 
   def display_shed(args)
     shed = args.state.game_state.shed
-    args.outputs.sprites << shed.spritesheet.get(0, 75, 175, 64, 64) unless shed.open
+    args.outputs.sprites << shed.spritesheet.get(0, 100, 175, 64, 64) unless shed.open
     # Don't tick if the shed is closed and frame is zero
     return if !shed.open && shed.frame.zero?
 
