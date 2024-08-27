@@ -4,11 +4,12 @@
 # rubocop:disable Style/RedundantFileExtensionInRequire
 require 'app/labels.rb'
 require 'app/button.rb'
+require 'app/spritesheet.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Create a garden shed to store seeds and harvested plants
 class Shed
-  attr_accessor :harvested_plants, :open, :frame
+  attr_accessor :harvested_plants, :open, :frame, :spritesheet
 
   def initialize
     @open = false
@@ -19,6 +20,7 @@ class Shed
     }
     @labels = generate_labels
     @buttons = generate_buttons
+    @spritesheet = Spritesheet.new('sprites/shed_sheet.png', 64, 64, 2)
   end
 
   def tick(args)
@@ -28,16 +30,14 @@ class Shed
 
     handle_labels(args)
     handle_images(args)
-
-    # handle_labels(args) if @open
-    # handle_buttons(args)
+    handle_buttons(args)
   end
 
   private
 
   def generate_labels
     labels = {}
-    y = 400
+    y = 500
     @harvested_plants.each do |key, value|
       labels[key] = Labels.new(250, y, '', value, 20, [255, 255, 255, 255])
       y -= 50
@@ -47,8 +47,8 @@ class Shed
 
   def manual_labels
     {
-      title: Labels.new(600, 700, 'Garden Shed', '', 30, [255, 255, 255, 255]),
-      harvest: Labels.new(250, 450, 'Harvested', '', 20, [255, 255, 255, 255])
+      title: Labels.new(650, 650, 'Garden Shed', '', 30, [255, 255, 255, 255]),
+      harvest: Labels.new(250, 550, 'Harvested', '', 20, [255, 255, 255, 255])
     }
   end
 
@@ -60,7 +60,13 @@ class Shed
   end
 
   def generate_buttons
-    { shed: Button.new(:shed, [900, 400], 'Close', [100, 100]) }
+    buttons = {}
+    y = 470
+    @harvested_plants.each_key do |key|
+      buttons[key] = Button.new(:sell, [300, y], 'Sell', [50, 40], :default, key)
+      y -= 50
+    end
+    buttons
   end
 
   def handle_buttons(args)
@@ -69,7 +75,6 @@ class Shed
 
   def draw_shed(args)
     animate_shed
-    # args.outputs.primitives << { x: 100, y: 0, w: @frame, h: 520, r: 0, g: 0, b: 0, a: 155, primitive_marker: :solid }
     args.outputs.sprites << { x: 200, y: 0, w: @frame, h: 720, a: 240, path: 'sprites/shed_background.png' }
   end
 
@@ -83,7 +88,7 @@ class Shed
 
   def handle_images(args)
     plant_spritesheets = args.state.game_state.plant_manager.spritesheets
-    coords = [215, 380]
+    coords = [215, 480]
     @harvested_plants.each_key do |key|
       if plant_spritesheets.include?(key)
         args.outputs.sprites << plant_spritesheets[key].get(30, coords[0], coords[1], 25,

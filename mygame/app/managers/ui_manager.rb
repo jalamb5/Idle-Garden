@@ -25,9 +25,6 @@ class UIManager
                        growing: ['Growing:', args.state.game_state.plant_manager.plants.length],
                       #  harvested: ['Harvested:', args.state.game_state.harvested_plants],
                        cash: ['Cash:', args.state.game_state.cash],
-                      #  auto_harvesters: ['Auto Harvesters:', args.state.game_state.automations.auto_harvesters.length],
-                      #  auto_planters: ['Auto Planters:', args.state.game_state.automations.auto_planters.length],
-                      #  auto_sellers: ['Auto Sellers:', args.state.game_state.automations.auto_sellers.length],
                        level: ['Level:', args.state.game_state.level.current_level] }
     @labels = generate_labels(args)
   end

@@ -63,7 +63,7 @@ class Shed
     buttons = {}
     y = 470
     @harvested_plants.each_key do |key|
-      buttons[key] = Button.new(:sell, [300, y], 'Sell', [50, 40], :default, key)
+      buttons[key] = Button.new(:sell, [300, y], 'Sell', [60, 40], :default, key)
       y -= 50
     end
     buttons
