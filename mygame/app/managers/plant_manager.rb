@@ -8,13 +8,14 @@ require 'app/spritesheet.rb'
 
 # Manage growth and placement of plants
 class PlantManager
-  attr_accessor :plants, :seeds, :spritesheets
+  attr_accessor :plants, :seeds, :spritesheets, :selection
 
   def initialize
     @plants = []
     @spritesheets = build_spritesheets
     @garden = { x: 250, y: 50, w: 980, h: 620 }
-    @seeds = 5
+    @seeds = { flower_red: 5, flower_blue: 0 }
+    @selection = :flower_red
   end
 
   def tick(args)
@@ -48,13 +49,13 @@ class PlantManager
     return unless args.inputs.mouse.click && args.inputs.mouse.point.inside_rect?(@garden)
 
     # Randomly select plant type
-    sheet = %i[flower_red flower_blue].sample
-    new_plant = Plant.new(args, sheet)
+    # sheet = %i[flower_red flower_blue].sample
+    new_plant = Plant.new(args, @selection)
 
-    return unless @seeds.positive? && !new_plant.invalid
+    return unless @seeds[@selection].positive? && !new_plant.invalid
 
     @plants << new_plant
-    @seeds -= 1
+    @seeds[@selection] -= 1
   end
 
   def manage_plants(args)
@@ -70,7 +71,7 @@ class PlantManager
 
   # DragonRuby required methods
   def serialize
-    { plants: @plants, seeds: @seeds }
+    { plants: @plants, seeds: @seeds, selection: @selection }
   end
 
   def inspect

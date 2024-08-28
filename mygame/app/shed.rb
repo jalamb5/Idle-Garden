@@ -11,14 +11,14 @@ require 'app/spritesheet.rb'
 class Shed
   attr_accessor :harvested_plants, :open, :frame, :spritesheet
 
-  def initialize
+  def initialize(args)
     @open = false
     @frame = 0
     @harvested_plants = {
       flower_red: 0,
       flower_blue: 0
     }
-    @labels = generate_labels
+    @labels = generate_labels(args.state.game_state.plant_manager)
     @buttons = generate_buttons
     @spritesheet = Spritesheet.new('sprites/shed_sheet.png', 64, 64, 2)
   end
@@ -35,11 +35,14 @@ class Shed
 
   private
 
-  def generate_labels
+  def generate_labels(plant_manager)
     labels = {}
     y = 500
     @harvested_plants.each do |key, value|
-      labels[key] = Labels.new(250, y, '', value, 20, [255, 255, 255, 255])
+      # Harvest label
+      labels["#{key}_harvest"] = Labels.new(250, y, '', value, 20, [255, 255, 255, 255])
+      # Seeds label
+      labels["#{key}_seeds"] = Labels.new(450, y, '', plant_manager.seeds[key], 20, [255, 255, 255, 255])
       y -= 50
     end
     labels.merge(manual_labels)
@@ -48,14 +51,16 @@ class Shed
   def manual_labels
     {
       title: Labels.new(650, 650, 'Garden Shed', '', 30, [255, 255, 255, 255]),
-      harvest: Labels.new(250, 550, 'Harvested', '', 20, [255, 255, 255, 255])
+      harvest: Labels.new(250, 550, 'Harvested', '', 20, [255, 255, 255, 255]),
+      seeds: Labels.new(450, 550, 'Seeds', '', 20, [255, 255, 255, 255])
     }
   end
 
   def handle_labels(args)
     @labels.each do |key, label|
       label.display(args)
-      label.value = @harvested_plants[key]
+      label.update(key, args)
+      # label.value = @harvested_plants[key]
     end
   end
 

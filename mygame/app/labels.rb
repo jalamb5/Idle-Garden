@@ -21,6 +21,14 @@ class Labels
   def update(key, args)
     prev = @value
     case key
+    when :flower_red_harvest
+      @value = args.state.game_state.shed.harvested_plants.flower_red
+    when :flower_blue_harvest
+      @value = args.state.game_state.shed.harvested_plants.flower_blue
+    when :flower_red_seeds
+      @value = args.state.game_state.plant_manager.seeds.flower_red
+    when :flower_blue_seeds
+      @value = args.state.game_state.plant_manager.seeds.flower_blue
     when :seed
       @value = args.state.game_state.plant_manager.seeds
     when :growing
