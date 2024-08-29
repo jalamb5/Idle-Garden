@@ -33,6 +33,10 @@ module ButtonActions
     true
   end
 
+  def self.select_seed(game_state, type)
+    game_state.plant_manager.selection = type
+  end
+
   def self.buy_auto_harvester(args)
     return false if (args.state.game_state.cash - args.state.game_state.price[:harvester]).negative?
 

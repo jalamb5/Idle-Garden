@@ -19,6 +19,7 @@ class Button
   BUTTON_ACTIONS = {
     sell: ->(args, type) { ButtonActions.sell(args.state.game_state, type) },
     buy_seed: ->(args, type) { ButtonActions.buy_seed(args.state.game_state, type) },
+    select_seed: ->(args, type) { ButtonActions.select_seed(args.state.game_state, type) },
     buy_auto_harvester: ->(args, _type) { ButtonActions.buy_auto_harvester(args) },
     buy_auto_seller: ->(args, _type) { ButtonActions.buy_auto_seller(args) },
     buy_auto_planter: ->(args, _type) { ButtonActions.buy_auto_planter(args) },
