@@ -107,7 +107,7 @@ class UIManager
   def display_images(args)
     plant_spritesheets = args.state.game_state.plant_manager.spritesheets
     @images.each { |image| args.outputs.sprites << image }
-    args.outputs.sprites << plant_spritesheets[args.state.game_state.plant_manager.selection].get(30, 110, 180, 25, 25)
+    args.outputs.sprites << plant_spritesheets[args.state.game_state.plant_manager.selection].get(30, 115, 180, 25, 25)
   end
 
   def display_shed(args)

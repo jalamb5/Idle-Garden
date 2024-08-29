@@ -18,7 +18,8 @@ class UIManager
     @images = [
       { x: 200, y: 0, w: 1080, h: 720, path: 'sprites/grass_background.png' },
       { x: 250, y: 50, w: 980, h: 620, path: 'sprites/background.png' },
-      { x: 170, y: args.grid.h - 30, w: 24, h: 24, path: 'sprites/pause_icon.png' }
+      { x: 170, y: args.grid.h - 30, w: 24, h: 24, path: 'sprites/pause_icon.png' },
+      { x: 100, y: 175, w: 50, h: 50, path: 'sprites/selection_box.png' }
     ]
     @label_details = { score: ['Score:', args.state.game_state.score, 23, [240, 30, 30, 255]],
                        seed: ['Seeds:', args.state.game_state.plant_manager.seeds],
@@ -104,7 +105,9 @@ class UIManager
   end
 
   def display_images(args)
+    plant_spritesheets = args.state.game_state.plant_manager.spritesheets
     @images.each { |image| args.outputs.sprites << image }
+    args.outputs.sprites << plant_spritesheets[args.state.game_state.plant_manager.selection].get(30, 110, 180, 25, 25)
   end
 
   def display_shed(args)
