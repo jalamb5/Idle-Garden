@@ -24,6 +24,10 @@ class PlantManager
     display_plants(args) unless args.state.game_state.shed.open
   end
 
+  def seed_value(type)
+    @seeds[type]
+  end
+
   def reconstruct(args)
     return if @plants.empty?
 

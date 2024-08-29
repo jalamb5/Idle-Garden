@@ -30,7 +30,7 @@ class Labels
     when :flower_blue_seeds
       @value = args.state.game_state.plant_manager.seeds.flower_blue
     when :seed
-      @value = args.state.game_state.plant_manager.seeds
+      @value = args.state.game_state.plant_manager.seeds.values.sum
     when :growing
       @value = args.state.game_state.plant_manager.plants.length
     when :harvested

@@ -23,7 +23,6 @@ class UIManager
     @label_details = { score: ['Score:', args.state.game_state.score, 23, [240, 30, 30, 255]],
                        seed: ['Seeds:', args.state.game_state.plant_manager.seeds],
                        growing: ['Growing:', args.state.game_state.plant_manager.plants.length],
-                      #  harvested: ['Harvested:', args.state.game_state.harvested_plants],
                        cash: ['Cash:', args.state.game_state.cash],
                        level: ['Level:', args.state.game_state.level.current_level] }
     @labels = generate_labels(args)
@@ -48,7 +47,7 @@ class UIManager
   def generate_buttons(args, game)
     {
       pause_game: Button.new(:pause_game, [170, args.grid.h - 30], '', [30, 30], :clear),
-      buy_seed: Button.new(:buy_seed, [0, 50], "Seed (#{game.price[:seed]})"),
+      # buy_seed: Button.new(:buy_seed, [0, 50], "Seed (#{game.price[:seed]})"),
       # sell: Button.new(:sell, [0, 0], 'Sell', [200, 50]),
       shed: Button.new(:shed, [0, 150], '', [100, 100], :clear)
     }

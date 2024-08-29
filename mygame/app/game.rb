@@ -21,7 +21,7 @@ class Game
     @block_click = false
     # @harvested_plants = 0
     @cash = 5
-    @price = { seed: 5, flower_red: 10, flower_blue: 15, planter: 150, harvester: 250, seller: 350 }
+    @price = { seed: { flower_red: 5, flower_blue: 10 }, flower_red: 10, flower_blue: 15, planter: 150, harvester: 250, seller: 350 }
     @score = 0
     @level = Level.new
     @shed = Shed.new(args)
@@ -56,7 +56,7 @@ class Game
   end
 
   def debt_check
-    return unless @cash <= 0 && @shed.harvested_plants.all? { |_key, value| value.zero? } && @plant_manager.seeds <= 0 && @plant_manager.plants.length <= 0
+    return unless @cash <= 0 && @shed.harvested_plants.values.sum <= 0 && @plant_manager.seeds.values.sum <= 0 && @plant_manager.plants.length <= 0
 
     # If player has no money, no seeds, no plants, and no harvests, debt is accrued.
     @plant_manager.seeds += 5

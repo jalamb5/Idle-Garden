@@ -18,7 +18,7 @@ class Shed
       flower_red: 0,
       flower_blue: 0
     }
-    @labels = generate_labels(args.state.game_state.plant_manager)
+    @labels = generate_labels
     @buttons = generate_buttons
     @spritesheet = Spritesheet.new('sprites/shed_sheet.png', 64, 64, 2)
   end
@@ -35,14 +35,14 @@ class Shed
 
   private
 
-  def generate_labels(plant_manager)
+  def generate_labels
     labels = {}
     y = 500
     @harvested_plants.each do |key, value|
       # Harvest label
-      labels["#{key}_harvest"] = Labels.new(250, y, '', value, 20, [255, 255, 255, 255])
+      labels["#{key}_harvest".to_sym] = Labels.new(250, y, '', value, 20, [255, 255, 255, 255])
       # Seeds label
-      labels["#{key}_seeds"] = Labels.new(450, y, '', plant_manager.seeds[key], 20, [255, 255, 255, 255])
+      labels["#{key}_seeds".to_sym] = Labels.new(450, y, '', 0, 20, [255, 255, 255, 255])
       y -= 50
     end
     labels.merge(manual_labels)
@@ -68,7 +68,8 @@ class Shed
     buttons = {}
     y = 470
     @harvested_plants.each_key do |key|
-      buttons[key] = Button.new(:sell, [300, y], 'Sell', [50, 40], :default, key)
+      buttons["#{key}_harvest".to_sym] = Button.new(:sell, [300, y], 'Sell', [50, 40], :default, key)
+      buttons["#{key}_seeds".to_sym] = Button.new(:buy_seed, [500, y], 'Buy', [50, 40], :default, key)
       y -= 50
     end
     buttons

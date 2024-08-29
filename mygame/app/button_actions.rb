@@ -25,11 +25,11 @@ module ButtonActions
     true
   end
 
-  def self.buy_seed(game_state)
-    return false if (game_state.cash - game_state.price[:seed]).negative?
+  def self.buy_seed(game_state, type)
+    return false if (game_state.cash - game_state.price.seed[type]).negative?
 
-    game_state.plant_manager.seeds += 1
-    game_state.cash -= game_state.price[:seed]
+    game_state.plant_manager.seeds[type] += 1
+    game_state.cash -= game_state.price.seed[type]
     true
   end
 
