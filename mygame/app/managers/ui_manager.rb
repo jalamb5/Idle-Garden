@@ -9,9 +9,10 @@ require 'app/spritesheet.rb'
 
 # Manage display and updating of UI elements
 class UIManager
-  attr_accessor :buttons, :unlocked_buttons, :labels, :alerts, :images
+  attr_accessor :buttons, :unlocked_buttons, :button_sprites, :labels, :alerts, :images
 
   def initialize(args, game)
+    @button_sprites = Spritesheet.new('sprites/button.png', 5, 64, 3)
     @buttons = generate_buttons(args, game)
     @unlocked_buttons = []
     @alerts = []
