@@ -70,7 +70,7 @@ class Shed
     @harvested_plants.each_key do |key|
       buttons["#{key}_harvest".to_sym] = Button.new(:sell, [300, y], 'Sell', [50, 40], :default, key)
       buttons["#{key}_seeds".to_sym] = Button.new(:buy_seed, [500, y], 'Buy', [50, 40], :default, key)
-      buttons["#{key}_select".to_sym] = Button.new(:select_seed, [550, y], 'Plant', [50, 40], :default, key)
+      buttons["#{key}_select".to_sym] = Button.new(:select_seed, [550, y], 'Select', [50, 40], :default, key)
       y -= 50
     end
     buttons

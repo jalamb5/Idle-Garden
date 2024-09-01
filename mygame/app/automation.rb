@@ -35,10 +35,14 @@ class Automation
     when :harvester
       auto_harvester(args) if @cooldown <= 0 && args.state.game_state.plant_manager.plants.length.positive?
     when :planter
-      auto_planter(args) if @cooldown <= 0 && args.state.game_state.plant_manager.seeds.positive?
+      auto_planter(args) if @cooldown <= 0 && args.state.game_state.plant_manager.seeds.any? do |_key, value|
+                              value.positive?
+                            end
     when :seller
       move_auto_seller(args)
-      auto_seller(args.state.game_state) if args.state.game_state.shed.harvested_plants.any? { |_key, value| value.positive? }
+      auto_seller(args.state.game_state) if args.state.game_state.shed.harvested_plants.any? do |_key, value|
+                                              value.positive?
+                                            end
     end
   end
 
@@ -90,13 +94,20 @@ class Automation
   def auto_planter(args)
     return unless @location == @target
 
-    sheet = %i[flower_red flower_blue].sample
+    # TODO: Add logic to check if seeds are available
+    sheet = seed_selector(args.state.game_state.plant_manager.seeds)
     plant = Plant.new(args, sheet, @location[0], @location[1])
     args.state.game_state.plant_manager.plants << plant
-    args.state.game_state.plant_manager.seeds -= 1
+    args.state.game_state.plant_manager.seeds[sheet] -= 1
     @work_completed += 1
     @cooldown = rand(1000)
     @target = coord_generator
+  end
+
+  # Randomly select a seed type from seeds with positive value
+  def seed_selector(seeds)
+    positive_seeds = seeds.select { |_key, value| value.positive? }.keys
+    positive_seeds.sample
   end
 
   # Generate random coordinate within the garden
@@ -113,7 +124,7 @@ class Automation
   def auto_seller(game_state)
     return unless @location == [150, 720]
 
-    game_state.shed.harvested_plants.each do |key, value|
+    game_state.shed.harvested_plants.each do |key, _value|
       profit = game_state.shed.harvested_plants[key] * game_state.price[key]
       game_state.cash += profit
       game_state.score += game_state.shed.harvested_plants[key] * 10
@@ -129,7 +140,9 @@ class Automation
     home = [75, 175]
     if @location == off_screen
       @target = home
-    elsif @location == home && args.state.game_state.shed.harvested_plants.any? { |_key, value| value.positive? } && @cooldown <= 0
+    elsif @location == home && args.state.game_state.shed.harvested_plants.any? do |_key, value|
+            value.positive?
+          end && @cooldown <= 0
       @target = off_screen
     else
       @target
@@ -151,7 +164,7 @@ class Automation
   end
 
   # Generate a starting target for each automation
-  def target_generator(args)
+  def target_generator(_args)
     case @type
     when :harvester
       nil
@@ -174,7 +187,8 @@ class Automation
 
   # DragonRuby required methods
   def serialize
-    { type: @type, cooldown: @cooldown, sprite: @sprite, name: @name, work_completed: @work_completed, location: @location, target: @target, counter: @counter }
+    { type: @type, cooldown: @cooldown, sprite: @sprite, name: @name, work_completed: @work_completed,
+      location: @location, target: @target, counter: @counter }
   end
 
   def inspect

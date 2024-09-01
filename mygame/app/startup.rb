@@ -51,6 +51,7 @@ class Startup
                      'Click in the soil to plant seeds.',
                      'When your seeds have matured you can click to harvest them.',
                      'Flowers can be sold for cash while withered plants may provide addtional seeds.',
+                     'Use the shed to store seeds and harvested plants.',
                      'As you level up, you can hire helpers to manage your garden for you.',
                      'Happy Gardening!',
                      'Press SPACE to continue.']

@@ -47,15 +47,15 @@ class Level
     case level
     when 2
       args.state.game_state.ui.unlocked_buttons <<
-        { buy_auto_planter: Button.new(:buy_auto_planter, [100, 50],
+        { buy_auto_planter: Button.new(:buy_auto_planter, [10, 0],
                                        "Planter (#{args.state.game_state.price[:planter]})") }
     when 3
       args.state.game_state.ui.unlocked_buttons <<
-        { buy_auto_harvester: Button.new(:buy_auto_harvester, [0, 100],
+        { buy_auto_harvester: Button.new(:buy_auto_harvester, [10, 50],
                                          "Harvester (#{args.state.game_state.price[:harvester]})") }
     when 4
       args.state.game_state.ui.unlocked_buttons <<
-        { buy_auto_seller: Button.new(:buy_auto_seller, [100, 100],
+        { buy_auto_seller: Button.new(:buy_auto_seller, [10, 100],
                                       "Seller (#{args.state.game_state.price[:seller]})") }
     end
   end
