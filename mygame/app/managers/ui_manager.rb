@@ -45,7 +45,7 @@ class UIManager
 
   private
 
-  def generate_buttons(args, game)
+  def generate_buttons(args, _game)
     {
       pause_game: Button.new(:pause_game, [170, args.grid.h - 30], '', [30, 30], :clear),
       shed: Button.new(:shed, [0, 170], '', [64, 50], :clear)

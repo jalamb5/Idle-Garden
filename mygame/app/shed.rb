@@ -11,7 +11,7 @@ require 'app/spritesheet.rb'
 class Shed
   attr_accessor :harvested_plants, :open, :frame, :spritesheet
 
-  def initialize(args)
+  def initialize
     @open = false
     @frame = 0
     @harvested_plants = {
@@ -60,7 +60,6 @@ class Shed
     @labels.each do |key, label|
       label.display(args)
       label.update(key, args)
-      # label.value = @harvested_plants[key]
     end
   end
 
