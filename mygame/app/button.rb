@@ -49,7 +49,7 @@ class Button
   # show button on screen
   def display(args)
     args.outputs.primitives << @entity[:primitives]
-    button_sprites = construct_button_sprite(args) if args.state.game_state
+    button_sprites = construct_button_sprite(args)
     button_sprites&.each { |sprite| args.outputs.sprites << sprite }
   end
 
@@ -87,7 +87,7 @@ class Button
   def construct_button_sprite(args)
     return if @color == COLORS[:clear]
 
-    spritesheet = args.state.game_state.ui.button_sprites
+    spritesheet = args.state.startup.button_sprites
     w, _h = args.gtk.calcstringbox(@text, -4, 'fonts/Tiny5.ttf')
     middle = w.to_i + 5
     [spritesheet.get(0, @x, @y, 5, @height),

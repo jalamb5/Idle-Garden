@@ -65,18 +65,15 @@ class Plant
 
   # Harvest plant if correct stage
   def harvest(args, plant)
-    if plant.stage == :READY_TO_HARVEST
-      # args.state.game_state.harvested_plants += 1
-      args.state.game_state.shed.harvested_plants[plant.sheet] += 1
-      plant.invalid = true
-      args.state.startup.sound_manager.play_effect(:harvest_plant, args)
-      args.state.game_state.score += 2
-    elsif plant.stage == :WITHERED
-      args.state.game_state.plant_manager.seeds += rand(10)
-      plant.invalid = true
-      args.state.startup.sound_manager.play_effect(:harvest_withered, args)
-      args.state.game_state.score += 1
+    return unless plant.stage == :READY_TO_HARVEST || plant.stage == :WITHERED
+
+    case plant.stage
+    when :READY_TO_HARVEST
+      harvest_action(args, plant)
+    when :WITHERED
+      wither_action(args, plant)
     end
+    plant.invalid = true
   end
 
   private
@@ -91,6 +88,20 @@ class Plant
     elsif @age >= WITHER && @age < DEATH
       @stage = :WITHERED
     end
+  end
+
+  # Perform actions for plants that are ready to be harvested
+  def harvest_action(args, plant)
+    args.state.game_state.shed.harvested_plants[plant.sheet] += 1
+    args.state.startup.sound_manager.play_effect(:harvest_plant, args)
+    args.state.game_state.score += 2
+  end
+
+  # Perform actions for plants that are withered
+  def wither_action(args, plant)
+    args.state.game_state.plant_manager.seeds[plant.sheet] += rand(10)
+    args.state.startup.sound_manager.play_effect(:harvest_withered, args)
+    args.state.game_state.score += 1
   end
 
   # sets @invalid to false if not occupied, attemps to harvest plant at location if occupied

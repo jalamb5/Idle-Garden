@@ -10,13 +10,14 @@ require 'app/labels.rb'
 
 # Handle splash screen and start / load game
 class Startup
-  attr_accessor :splash_state, :sound_manager, :tutorial
+  attr_accessor :splash_state, :sound_manager, :tutorial, :button_sprites
 
   def initialize(args)
     @splash_state = true
     @tutorial = true
     @sound_manager = SoundManager.new
     @sound_manager.play_music(:garden_melody, args)
+    @button_sprites = Spritesheet.new('sprites/button.png', 5, 64, 3)
   end
 
   def tick(args)
