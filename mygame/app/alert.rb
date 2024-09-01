@@ -12,7 +12,8 @@ class Alert
   COLORS = {
     default: { r: 200, g: 213, b: 185, a: 255 },
     pink: { r: 244, g: 187, b: 211, a: 255 },
-    blue: { r: 99, g: 176, b: 205, a: 255 }
+    blue: { r: 99, g: 176, b: 205, a: 255 },
+    purple: { r: 153, g: 50, b: 204, a: 200}
   }.freeze
 
   def initialize(message, y_coord: 540, hover: false, color: :default)
