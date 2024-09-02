@@ -67,7 +67,7 @@ class Button
 
     tooltips = args.gtk.parse_json_file('data/tooltips.json')
     key = "#{@name}#{@type}"
-    args.state.game_state.ui.alerts << Alert.new(tooltips[key], y_coord: (args.grid.h - 180), hover: true)
+    args.state.game_state.ui.alerts << Alert.new(tooltips[key], hover: true)
   end
 
   private
