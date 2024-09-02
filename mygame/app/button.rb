@@ -66,7 +66,8 @@ class Button
     return false unless args.inputs.mouse.point.inside_rect?(@entity[:rect])
 
     tooltips = args.gtk.parse_json_file('data/tooltips.json')
-    args.state.game_state.ui.alerts << Alert.new(tooltips[@name.to_s], y_coord: (args.grid.h - 180), hover: true)
+    key = "#{@name}#{@type}"
+    args.state.game_state.ui.alerts << Alert.new(tooltips[key], y_coord: (args.grid.h - 180), hover: true)
   end
 
   private

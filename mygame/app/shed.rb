@@ -67,16 +67,20 @@ class Shed
     buttons = {}
     y = 470
     @harvested_plants.each_key do |key|
-      buttons["#{key}_harvest".to_sym] = Button.new(:sell, [300, y], 'Sell', [50, 40], :default, key)
-      buttons["#{key}_seeds".to_sym] = Button.new(:buy_seed, [500, y], 'Buy', [50, 40], :default, key)
-      buttons["#{key}_select".to_sym] = Button.new(:select_seed, [550, y], 'Select', [50, 40], :default, key)
+      buttons["sell#{key}".to_sym] = Button.new(:sell, [300, y], 'Sell', [50, 40], :default, key)
+      buttons["buy_seed#{key}".to_sym] = Button.new(:buy_seed, [500, y], 'Buy', [50, 40], :default, key)
+      buttons["select_seed#{key}".to_sym] = Button.new(:select_seed, [550, y], 'Select', [50, 40], :default, key)
       y -= 50
     end
     buttons
   end
 
   def handle_buttons(args)
-    @buttons.each_value { |button| button.display(args) && button.clicked?(args) }
+    @buttons.each_value do |button|
+      button.display(args)
+      button.clicked?(args)
+      button.hover?(args)
+    end
   end
 
   def draw_shed(args)
