@@ -6,6 +6,12 @@
   "buy_auto_seller": "Hire a seller to sell plants periodically.",
   "shed": "Access your seeds and harvested plants.",
   "save": "Save your game. Previous save will be overwritten.",
-  "pause_game": "Pause your game."
+  "pause_game": "Pause your game.",
+  "flower_red_harvest": "Sell flowers for 10 cash each.",
+  "flower_blue_harvest": "Sell flowers for 15 cash each.",
+  "flower_red_seeds": "Buy seeds for 5 cash each.",
+  "flower_blue_seeds": "Buy seeds for 10 cash each.",
+  "flower_red_select": "Select red flowers to plant.",
+  "flower_blue_select": "Select blue flowers to plant."
 }
 
