@@ -17,7 +17,7 @@ class UIManager
     @alerts = []
     @images = [
       { x: 200, y: 0, w: 1080, h: 720, path: 'sprites/grass_background.png' },
-      { x: 250, y: 50, w: 980, h: 620, path: 'sprites/background.png' },
+      # { x: 250, y: 50, w: 980, h: 620, path: 'sprites/background.png' },
       { x: 170, y: args.grid.h - 30, w: 24, h: 24, path: 'sprites/pause_icon.png' },
       { x: 120, y: 175, w: 50, h: 50, path: 'sprites/selection_box.png' }
     ]
@@ -27,6 +27,7 @@ class UIManager
                        cash: ['Cash:', args.state.game_state.cash],
                        level: ['Level:', args.state.game_state.level.current_level] }
     @labels = generate_labels(args)
+    @images << construct_soil_sprite
   end
 
   def tick(args)
@@ -100,6 +101,13 @@ class UIManager
     @alerts.each { |alert| alert.display(args) }
     # Remove expired alerts
     @alerts.reject! { |alert| alert.ttl.zero? }
+  end
+
+  def construct_soil_sprite
+    spritesheet = Spritesheet.new('sprites/garden_soil.png', 15, 570, 3)
+    [spritesheet.get(0, 250, 50, 15, 620),
+     spritesheet.get(1, 265, 50, 950, 620),
+     spritesheet.get(2, 1215, 50, 15, 620)]
   end
 
   def display_images(args)
