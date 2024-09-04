@@ -49,7 +49,7 @@ class Button
   # show button on screen
   def display(args)
     args.outputs.primitives << @entity[:primitives]
-    button_sprites = construct_button_sprite(args)
+    button_sprites = construct_button_sprite(args) unless @color == COLORS[:clear]
     button_sprites&.each { |sprite| args.outputs.sprites << sprite }
   end
 
@@ -79,18 +79,17 @@ class Button
       primitives: [
         { x: @x + 5, y: @y + 30, text: @text, size_enum: -4, alignment_enum: 0, vertical_alignment_enum: 2,
           font: 'fonts/Tiny5.ttf' }.label!
-        # [@x + 2, @y + 1, @width - 4, @height - 2, @color].solid,
-        # ({ x: @x + 2, y: @y + 1, w: @width - 4, h: @height - 2, r: 0, g: 0, b: 0, a: 80 }.border! if @border)
       ]
     }
   end
 
   def construct_button_sprite(args)
-    return if @color == COLORS[:clear]
-
-    spritesheet = args.state.startup.button_sprites
+    # Determine width of text label
     w, _h = args.gtk.calcstringbox(@text, -4, 'fonts/Tiny5.ttf')
-    middle = w.to_i + 5
+
+    # Round label width to the nearest multiple of 30 to standardize button sizes
+    middle = ((w.to_i + 5) / 30.0).ceil * 30
+    spritesheet = args.state.startup.button_sprites
     [spritesheet.get(0, @x, @y, 5, @height),
      spritesheet.get(1, @x + 5, @y, middle, @height),
      spritesheet.get(2, @x + middle + 5, @y, 5, @height)]
