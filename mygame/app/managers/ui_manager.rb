@@ -16,8 +16,6 @@ class UIManager
     @unlocked_buttons = []
     @alerts = []
     @images = [
-      { x: 200, y: 0, w: 1080, h: 720, path: 'sprites/grass_background.png' },
-      # { x: 250, y: 50, w: 980, h: 620, path: 'sprites/background.png' },
       { x: 170, y: args.grid.h - 30, w: 24, h: 24, path: 'sprites/pause_icon.png' },
       { x: 120, y: 175, w: 50, h: 50, path: 'sprites/selection_box.png' }
     ]
@@ -28,6 +26,9 @@ class UIManager
                        level: ['Level:', args.state.game_state.level.current_level] }
     @labels = generate_labels(args)
     @images << construct_soil_sprite
+    @images << construct_sidebar_sprite
+    @grass_data = generate_grass_data
+    @frame = 0
   end
 
   def tick(args)
@@ -42,6 +43,7 @@ class UIManager
 
     handle_alerts(args) if @alerts.any?
     display_shed(args)
+    @frame += 1
   end
 
   private
@@ -110,10 +112,56 @@ class UIManager
      spritesheet.get(2, 1215, 50, 15, 620)]
   end
 
+  def construct_sidebar_sprite
+    spritesheet = Spritesheet.new('sprites/sidebar.png', 5, 720, 3)
+    [spritesheet.get(0, 0, 0, 5, 720),
+     spritesheet.get(1, 5, 0, 195, 720),
+     spritesheet.get(2, 195, 0, 5, 720)]
+  end
+
+  # Create arrays for each 10x10 segment of grass with randomized spritesheet value
+  def generate_grass_data
+    data = []
+
+    (200...1280).each do |x|
+      next unless (x % 10).zero?
+
+      (0...720).each do |y|
+        next unless (y % 10).zero?
+
+        data << [rand(2), x, y, 10, 10]
+      end
+    end
+    data
+  end
+
+  # Use grass data to construct sprites from spritesheet. Adjust spritesheet value based on frame count.
+  def construct_grass_sprite
+    spritesheet = Spritesheet.new('sprites/garden_grass.png', 10, 10, 2)
+    sprites = []
+    @grass_data.each do |grass|
+      sprites << spritesheet.get(grass[0], grass[1], grass[2], grass[3], grass[4])
+      if (@frame % 100).zero?
+        grass[0] = grass[0].zero? ? 1 : 0
+      end
+    end
+    sprites
+  end
+
+  def display_grass_sprites(args)
+    sprites = construct_grass_sprite
+    sprites.each { |sprite| args.outputs.sprites << sprite }
+  end
+
+  def display_selection(args)
+    plant_manager = args.state.game_state.plant_manager
+    args.outputs.sprites << plant_manager.spritesheets[plant_manager.selection].get(30, 130, 180, 25, 25)
+  end
+
   def display_images(args)
-    plant_spritesheets = args.state.game_state.plant_manager.spritesheets
+    display_grass_sprites(args)
+    display_selection(args)
     @images.each { |image| args.outputs.sprites << image }
-    args.outputs.sprites << plant_spritesheets[args.state.game_state.plant_manager.selection].get(30, 130, 180, 25, 25)
   end
 
   def display_shed(args)
