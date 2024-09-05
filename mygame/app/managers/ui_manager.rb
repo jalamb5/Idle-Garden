@@ -129,7 +129,7 @@ class UIManager
       (0...720).each do |y|
         next unless (y % 50).zero?
 
-        data << [(0..3).select(&:even?).sample, x, y, 50, 50] unless (300...1200).include?(x) && (50...630).include?(y)
+        data << [(0..5).select(&:even?).sample, x, y, 50, 50] unless (300...1200).include?(x) && (50...630).include?(y)
       end
     end
 
@@ -138,7 +138,7 @@ class UIManager
 
   # Use grass data to construct sprites from spritesheet. Adjust spritesheet value based on frame count.
   def construct_grass_sprite
-    spritesheet = Spritesheet.new('sprites/garden_grass_simplified.png', 50, 50, 4)
+    spritesheet = Spritesheet.new('sprites/garden_grass_simplified.png', 50, 50, 6)
     sprites = []
     @grass_data.each do |grass|
       sprites << spritesheet.get(grass[0], grass[1], grass[2], grass[3], grass[4])
