@@ -119,30 +119,32 @@ class UIManager
      spritesheet.get(2, 195, 0, 5, 720)]
   end
 
-  # Create arrays for each 10x10 segment of grass with randomized spritesheet value
+  # Create arrays for each 50x50 segment of grass with randomized spritesheet value
   def generate_grass_data
     data = []
 
     (200...1280).each do |x|
-      next unless (x % 10).zero?
+      next unless (x % 50).zero?
 
       (0...720).each do |y|
-        next unless (y % 10).zero?
+        next unless (y % 50).zero?
 
-        data << [rand(2), x, y, 10, 10]
+        data << [(0..3).select(&:even?).sample, x, y, 50, 50] unless (300...1200).include?(x) && (50...630).include?(y)
       end
     end
+
     data
   end
 
   # Use grass data to construct sprites from spritesheet. Adjust spritesheet value based on frame count.
   def construct_grass_sprite
-    spritesheet = Spritesheet.new('sprites/garden_grass.png', 10, 10, 2)
+    spritesheet = Spritesheet.new('sprites/garden_grass_simplified.png', 50, 50, 4)
     sprites = []
     @grass_data.each do |grass|
       sprites << spritesheet.get(grass[0], grass[1], grass[2], grass[3], grass[4])
+      # shift image periodically to animate
       if (@frame % 100).zero?
-        grass[0] = grass[0].zero? ? 1 : 0
+        grass[0] = grass[0].even? ? grass[0] + 1 : grass[0] - 1
       end
     end
     sprites

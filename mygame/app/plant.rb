@@ -19,8 +19,8 @@ class Plant
   WITHER = 8000
   WITHER_RATE = 0.2
   DEATH = 10_000
-  STAGES = { SEED: (0..13), GROWING: (14..25), FULL_GROWN: (26..29), READY_TO_HARVEST: (30..33),
-             WITHERED: (34..55) }.freeze
+  STAGES = { SEED: (0..13), GROWING: (14..25), FULL_GROWN: (26..27), READY_TO_HARVEST: (28..30),
+             WITHERED: (31..55) }.freeze
 
   def initialize(args, sheet, x_coord = args.inputs.mouse.x, y_coord = args.inputs.mouse.y)
     @x = x_coord - 25
