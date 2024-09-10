@@ -24,9 +24,10 @@ class LoadManager
   def reconstruct_objects(args, game_state, saved_state)
     set_volume(args, saved_state)
     args.state.startup.tutorial = saved_state.save_data.tutorial
-    game_state.harvested_plants = saved_state[:harvested_plants]
+    # game_state.shed.harvested_plants = saved_state[:harvested_plants]
     game_state.cash = saved_state[:cash]
     game_state.score = saved_state[:score]
+    set_harvested_plants(game_state, saved_state[:harvested_plants])
     reconstruct_automations(args, game_state, saved_state)
     reconstruct_plants(args, game_state, saved_state)
 
@@ -37,6 +38,12 @@ class LoadManager
     args.state.startup.sound_manager.sfx_gain = saved_state.save_data.sfx_gain
     args.state.startup.sound_manager.music_gain = saved_state.save_data.music_gain
     args.audio[:music][:gain] = saved_state.save_data.music_gain
+  end
+
+  def set_harvested_plants(game_state, harvested_plants)
+    harvested_plants.each do |key, value|
+      game_state.shed.harvested_plants[key] = value
+    end
   end
 
   def reconstruct_automations(args, game_state, saved_state)
