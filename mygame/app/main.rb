@@ -2,10 +2,10 @@
 
 # DragonRuby requires extensions
 # rubocop:disable Style/RedundantFileExtensionInRequire
-require 'app/startup.rb'
+require 'app/boot.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 def tick(args)
-  args.state.startup ||= Startup.new(args)
-  args.state.startup.tick(args)
+  args.state.boot ||= Boot.new(args)
+  args.state.boot.tick(args)
 end

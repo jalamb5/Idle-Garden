@@ -14,7 +14,7 @@ require 'app/managers/plant_manager.rb'
 # Handle game logic
 class Game
   attr_accessor :plant_manager, :cash, :price, :score, :level, :paused,
-                :ui, :automations, :block_click, :shed, :save_data
+                :automations, :block_click, :shed, :save_data
 
   def initialize(args)
     @paused = false
@@ -24,7 +24,6 @@ class Game
     @score = 0
     @level = Level.new
     @shed = Shed.new
-    @ui = UIManager.new(args, self)
     @automations = AutomationManager.new
     @plant_manager = PlantManager.new
     @save_data = {}
@@ -42,8 +41,6 @@ class Game
   private
 
   def standard_display(args)
-    @ui.tick(args)
-
     @automations.tick(args)
 
     @plant_manager.tick(args)
@@ -72,7 +69,7 @@ class Game
   def dev_mode(args)
     return unless args.inputs.keyboard.key_held.d && args.inputs.keyboard.key_held.e && args.inputs.keyboard.key_down.v
 
-    @ui.alerts << Alert.new('Dev Mode Activated!')
+    args.state.boot.ui_manager.game_ui.alerts << Alert.new('Dev Mode Activated!')
     @cash += 1000
     @plant_manager.seeds[:flower_red] += 500
     @score += 9000
@@ -81,7 +78,7 @@ class Game
   # DragonRuby required methods
   def serialize
     { plant_manager: @plant_manager,
-      cash: @cash, score: @score, ui: @ui,
+      cash: @cash, score: @score,
       automations: @automations, shed: @shed, save_data: @save_data }
   end
 

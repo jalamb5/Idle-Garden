@@ -11,8 +11,8 @@ require 'app/managers/load_manager.rb'
 
 # Manage logic for clicking buttons
 module ButtonActions
-  def self.start(startup)
-    startup.splash_state = false
+  def self.start(boot)
+    boot.splash_state = false
     true
   end
 
@@ -75,8 +75,8 @@ module ButtonActions
   # Saves the state of the game in a text file called game_state.txt
   def self.save(args)
     # Collect data not stored in game_state
-    args.state.game_state.save_data = { sfx_gain: args.state.startup.sound_manager.sfx_gain,
-                                        music_gain: args.state.startup.sound_manager.music_gain,
+    args.state.game_state.save_data = { sfx_gain: args.state.boot.sound_manager.sfx_gain,
+                                        music_gain: args.state.boot.sound_manager.music_gain,
                                         save_version: 1 }
     # Write save file
     $gtk.serialize_state('game_state.txt', args.state.game_state)
@@ -86,7 +86,7 @@ module ButtonActions
   # Load save happens before game_state initialization, requires args.state
   def self.load_save(state)
     state.load_state = LoadManager.new
-    state.startup.splash_state = false
+    state.boot.splash_state = false
     true
   end
 
@@ -97,7 +97,7 @@ module ButtonActions
 
   def self.mute_music(args)
     args.audio[:music][:gain] = args.audio[:music][:gain].zero? ? 0.25 : 0
-    args.state.startup.sound_manager.music_gain = args.state.startup.sound_manager.music_gain.zero? ? 0.25 : 0
+    args.state.boot.sound_manager.music_gain = args.state.boot.sound_manager.music_gain.zero? ? 0.25 : 0
     true
   end
 

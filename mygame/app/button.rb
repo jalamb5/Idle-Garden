@@ -27,9 +27,9 @@ class Button
     save: ->(args, _type) { ButtonActions.save(args) },
     load_save: ->(args, _type) { ButtonActions.load_save(args.state) },
     pause_game: ->(args, _type) { ButtonActions.pause_game(args.state.game_state) },
-    start: ->(args, _type) { ButtonActions.start(args.state.startup) },
+    start: ->(args, _type) { ButtonActions.start(args.state.boot) },
     mute_music: ->(args, _type) { ButtonActions.mute_music(args) },
-    mute_sfx: ->(args, _type) { ButtonActions.mute_sfx(args.state.startup.sound_manager) },
+    mute_sfx: ->(args, _type) { ButtonActions.mute_sfx(args.state.boot.sound_manager) },
     quit: ->(_args, _type) { ButtonActions.quit }
   }.freeze
 
@@ -67,7 +67,7 @@ class Button
 
     tooltips = args.gtk.parse_json_file('data/tooltips.json')
     key = "#{@name}#{@type}"
-    args.state.game_state.ui.alerts << Alert.new(tooltips[key], hover: true)
+    args.state.boot.ui_manager.game_ui.alerts << Alert.new(tooltips[key], hover: true)
   end
 
   private
@@ -89,7 +89,7 @@ class Button
 
     # Round label width to the nearest multiple of 30 to standardize button sizes
     middle = ((w.to_i + 5) / 30.0).ceil * 30
-    spritesheet = args.state.startup.button_sprites
+    spritesheet = args.state.boot.ui_manager.spritesheets.button_sprites
     [spritesheet.get(0, @x, @y, 5, @height),
      spritesheet.get(1, @x + 5, @y, middle, @height),
      spritesheet.get(2, @x + middle + 5, @y, 5, @height)]
@@ -97,7 +97,7 @@ class Button
 
   def play_button_sound(type, args)
     sound = type ? :button_click : :button_reject
-    args.state.startup.sound_manager.play_effect(sound, args)
+    args.state.boot.sound_manager.play_effect(sound, args)
   end
 
   # DragonRuby required methods

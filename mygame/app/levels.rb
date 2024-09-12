@@ -50,22 +50,22 @@ class Level
   def unlock_level(args, level)
     case level
     when 2
-      args.state.game_state.ui.unlocked_buttons <<
+      args.state.boot.ui_manager.game_ui.unlocked_buttons <<
         { buy_auto_planter: Button.new(:buy_auto_planter, [10, 0],
                                        "Planter (#{args.state.game_state.price[:planter]})") }
-      args.state.game_state.ui.alerts << @alerts[:planter] if @alerts[:planter]
+      args.state.boot.ui_manager.game_ui.alerts << @alerts[:planter] if @alerts[:planter]
       @alerts[:planter] = false
     when 3
-      args.state.game_state.ui.unlocked_buttons <<
+      args.state.boot.ui_manager.game_ui.unlocked_buttons <<
         { buy_auto_harvester: Button.new(:buy_auto_harvester, [10, 50],
                                          "Harvester (#{args.state.game_state.price[:harvester]})") }
-      args.state.game_state.ui.alerts << @alerts[:harvester] if @alerts[:harvester]
+      args.state.boot.ui_manager.game_ui.alerts << @alerts[:harvester] if @alerts[:harvester]
       @alerts[:harvester] = false
     when 4
-      args.state.game_state.ui.unlocked_buttons <<
+      args.state.boot.ui_manager.game_ui.unlocked_buttons <<
         { buy_auto_seller: Button.new(:buy_auto_seller, [10, 100],
                                       "Seller (#{args.state.game_state.price[:seller]})") }
-      args.state.game_state.ui.alerts << @alerts[:seller] if @alerts[:seller]
+      args.state.boot.ui_manager.game_ui.alerts << @alerts[:seller] if @alerts[:seller]
       @alerts[:seller] = false
     end
   end
