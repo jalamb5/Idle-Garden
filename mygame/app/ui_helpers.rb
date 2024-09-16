@@ -17,4 +17,21 @@ module UIHelpers
     end
     grid
   end
+
+  def self.construct_grid_sprites(grid, spritesheet, x_limit = [], y_limit = [])
+    sprites = []
+    grid.each do |square|
+      unless x_limit.include?(square[1]) && y_limit.include?(square[2])
+        sprites << spritesheet.get(square[0], square[1], square[2], square[3], square[4])
+      end
+    end
+    sprites
+  end
+
+  def self.animate_sprites(grid, frame, rate)
+    return grid unless (frame % rate).zero?
+
+    grid.each { |square| square[0] = square[0].even? ? square[0] + 1 : square[0] - 1 }
+    grid
+  end
 end

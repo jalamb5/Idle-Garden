@@ -119,24 +119,10 @@ class GameUIBuilder
   end
 
   # Use grass data to construct sprites from spritesheet. Adjust spritesheet value based on frame count.
-  def construct_grass_sprite(args)
-    spritesheet = args.state.boot.ui_manager.spritesheets.grass
-    sprites = []
-    @grass_data.each do |grass|
-      unless (300...1200).include?(grass[1]) && (50...630).include?(grass[2])
-        sprites << spritesheet.get(grass[0], grass[1], grass[2], grass[3], grass[4])
-      end
-      # shift image periodically to animate
-      if (@frame % 100).zero?
-        grass[0] = grass[0].even? ? grass[0] + 1 : grass[0] - 1
-      end
-    end
-    sprites
-  end
-
   def display_grass_sprites(args)
-    sprites = construct_grass_sprite(args)
+    sprites = UIHelpers.construct_grid_sprites(@grass_data, args.state.boot.ui_manager.spritesheets.grass, (300...1200), (50...630))
     sprites.each { |sprite| args.outputs.sprites << sprite }
+    @grass_data = UIHelpers.animate_sprites(@grass_data, @frame, 100)
   end
 
   def display_selection(args)
