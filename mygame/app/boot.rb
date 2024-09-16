@@ -14,7 +14,7 @@ class Boot
   attr_accessor :splash_state, :sound_manager, :tutorial, :button_sprites, :ui_manager
 
   def initialize(args)
-    args.state.game_state ||= Game.new(args)
+    args.state.game_state ||= Game.new
     @splash_state = true
     @tutorial = true
     @sound_manager = SoundManager.new
@@ -34,7 +34,7 @@ class Boot
   private
 
   def show_tutorial(args)
-    args.state.game_state.block_click = true
+    args.state.game_state.plant_manager.block_plant = true
     labels = []
     coords = [350, 500]
     intro_message = ['Welcome to Idle Garden!',

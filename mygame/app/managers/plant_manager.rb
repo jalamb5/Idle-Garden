@@ -8,7 +8,7 @@ require 'app/spritesheet.rb'
 
 # Manage growth and placement of plants
 class PlantManager
-  attr_accessor :plants, :seeds, :spritesheets, :selection
+  attr_accessor :plants, :seeds, :spritesheets, :selection, :block_plant
 
   def initialize
     @plants = []
@@ -16,6 +16,7 @@ class PlantManager
     @garden = { x: 250, y: 50, w: 980, h: 620 }
     @seeds = { flower_red: 5, flower_blue: 0 }
     @selection = :flower_red
+    @block_plant = false
   end
 
   def tick(args)

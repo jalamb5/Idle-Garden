@@ -27,7 +27,6 @@ class GameUIBuilder
                        level: ['Level:', args.state.game_state.level.current_level] }
     @labels = generate_labels(args)
     @grass_data = UIHelpers.screen_grid_generator(50, 200...1280, 0...720, 0..11, 2)
-    @frame = 0
   end
 
   def tick(args)
@@ -42,7 +41,6 @@ class GameUIBuilder
 
     handle_alerts(args) if @alerts.any?
     display_shed(args)
-    @frame += 1
   end
 
   private
@@ -122,7 +120,7 @@ class GameUIBuilder
   def display_grass_sprites(args)
     sprites = UIHelpers.construct_grid_sprites(@grass_data, args.state.boot.ui_manager.spritesheets.grass, (300...1200), (50...630))
     sprites.each { |sprite| args.outputs.sprites << sprite }
-    @grass_data = UIHelpers.animate_sprites(@grass_data, @frame, 100)
+    @grass_data = UIHelpers.animate_sprites(@grass_data, args.state.boot.ui_manager.frame, 100)
   end
 
   def display_selection(args)
@@ -131,9 +129,9 @@ class GameUIBuilder
   end
 
   def display_images(args)
+    display_grass_sprites(args)
     construct_soil_sprite(args, args.state.boot.ui_manager.spritesheets.soil)
     construct_sidebar_sprite(args, args.state.boot.ui_manager.spritesheets.sidebar)
-    display_grass_sprites(args)
     display_selection(args)
     @images.each { |image| args.outputs.sprites << image }
   end

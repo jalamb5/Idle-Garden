@@ -7,36 +7,18 @@ require 'app/button.rb'
 
 # Manage pause menu
 class Pause
-  def initialize(args)
-    @standard_buttons = pause_buttons
-    @mute_buttons = mute_buttons(args)
-  end
-
   def tick(args)
-    draw_screen(args)
+    args.state.boot.ui_manager.boot_ui.splash_screen.tick(args)
+    pause_buttons(args).each_value { |button| button.display(args) && button.clicked?(args) }
   end
 
   private
 
-  def draw_screen(args)
-    args.outputs.sprites << { x: 0, y: 0, w: 1280, h: 720, path: 'sprites/splash.png' }
-    @standard_buttons.each_value { |button| button.display(args) && button.clicked?(args) }
-    @mute_buttons.each_value do |button|
-      button.display(args)
-      @mute_buttons = mute_buttons(args) if button.clicked?(args)
-    end
-  end
-
-  def pause_buttons
+  def pause_buttons(args)
     {
       pause_game: Button.new(:pause_game, [400, 360], 'Return to Garden', [200, 50], :opaque),
       save: Button.new(:save, [700, 360], 'Save', [200, 50], :opaque),
-      quit: Button.new(:quit, [540, 60], 'Quit Game', [200, 50], :opaque)
-    }
-  end
-
-  def mute_buttons(args)
-    {
+      quit: Button.new(:quit, [540, 60], 'Quit Game', [200, 50], :opaque),
       mute_sfx: create_mute_button(:mute_sfx, 400, args.state.boot.sound_manager.sfx_gain, 'Unmute Sound Effects',
                                    'Mute Sound Effects'),
       mute_music: create_mute_button(:mute_music, 700, args.state.boot.sound_manager.music_gain, 'Unmute Music',
