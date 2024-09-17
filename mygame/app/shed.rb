@@ -24,7 +24,7 @@ class Shed
   end
 
   def tick(args)
-    args.state.game_state.block_click = true
+    args.state.game_state.plant_manager.block_plant = true
     draw_shed(args)
     return unless @open
 

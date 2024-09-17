@@ -3,7 +3,7 @@ devid=jalamb5
 devtitle=Justin Lamb
 gameid=idle-garden
 gametitle=Idle Garden
-version=0.17
+version=0.18
 icon=metadata/icon.png
 
 # === Flags available at all licensing tiers ===
