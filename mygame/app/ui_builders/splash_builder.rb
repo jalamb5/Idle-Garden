@@ -5,6 +5,7 @@
 require 'app/ui_helpers.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
+# Build and display splash screen sprites
 class SplashBuilder
   def initialize
     @title_frame = 0
@@ -26,7 +27,7 @@ class SplashBuilder
 
   def display_title_sprite(args)
     # Animate sprite
-    @title_frame = @title_frame.zero? ? 1 : 0 if (args.state.boot.ui_manager.frame % 100).zero?
+    @title_frame = @title_frame.zero? ? 1 : 0 if (args.state.boot.ui_manager.frame % 50).zero?
     # Display sprite
     args.outputs.sprites << args.state.boot.ui_manager.spritesheets.title_sprites.get(@title_frame, 350, 500, 600, 200)
   end

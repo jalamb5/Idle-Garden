@@ -14,7 +14,7 @@ class LoadManager
   end
 
   def load_save(args)
-    args.state.game_state = Game.new(args)
+    args.state.game_state = Game.new
     saved_state = $gtk.deserialize_state('game_state.txt')
     reconstruct_objects(args, args.state.game_state, saved_state)
   end
