@@ -29,6 +29,7 @@ class Boot
 
     args.state.game_state.tick(args)
     show_tutorial(args) if @tutorial
+    args.state.game_state.plant_manager.block_plant = false
   end
 
   private

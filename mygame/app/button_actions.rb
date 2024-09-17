@@ -43,7 +43,7 @@ module ButtonActions
     auto_harvester = Automation.new(:harvester, args)
     args.state.game_state.automations.auto_harvesters << auto_harvester
     args.state.game_state.cash -= args.state.game_state.price[:harvester]
-    args.state.game_state.ui.alerts << Alert.new("#{auto_harvester.name} is helping in the garden!", color: :blue)
+    args.state.boot.ui_manager.game_ui.alerts << Alert.new("#{auto_harvester.name} is helping in the garden!", color: :blue)
     true
   end
 
@@ -53,7 +53,7 @@ module ButtonActions
     auto_seller = Automation.new(:seller, args)
     args.state.game_state.automations.auto_sellers << auto_seller
     args.state.game_state.cash -= args.state.game_state.price[:seller]
-    args.state.game_state.ui.alerts << Alert.new("#{auto_seller.name} is helping to sell your harvest!", color: :blue)
+    args.state.boot.ui_manager.game_ui.alerts << Alert.new("#{auto_seller.name} is helping to sell your harvest!", color: :blue)
     true
   end
 
@@ -63,7 +63,7 @@ module ButtonActions
     auto_planter = Automation.new(:planter, args)
     args.state.game_state.automations.auto_planters << auto_planter
     args.state.game_state.cash -= args.state.game_state.price[:planter]
-    args.state.game_state.ui.alerts << Alert.new("#{auto_planter.name} is helping in the garden!", color: :blue)
+    args.state.boot.ui_manager.game_ui.alerts << Alert.new("#{auto_planter.name} is helping in the garden!", color: :blue)
     true
   end
 

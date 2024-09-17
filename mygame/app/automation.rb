@@ -22,7 +22,7 @@ class Automation
     @counter = 0
     @name = name_generator(args)
     @work_completed = 0
-    args.state.startup.sound_manager.play_effect(@type, args) unless args.state.load_state.loaded_from_save == true
+    args.state.boot.sound_manager.play_effect(@type, args) unless args.state.load_state.loaded_from_save == true
   end
 
   def run(args)
@@ -49,14 +49,14 @@ class Automation
   def clicked?(args)
     return false unless args.inputs.mouse.click && args.inputs.mouse.point.inside_rect?(@sprite)
 
-    args.state.startup.sound_manager.play_effect(@type, args)
+    args.state.boot.sound_manager.play_effect(@type, args)
 
     # Prevent clicking automator from planting or harvesting
-    args.state.game_state.block_click = true
+    args.state.game_state.plant_manager.block_plant = true
     messages = { harvester: ['has harvested', 'plants'],
                  planter: ['has planted', 'seeds'],
                  seller: ['has made', 'cash from the garden'] }
-    args.state.game_state.ui.alerts << Alert.new(
+    args.state.boot.ui_manager.game_ui.alerts << Alert.new(
       "#{@name} #{messages[@type][0]} #{@work_completed} #{messages[@type][1]}", color: :blue
     )
   end
