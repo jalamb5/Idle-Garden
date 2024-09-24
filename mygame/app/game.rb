@@ -8,11 +8,12 @@ require 'app/shed.rb'
 require 'app/managers/ui_manager.rb'
 require 'app/managers/automation_manager.rb'
 require 'app/managers/plant_manager.rb'
+require 'app/managers/soil_manager.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Handle game logic
 class Game
-  attr_accessor :plant_manager, :cash, :price, :score, :level, :paused,
+  attr_accessor :plant_manager, :soil_manager, :cash, :price, :score, :level, :paused,
                 :automations, :shed, :save_data
 
   def initialize
@@ -24,6 +25,7 @@ class Game
     @shed = Shed.new
     @automations = AutomationManager.new
     @plant_manager = PlantManager.new
+    @soil_manager = SoilManager.new
     @save_data = {}
   end
 
@@ -37,6 +39,8 @@ class Game
   private
 
   def standard_display(args)
+    @soil_manager.tick(args)
+
     @automations.tick(args)
 
     @plant_manager.tick(args)
