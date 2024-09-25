@@ -13,7 +13,7 @@ class SoilManager
 
   def initialize
     @soil_plots = constuct_soil_plots
-    @spritesheet = Spritesheet.new('sprites/garden_soil.png', 10, 10, 3)
+    @spritesheet = Spritesheet.new('sprites/soil_plot.png', 10, 10, 3)
   end
 
   def tick(args)
