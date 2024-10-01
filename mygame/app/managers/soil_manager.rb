@@ -9,7 +9,7 @@ require 'app/spritesheet.rb'
 
 # Construct and Manage soil plots
 class SoilManager
-  attr_accessor :spritesheet
+  attr_accessor :spritesheet, :soil_plots
 
   def initialize
     @soil_plots = constuct_soil_plots
@@ -17,7 +17,6 @@ class SoilManager
   end
 
   def tick(args)
-    update_soil_sprites(args)
     display_soil_plots(args)
   end
 
@@ -30,11 +29,10 @@ class SoilManager
     plots
   end
 
-  def update_soil_sprites(args)
-    @soil_plots.each { |plot| plot.update_sprite(args) }
-  end
-
   def display_soil_plots(args)
-    @soil_plots.each { |plot| args.outputs.sprites << plot.sprite }
+    @soil_plots.each do |plot|
+      plot.update_sprite(args)
+      args.outputs.sprites << plot.sprite
+    end
   end
 end

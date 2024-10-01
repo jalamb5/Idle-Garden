@@ -51,7 +51,7 @@ class PlantManager
 
     # Randomly select plant type
     # sheet = %i[flower_red flower_blue].sample
-    new_plant = Plant.new(args, @selection)
+    new_plant = Plant.new(args, @selection, args.inputs.mouse.x, args.inputs.mouse.y)
 
     return unless @seeds[@selection].positive? && !new_plant.invalid
 

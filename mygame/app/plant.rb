@@ -23,8 +23,8 @@ class Plant
              WITHERED: (31..55) }.freeze
 
   def initialize(args, sheet, x_coord = args.inputs.mouse.x, y_coord = args.inputs.mouse.y)
-    @x = x_coord - 25
-    @y = y_coord - 10
+    @x = x_coord - 32 # Offset to center
+    @y = y_coord
     @w = 64
     @h = 64
     @age = 0
@@ -35,6 +35,8 @@ class Plant
     @sheet = sheet
 
     @sprite = update_sprite(args)
+    @soil_plot = find_soil_plot(args)
+    @soil_plot.degrade
   end
 
   def update_sprite(args)
@@ -73,6 +75,7 @@ class Plant
     when :WITHERED
       wither_action(args, plant)
     end
+    @soil_plot.degrade
     plant.invalid = true
   end
 
@@ -115,6 +118,19 @@ class Plant
       return true
     end
     false
+  end
+
+  # Find soil plot location
+  def find_soil_plot(args)
+    args.state.game_state.soil_manager.soil_plots.each do |plot|
+      next unless args.geometry.intersect_rect?(
+        [plot.square.x, plot.square.y, plot.square.plot_size, plot.square.plot_size],
+        # X location needed to be offset by 32 to center sprite but is not needed for plot lookup
+        [@x + 32, @y, plot.square.plot_size, plot.square.plot_size]
+      )
+
+      return plot
+    end
   end
 
   # DragonRuby required methods

@@ -2,17 +2,27 @@
 
 # Handle soil plots
 class Soil
-  attr_reader :sprite
+  attr_reader :sprite, :square
 
-  def initialize(square)
-    # @sheet = square[0]
-    @coords = [square[1], square[2]]
-    @plot_size = square[3]
+  def initialize(data)
+    @square = squarify(data)
     @sprite = nil
-    @fertility = 0
+    @tile = 2
   end
 
   def update_sprite(args)
-    @sprite = args.state.game_state.soil_manager.spritesheet.get(@fertility, @coords[0], @coords[1], @plot_size, @plot_size)
+    @sprite = args.state.game_state.soil_manager.spritesheet.get(@tile, @square.x, @square.y, @square.plot_size, @square.plot_size)
+  end
+
+  def degrade
+    @tile -= 1
+  end
+
+  private
+
+  # Transform square to Struct
+  Square = Struct.new(:sheet, :x, :y, :plot_size)
+  def squarify(data)
+    Square.new(data[0], data[1], data[2], data[3])
   end
 end
