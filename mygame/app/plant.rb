@@ -12,7 +12,6 @@ class Plant
   attr_sprite
 
   # Growth Stages & Rates
-  GROWTH_RATE = 0.1
   GROWING = 2000
   FULL_GROWN = 4000
   READY_TO_HARVEST = 6000
