@@ -17,7 +17,7 @@ class SoilManager
   end
 
   def tick(args)
-    display_soil_plots(args)
+    display_soil_plots(args) unless args.state.game_state.shed.open || args.state.game_state.paused
   end
 
   private

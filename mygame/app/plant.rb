@@ -61,7 +61,7 @@ class Plant
       end
       update_sprite(args)
     end
-    @invalid = true if @age >= DEATH
+    @invalid = true && @soil_plot.improve if @age >= DEATH
   end
 
   # Harvest plant if correct stage

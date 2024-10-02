@@ -7,7 +7,7 @@ class Soil
   def initialize(data)
     @square = squarify(data)
     @sprite = nil
-    @tile = 2
+    @tile = 2 # 0 = low, 1 = med, 2 = high fertility
   end
 
   def update_sprite(args)
@@ -15,7 +15,15 @@ class Soil
   end
 
   def degrade
+    return if @tile.zero?
+
     @tile -= 1
+  end
+
+  def improve
+    return if @tile == 2
+
+    @tile += 1
   end
 
   private
