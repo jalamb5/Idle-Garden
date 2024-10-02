@@ -26,6 +26,7 @@ class LoadManager
     args.state.boot.tutorial = saved_state.save_data.tutorial
     game_state.cash = saved_state[:cash]
     game_state.score = saved_state[:score]
+    game_state.soil_manager.reconstruct(saved_state)
     set_harvested_plants(game_state, saved_state[:harvested_plants])
     reconstruct_automations(args, game_state, saved_state)
     reconstruct_plants(args, game_state, saved_state)
@@ -40,6 +41,8 @@ class LoadManager
   end
 
   def set_harvested_plants(game_state, harvested_plants)
+    return if harvested_plants.nil?
+
     harvested_plants.each do |key, value|
       game_state.shed.harvested_plants[key] = value
     end

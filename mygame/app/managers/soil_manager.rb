@@ -20,6 +20,21 @@ class SoilManager
     display_soil_plots(args) unless args.state.game_state.shed.open || args.state.game_state.paused
   end
 
+  def reconstruct(save_data)
+    return unless save_data.soil_manager
+
+    old_plots = save_data.soil_manager.soil_plots
+
+    attributes = %i[tile]
+
+    @soil_plots.each_with_index do |plot, i|
+      attributes.each do |attr|
+        plot.send("#{attr}=", old_plots[i].send(attr))
+      end
+      plot
+    end
+  end
+
   private
 
   def constuct_soil_plots
