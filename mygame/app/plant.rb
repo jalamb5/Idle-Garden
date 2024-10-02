@@ -7,7 +7,7 @@ require 'app/spritesheet.rb'
 
 # Create new plants in garden
 class Plant
-  attr_accessor :x, :y, :w, :h, :age, :invalid, :stage, :a, :frame, :sheet, :sprite
+  attr_accessor :x, :y, :w, :h, :age, :invalid, :stage, :a, :frame, :sheet, :sprite, :soil_plot
 
   attr_sprite
 
@@ -36,7 +36,6 @@ class Plant
 
     @sprite = update_sprite(args)
     @soil_plot = find_soil_plot(args)
-    @soil_plot.degrade
   end
 
   def update_sprite(args)
@@ -75,7 +74,7 @@ class Plant
     when :WITHERED
       wither_action(args, plant)
     end
-    @soil_plot.degrade
+    plant.soil_plot.degrade
     plant.invalid = true
   end
 
