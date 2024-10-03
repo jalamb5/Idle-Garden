@@ -17,11 +17,11 @@ module ButtonActions
   end
 
   def self.sell(game_state, type)
-    return false if game_state.shed.harvested_plants[type] <= 0
+    return false if game_state.shed.harvested_plants[type].length <= 0
 
-    game_state.cash += game_state.shed.harvested_plants[type] * game_state.price[type]
-    game_state.score += game_state.shed.harvested_plants[type] * 10
-    game_state.shed.harvested_plants[type] = 0
+    game_state.cash += game_state.shed.harvested_plants[type].length * game_state.price[type]
+    game_state.score += game_state.shed.harvested_plants[type].length * 10
+    game_state.shed.harvested_plants[type].clear
     true
   end
 

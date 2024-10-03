@@ -93,7 +93,7 @@ class Plant
 
   # Perform actions for plants that are ready to be harvested
   def harvest_action(args, plant)
-    args.state.game_state.shed.harvested_plants[plant.sheet] += 1
+    args.state.game_state.shed.harvested_plants[plant.sheet] << plant
     args.state.startup.sound_manager.play_effect(:harvest_plant, args)
     args.state.game_state.score += 2
   end

@@ -15,8 +15,8 @@ class Shed
     @open = false
     @frame = 0
     @harvested_plants = {
-      flower_red: 0,
-      flower_blue: 0
+      flower_red: [],
+      flower_blue: []
     }
     @labels = generate_labels
     @buttons = generate_buttons
@@ -40,7 +40,7 @@ class Shed
     y = 500
     @harvested_plants.each do |key, value|
       # Harvest label
-      labels["#{key}_harvest".to_sym] = Labels.new(250, y, '', value, 20, [255, 255, 255, 255])
+      labels["#{key}_harvest".to_sym] = Labels.new(250, y, '', value.length, 20, [255, 255, 255, 255])
       # Seeds label
       labels["#{key}_seeds".to_sym] = Labels.new(450, y, '', 0, 20, [255, 255, 255, 255])
       y -= 50
