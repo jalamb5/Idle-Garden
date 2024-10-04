@@ -28,7 +28,7 @@ class Plant
     @h = 64
     @age = 0
     @invalid = occupied(args, [@x, @y, @w, @h])
-    @stage = :SEED
+    @stage = :READY_TO_HARVEST
     @a = 255
     @frame = 0
     @sheet = sheet
@@ -100,7 +100,7 @@ class Plant
 
   # Perform actions for plants that are withered
   def wither_action(args, plant)
-    args.state.game_state.plant_manager.seeds[plant.sheet] += rand(10)
+    args.state.game_state.plant_manager.seeds[plant.sheet] += rand(5 * plant.soil_plot.tile)
     args.state.startup.sound_manager.play_effect(:harvest_withered, args)
     args.state.game_state.score += 1
   end

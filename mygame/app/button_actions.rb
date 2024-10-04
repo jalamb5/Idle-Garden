@@ -16,13 +16,40 @@ module ButtonActions
     true
   end
 
-  def self.sell(game_state, type)
+  def self.sell(args, type)
+    game_state = args.state.game_state
     return false if game_state.shed.harvested_plants[type].length <= 0
 
-    game_state.cash += game_state.shed.harvested_plants[type].length * game_state.price[type]
-    game_state.score += game_state.shed.harvested_plants[type].length * 10
+    fertility_bonus = calculate_fertility_bonus(game_state, type)
+    game_state.cash += calculate_price(game_state, type, fertility_bonus)
+    game_state.score += calculate_score(game_state, type, fertility_bonus)
     game_state.shed.harvested_plants[type].clear
+    if fertility_bonus.positive?
+      args.state.boot.ui_manager.game_ui.alerts << Alert.new("You earned a fertility bonus of #{fertility_bonus}!")
+    end
     true
+  end
+
+  def self.calculate_price(game_state, type, fertility_bonus)
+    price = 0
+    price += game_state.shed.harvested_plants[type].length * game_state.price[type]
+    price += fertility_bonus
+    price
+  end
+
+  def self.calculate_fertility_bonus(game_state, type)
+    bonus = 0
+    game_state.shed.harvested_plants[type].each do |plant|
+      bonus += plant.soil_plot.tile
+    end
+    bonus
+  end
+
+  def self.calculate_score(game_state, type, fertility_bonus)
+    score = 0
+    score += game_state.shed.harvested_plants[type].length * 10
+    score += fertility_bonus
+    score
   end
 
   def self.buy_seed(game_state, type)

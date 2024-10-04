@@ -17,7 +17,7 @@ class Button
   }.freeze
 
   BUTTON_ACTIONS = {
-    sell: ->(args, type) { ButtonActions.sell(args.state.game_state, type) },
+    sell: ->(args, type) { ButtonActions.sell(args, type) },
     buy_seed: ->(args, type) { ButtonActions.buy_seed(args.state.game_state, type) },
     select_seed: ->(args, type) { ButtonActions.select_seed(args.state.game_state, type) },
     buy_auto_harvester: ->(args, _type) { ButtonActions.buy_auto_harvester(args) },
