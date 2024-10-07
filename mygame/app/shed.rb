@@ -18,6 +18,7 @@ class Shed
       flower_red: [],
       flower_blue: []
     }
+    @inventory = {}
     @labels = generate_labels
     @buttons = generate_buttons
     @spritesheet = Spritesheet.new('sprites/shed_sheet.png', 64, 64, 2)
@@ -38,11 +39,12 @@ class Shed
   def generate_labels
     labels = {}
     y = 500
-    @harvested_plants.each do |key, value|
-      # Harvest label
-      labels["#{key}_harvest".to_sym] = Labels.new(250, y, '', value.length, 20, [255, 255, 255, 255])
-      # Seeds label
-      labels["#{key}_seeds".to_sym] = Labels.new(450, y, '', 0, 20, [255, 255, 255, 255])
+    items = @harvested_plants << @inventory
+    items.each do |key, value|
+      # Inventory label
+      labels["#{key}_inventory".to_sym] = Labels.new(250, y, '', value.length, 20, [255, 255, 255, 255])
+      # Shop label
+      labels["#{key}_shop".to_sym] = Labels.new(450, y, '', 0, 20, [255, 255, 255, 255])
       y -= 50
     end
     labels.merge(manual_labels)
@@ -51,8 +53,8 @@ class Shed
   def manual_labels
     {
       title: Labels.new(650, 650, 'Garden Shed', '', 30, [255, 255, 255, 255]),
-      harvest: Labels.new(250, 550, 'Harvested', '', 20, [255, 255, 255, 255]),
-      seeds: Labels.new(450, 550, 'Seeds', '', 20, [255, 255, 255, 255])
+      inventory: Labels.new(250, 550, 'Inventory', '', 20, [255, 255, 255, 255]),
+      shop: Labels.new(450, 550, 'Shop', '', 20, [255, 255, 255, 255])
     }
   end
 
