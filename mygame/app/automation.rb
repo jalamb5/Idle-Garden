@@ -4,6 +4,7 @@
 # rubocop:disable Style/RedundantFileExtensionInRequire
 require 'app/plant.rb'
 require 'app/alert.rb'
+require 'app/button_actions.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Create new automations for garden
@@ -40,8 +41,8 @@ class Automation
                             end
     when :seller
       move_auto_seller(args)
-      auto_seller(args.state.game_state) if args.state.game_state.shed.harvested_plants.any? do |_key, value|
-                                              value.positive?
+      auto_seller(args.state.game_state, args) if args.state.game_state.shed.harvested_plants.any? do |_key, value|
+                                              value.length.positive?
                                             end
     end
   end
@@ -121,16 +122,15 @@ class Automation
   end
 
   # Sell harvest if the auto seller has moved off screen
-  def auto_seller(game_state)
+  def auto_seller(game_state, args)
     return unless @location == [150, 720]
 
-    game_state.shed.harvested_plants.each do |key, _value|
-      profit = game_state.shed.harvested_plants[key] * game_state.price[key]
-      game_state.cash += profit
-      game_state.score += game_state.shed.harvested_plants[key] * 10
-      game_state.shed.harvested_plants[key] = 0
-      @work_completed += profit
+    starting_cash = game_state.cash
+    game_state.shed.harvested_plants.each_key do |key|
+      ButtonActions.sell(args, key)
     end
+
+    @work_completed += game_state.cash - starting_cash
     @cooldown = rand(1000)
   end
 
@@ -141,7 +141,7 @@ class Automation
     if @location == off_screen
       @target = home
     elsif @location == home && args.state.game_state.shed.harvested_plants.any? do |_key, value|
-            value.positive?
+            value.length.positive?
           end && @cooldown <= 0
       @target = off_screen
     else
