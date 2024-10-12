@@ -9,11 +9,12 @@ require 'app/spritesheet.rb'
 
 # Construct and Manage soil plots
 class SoilManager
-  attr_accessor :spritesheet, :soil_plots
+  attr_accessor :spritesheets, :soil_plots
 
   def initialize
     @soil_plots = constuct_soil_plots
-    @spritesheet = Spritesheet.new('sprites/soil_plot.png', 10, 10, 3)
+    @spritesheets = { soil: Spritesheet.new('sprites/soil_plot.png', 10, 10, 3),
+                      fertilizer: Spritesheet.new('sprites/fertilizer.png', 64, 64, 1) }
   end
 
   def tick(args)

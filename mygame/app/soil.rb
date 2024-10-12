@@ -12,7 +12,7 @@ class Soil
   end
 
   def update_sprite(args)
-    @sprite = args.state.game_state.soil_manager.spritesheet.get(@tile, @square.x, @square.y, @square.plot_size, @square.plot_size)
+    @sprite = args.state.game_state.soil_manager.spritesheets.soil.get(@tile, @square.x, @square.y, @square.plot_size, @square.plot_size)
   end
 
   def degrade
