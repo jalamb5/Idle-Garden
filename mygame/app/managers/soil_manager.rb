@@ -21,6 +21,20 @@ class SoilManager
     display_soil_plots(args) unless args.state.game_state.shed.open || args.state.game_state.paused
   end
 
+  # rubocop:disable Naming/MethodParameterName
+  # Return a soil plot if it intersects specified coordinates
+  def find_plot(args, x, y)
+    @soil_plots.each do |plot|
+      next unless args.geometry.intersect_rect?(
+        [plot.square.x, plot.square.y, plot.square.plot_size, plot.square.plot_size],
+        [x, y, plot.square.plot_size, plot.square.plot_size]
+      )
+
+      return plot
+    end
+  end
+  # rubocop:enable Naming/MethodParameterName
+
   def reconstruct(save_data)
     return unless save_data.soil_manager
 

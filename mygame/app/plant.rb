@@ -34,7 +34,7 @@ class Plant
     @sheet = sheet
 
     @sprite = update_sprite(args)
-    @soil_plot = find_soil_plot(args)
+    @soil_plot = args.state.game_state.soil_manager.find_plot(args, @x + 32, @y) # Remove offset on x
   end
 
   def update_sprite(args)
@@ -116,19 +116,6 @@ class Plant
       return true
     end
     false
-  end
-
-  # Find soil plot location
-  def find_soil_plot(args)
-    args.state.game_state.soil_manager.soil_plots.each do |plot|
-      next unless args.geometry.intersect_rect?(
-        [plot.square.x, plot.square.y, plot.square.plot_size, plot.square.plot_size],
-        # X location needed to be offset by 32 to center sprite but is not needed for plot lookup
-        [@x + 32, @y, plot.square.plot_size, plot.square.plot_size]
-      )
-
-      return plot
-    end
   end
 
   # DragonRuby required methods
