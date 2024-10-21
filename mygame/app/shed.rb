@@ -5,11 +5,12 @@
 require 'app/labels.rb'
 require 'app/button.rb'
 require 'app/spritesheet.rb'
+require 'app/consumable.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Create a garden shed to store seeds and harvested plants
 class Shed
-  attr_accessor :harvested_plants, :open, :frame, :spritesheet
+  attr_accessor :harvested_plants, :open, :frame, :spritesheet, :selection, :inventory
 
   def initialize
     @open = false
@@ -18,10 +19,11 @@ class Shed
       flower_red: [],
       flower_blue: []
     }
-    @inventory = {}
+    @inventory = { flower_red_seed: Consumable.new(:flower_red, 5), flower_blue_seed: Consumable.new(:flower_blue, 0) }
     @labels = generate_labels
     @buttons = generate_buttons
     @spritesheet = Spritesheet.new('sprites/shed_sheet.png', 64, 64, 2)
+    @selection = :flower_red_seed
   end
 
   def tick(args)
@@ -39,12 +41,15 @@ class Shed
   def generate_labels
     labels = {}
     y = 500
-    items = @harvested_plants << @inventory
+    items = @inventory
     items.each do |key, value|
-      # Inventory label
-      labels["#{key}_inventory".to_sym] = Labels.new(250, y, '', value.length, 20, [255, 255, 255, 255])
-      # Shop label
-      labels["#{key}_shop".to_sym] = Labels.new(450, y, '', 0, 20, [255, 255, 255, 255])
+      if key.include?('_harvested')
+        # Sellable inventory (eg. harvested plants)
+        labels["#{key}_sellabe".to_sym] = Labels.new(250, y, '', value.quantity, 20, [255, 255, 255, 255])
+      else
+        # Usable inventory (eg. seeds)
+        labels["#{key}_usable".to_sym] = Labels.new(450, y, '', value.quantity, 20, [255, 255, 255, 255])
+      end
       y -= 50
     end
     labels.merge(manual_labels)
@@ -70,8 +75,8 @@ class Shed
     y = 470
     @harvested_plants.each_key do |key|
       buttons["sell#{key}".to_sym] = Button.new(:sell, [300, y], 'Sell', [50, 40], :default, key)
-      buttons["buy_seed#{key}".to_sym] = Button.new(:buy_seed, [500, y], 'Buy', [50, 40], :default, key)
-      buttons["select_seed#{key}".to_sym] = Button.new(:select_seed, [550, y], 'Select', [50, 40], :default, key)
+      buttons["buy_#{key}".to_sym] = Button.new(:buy, [500, y], 'Buy', [50, 40], :default, key)
+      buttons["select_#{key}".to_sym] = Button.new(:select, [550, y], 'Select', [50, 40], :default, key)
       y -= 50
     end
     buttons
@@ -112,7 +117,7 @@ class Shed
 
   # DragonRuby required methods
   def serialize
-    { open: @open, frame: @frame, harvested_plants: @harvested_plants }
+    { open: @open, frame: @frame, harvested_plants: @harvested_plants, selection: @selection }
   end
 
   def inspect

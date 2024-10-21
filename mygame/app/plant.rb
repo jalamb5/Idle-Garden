@@ -3,6 +3,7 @@
 # DragonRuby requires extensions
 # rubocop:disable Style/RedundantFileExtensionInRequire
 require 'app/spritesheet.rb'
+require 'app/consumable.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Create new plants in garden
@@ -22,8 +23,8 @@ class Plant
              WITHERED: (31..55) }.freeze
 
   def initialize(args, sheet, x_coord = args.inputs.mouse.x, y_coord = args.inputs.mouse.y)
-    @x = x_coord - 32 # Offset to center
-    @y = y_coord
+    @x = (x_coord - 32).to_i # Offset to center
+    @y = y_coord.to_i
     @w = 64
     @h = 64
     @age = 0
@@ -93,14 +94,21 @@ class Plant
 
   # Perform actions for plants that are ready to be harvested
   def harvest_action(args, plant)
-    args.state.game_state.shed.harvested_plants[plant.sheet] << plant
+    type = "#{plant.sheet}_harvested".to_sym
+    unless args.state.game_state.shed.inventory.include?(type)
+      args.state.game_state.shed.inventory[type] = Consumable.new(plant.sheet, 0)
+    end
+
+    args.state.game_state.shed.inventory[type].quantity += 1
+    args.state.game_state.shed.inventory[type].bonus += plant.soil_plot.tile
     args.state.startup.sound_manager.play_effect(:harvest_plant, args)
     args.state.game_state.score += 2
   end
 
   # Perform actions for plants that are withered
   def wither_action(args, plant)
-    args.state.game_state.plant_manager.seeds[plant.sheet] += rand(5 * plant.soil_plot.tile)
+    type = "#{plant.sheet}_seed".to_sym
+    args.state.game_state.shed.inventory[type] += rand(5 * plant.soil_plot.tile)
     args.state.startup.sound_manager.play_effect(:harvest_withered, args)
     args.state.game_state.score += 1
   end

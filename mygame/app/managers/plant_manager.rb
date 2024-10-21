@@ -8,14 +8,12 @@ require 'app/spritesheet.rb'
 
 # Manage growth and placement of plants
 class PlantManager
-  attr_accessor :plants, :seeds, :spritesheets, :selection, :block_plant
+  attr_accessor :plants, :seeds, :spritesheets, :block_plant
 
   def initialize
     @plants = []
     @spritesheets = build_spritesheets
     @garden = { x: 250, y: 50, w: 980, h: 620 }
-    @seeds = { flower_red: 5, flower_blue: 0 }
-    @selection = :flower_red
     @block_plant = false
   end
 
@@ -42,21 +40,24 @@ class PlantManager
   private
 
   def build_spritesheets
-    { flower_red: Spritesheet.new('sprites/flower_red_64x64.png', 64, 64, 56),
-      flower_blue: Spritesheet.new('sprites/flower_blue_64x64.png', 64, 64, 56) }
+    { flower_red_seed: Spritesheet.new('sprites/flower_red_64x64.png', 64, 64, 56),
+      flower_blue_seed: Spritesheet.new('sprites/flower_blue_64x64.png', 64, 64, 56) }
   end
 
   def plant_harvest(args)
     return unless args.inputs.mouse.click && args.inputs.mouse.point.inside_rect?(@garden)
 
-    # Randomly select plant type
-    # sheet = %i[flower_red flower_blue].sample
-    new_plant = Plant.new(args, @selection, args.inputs.mouse.x, args.inputs.mouse.y)
+    inventory = args.state.game_state.shed.inventory
+    selection = args.state.game_state.shed.selection
 
-    return unless @seeds[@selection].positive? && !new_plant.invalid
+    return unless inventory[selection]
+
+    new_plant = Plant.new(args, selection, args.inputs.mouse.x, args.inputs.mouse.y)
+
+    return unless inventory[selection].quantity.positive? && !new_plant.invalid
 
     @plants << new_plant
-    @seeds[@selection] -= 1
+    inventory[selection].quantity -= 1
   end
 
   def manage_plants(args)

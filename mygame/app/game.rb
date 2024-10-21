@@ -19,7 +19,8 @@ class Game
   def initialize
     @paused = false
     @cash = 5
-    @price = { seed: { flower_red: 5, flower_blue: 10 }, flower_red: 10, flower_blue: 15, planter: 150, harvester: 250, seller: 350 }
+    @price = { consumables: { flower_red: 5, flower_blue: 10, fertilizer: 15 },
+               flower_red: 10, flower_blue: 15, planter: 150, harvester: 250, seller: 350 }
     @score = 0
     @level = Level.new
     @shed = Shed.new
@@ -30,7 +31,7 @@ class Game
   end
 
   def tick(args)
-    args.state.load_state.load_save(args) if args.state.load_state.loaded_from_save == true
+    # args.state.load_state.load_save(args) if args.state.load_state.loaded_from_save == true
 
     standard_display(args)
     dev_mode(args)
@@ -52,7 +53,9 @@ class Game
   end
 
   def debt_check(alerts)
-    return unless @cash <= 0 && @shed.harvested_plants.values.sum <= 0 && @plant_manager.seeds.values.sum <= 0 && @plant_manager.plants.length <= 0
+    unless @cash <= 0 && @shed.harvested_plants.values.sum <= 0 && @plant_manager.seeds.values.sum <= 0 && @plant_manager.plants.length <= 0
+      return
+    end
 
     # If player has no money, no seeds, no plants, and no harvests, debt is accrued.
     @plant_manager.seeds += 5
@@ -66,7 +69,7 @@ class Game
 
     args.state.boot.ui_manager.game_ui.alerts << Alert.new('Dev Mode Activated!')
     @cash += 1000
-    @plant_manager.seeds[:flower_red] += 500
+    @shed.inventory.flower_red.quantity += 500
     @score += 9000
   end
 

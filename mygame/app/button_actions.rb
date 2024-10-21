@@ -7,6 +7,7 @@ require 'app/game.rb'
 require 'app/labels.rb'
 require 'app/alert.rb'
 require 'app/managers/load_manager.rb'
+require 'app/consumable.rb'
 # rubocop:enable Style/RedundantFileExtensionInRequire
 
 # Manage logic for clicking buttons
@@ -18,12 +19,13 @@ module ButtonActions
 
   def self.sell(args, type)
     game_state = args.state.game_state
-    return false if game_state.shed.harvested_plants[type].length <= 0
+    return false if game_state.shed.inventory[type].quantity <= 0
 
-    fertility_bonus = calculate_fertility_bonus(game_state, type)
+    fertility_bonus = game_state.shed.inventory[type].bonus
     game_state.cash += calculate_price(game_state, type, fertility_bonus)
     game_state.score += calculate_score(game_state, type, fertility_bonus)
-    game_state.shed.harvested_plants[type].clear
+    game_state.shed.inventory[type].quantity = 0
+    game_state.shed.inventory[type].bonus = 0
     if fertility_bonus.positive?
       args.state.boot.ui_manager.game_ui.alerts << Alert.new("You earned a fertility bonus of #{fertility_bonus}!")
     end
@@ -32,36 +34,37 @@ module ButtonActions
 
   def self.calculate_price(game_state, type, fertility_bonus)
     price = 0
-    price += game_state.shed.harvested_plants[type].length * game_state.price[type]
+    price += game_state.shed.inventory[type].quantity * game_state.price[type]
     price += fertility_bonus
     price
   end
 
-  def self.calculate_fertility_bonus(game_state, type)
-    bonus = 0
-    game_state.shed.harvested_plants[type].each do |plant|
-      bonus += plant.soil_plot.tile
-    end
-    bonus
-  end
+  # def self.calculate_fertility_bonus(game_state, type)
+  #   bonus = 0
+  #   game_state.shed.harvested_plants[type].each do |plant|
+  #     bonus += plant.soil_plot.tile
+  #   end
+  #   bonus
+  # end
 
   def self.calculate_score(game_state, type, fertility_bonus)
     score = 0
-    score += game_state.shed.harvested_plants[type].length * 10
+    score += game_state.shed.inventory[type].quantity * 10
     score += fertility_bonus
     score
   end
 
-  def self.buy_seed(game_state, type)
-    return false if (game_state.cash - game_state.price.seed[type]).negative?
+  def self.buy(game_state, type)
+    return false if (game_state.cash - game_state.price.consumables[type]).negative?
 
-    game_state.plant_manager.seeds[type] += 1
-    game_state.cash -= game_state.price.seed[type]
+    game_state.shed.inventory[type] ? (game_state.shed.inventory[type].quantity += 1) : (game_state.shed.inventory[type] = Consumable.new(type))
+
+    game_state.cash -= game_state.price.consumables[type]
     true
   end
 
-  def self.select_seed(game_state, type)
-    game_state.plant_manager.selection = type
+  def self.select(game_state, type)
+    game_state.shed.selection = type
   end
 
   def self.buy_auto_harvester(args)

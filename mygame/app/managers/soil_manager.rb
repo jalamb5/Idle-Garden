@@ -18,7 +18,10 @@ class SoilManager
   end
 
   def tick(args)
-    display_soil_plots(args) unless args.state.game_state.shed.open || args.state.game_state.paused
+    return if args.state.game_state.shed.open || args.state.game_state.paused
+
+    display_soil_plots(args)
+    apply_fertilizer(args) if args.inputs.mouse.click && find_plot(args, args.inputs.mouse.x, args.inputs.mouse.y)
   end
 
   # rubocop:disable Naming/MethodParameterName
@@ -64,5 +67,9 @@ class SoilManager
       plot.update_sprite(args)
       args.outputs.sprites << plot.sprite
     end
+  end
+
+  def apply_fertilizer(args)
+    plot = find_plot(args, args.inputs.mouse.x, args.inputs.mouse.y)
   end
 end

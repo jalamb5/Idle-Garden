@@ -21,7 +21,6 @@ class GameUIBuilder
       { x: 120, y: 175, w: 50, h: 50, path: 'sprites/selection_box.png' }
     ]
     @label_details = { score: ['Score:', args.state.game_state.score, 23, [240, 30, 30, 255]],
-                       seed: ['Seeds:', args.state.game_state.plant_manager.seeds],
                        growing: ['Growing:', args.state.game_state.plant_manager.plants.length],
                        cash: ['Cash:', args.state.game_state.cash],
                        level: ['Level:', args.state.game_state.level.current_level] }
@@ -124,8 +123,8 @@ class GameUIBuilder
   end
 
   def display_selection(args)
-    plant_manager = args.state.game_state.plant_manager
-    args.outputs.sprites << plant_manager.spritesheets[plant_manager.selection].get(30, 130, 180, 25, 25)
+    shed = args.state.game_state.shed
+    args.outputs.sprites << shed.inventory[shed.selection].get_key_frame([130, 180, 25, 25])
   end
 
   def display_images(args)
