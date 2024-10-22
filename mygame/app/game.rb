@@ -19,8 +19,8 @@ class Game
   def initialize
     @paused = false
     @cash = 5
-    @price = { consumables: { flower_red: 5, flower_blue: 10, fertilizer: 15 },
-               flower_red: 10, flower_blue: 15, planter: 150, harvester: 250, seller: 350 }
+    @price = { flower_red_seed: 5, flower_blue_seed: 10, fertilizer: 15,
+               flower_red_harvested: 10, flower_blue_harvested: 15, planter: 150, harvester: 250, seller: 350 }
     @score = 0
     @level = Level.new
     @shed = Shed.new
@@ -53,12 +53,10 @@ class Game
   end
 
   def debt_check(alerts)
-    unless @cash <= 0 && @shed.harvested_plants.values.sum <= 0 && @plant_manager.seeds.values.sum <= 0 && @plant_manager.plants.length <= 0
-      return
-    end
+    return unless @cash <= 0 && @shed.inventory.all? { |_k, v| v.quantity.zero? } && @plant_manager.plants.length <= 0
 
     # If player has no money, no seeds, no plants, and no harvests, debt is accrued.
-    @plant_manager.seeds += 5
+    @shed.inventory.flower_red_seed.quantity += 5
     @cash -= 30
     alerts << Alert.new('You have been given 5 seeds. You have incurred a debt of $30.', color: :pink)
   end

@@ -10,15 +10,11 @@ require 'app/consumable.rb'
 
 # Create a garden shed to store seeds and harvested plants
 class Shed
-  attr_accessor :harvested_plants, :open, :frame, :spritesheet, :selection, :inventory
+  attr_accessor :open, :frame, :spritesheet, :selection, :inventory
 
   def initialize
     @open = false
     @frame = 0
-    @harvested_plants = {
-      flower_red: [],
-      flower_blue: []
-    }
     @inventory = { flower_red_harvested: Consumable.new(:flower_red, 0),
                    flower_blue_harvested: Consumable.new(:flower_blue, 0),
                    flower_red_seed: Consumable.new(:flower_red, 5),
@@ -35,13 +31,14 @@ class Shed
     return unless @open
 
     handle_labels(args)
-    handle_images(args)
+    # handle_images(args)
     handle_buttons(args)
   end
 
   private
 
-  def generate_labels
+  Item_types = Struct.new(:harvested, :usable)
+  def split_inventory
     harvested = {}
     usable = {}
     @inventory.each do |key, value|
@@ -51,10 +48,15 @@ class Shed
         usable << { key => value }
       end
     end
+    Item_types.new(harvested, usable)
+  end
+
+  def generate_labels
+    items = split_inventory
 
     labels = {}
-    labels << build_labels(harvested, 'harvested')
-    labels << build_labels(usable, 'usable')
+    labels << build_labels(items.harvested, 'harvested')
+    labels << build_labels(items.usable, 'usable')
 
     labels.merge(manual_labels)
   end
@@ -64,7 +66,7 @@ class Shed
     y = 500
     x = type == 'harvested' ? 250 : 450
     items.each do |key, value|
-      labels["#{key}_#{type}".to_sym] = Labels.new(x, y, '', value.quantity, 20, [255, 255, 255, 255])
+      labels["#{key}".to_sym] = Labels.new(x, y, '', value.quantity, 20, [255, 255, 255, 255])
       y -= 50
     end
     labels
@@ -85,11 +87,17 @@ class Shed
     end
   end
 
+  # TODO: split into multiple methods like labels
   def generate_buttons
     buttons = {}
     y = 470
-    @harvested_plants.each_key do |key|
+    items = split_inventory
+    items.harvested.each_key do |key|
       buttons["sell#{key}".to_sym] = Button.new(:sell, [300, y], 'Sell', [50, 40], :default, key)
+      y -= 50
+    end
+    y = 470
+    items.usable.each_key do |key|
       buttons["buy_#{key}".to_sym] = Button.new(:buy, [500, y], 'Buy', [50, 40], :default, key)
       buttons["select_#{key}".to_sym] = Button.new(:select, [550, y], 'Select', [50, 40], :default, key)
       y -= 50
@@ -118,6 +126,7 @@ class Shed
     end
   end
 
+  # TODO: fix to use inventory
   def handle_images(args)
     plant_spritesheets = args.state.game_state.plant_manager.spritesheets
     coords = [215, 480]

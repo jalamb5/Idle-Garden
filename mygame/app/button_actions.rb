@@ -55,11 +55,11 @@ module ButtonActions
   end
 
   def self.buy(game_state, type)
-    return false if (game_state.cash - game_state.price.consumables[type]).negative?
+    return false if (game_state.cash - game_state.price[type]).negative?
 
     game_state.shed.inventory[type] ? (game_state.shed.inventory[type].quantity += 1) : (game_state.shed.inventory[type] = Consumable.new(type))
 
-    game_state.cash -= game_state.price.consumables[type]
+    game_state.cash -= game_state.price[type]
     true
   end
 

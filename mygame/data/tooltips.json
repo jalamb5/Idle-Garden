@@ -1,5 +1,4 @@
 {
-  "buy": "Buy more seeds.",
   "sell": "Sell all harvested plants.",
   "buy_auto_harvester": "Hire a harvester to collect ripe or withered plants periodically.",
   "buy_auto_planter": "Hire a planter to plant seeds periodically.",
@@ -7,11 +6,11 @@
   "shed": "Access your seeds and harvested plants.",
   "save": "Save your game. Previous save will be overwritten.",
   "pause_game": "Pause your game.",
-  "sellflower_red": "Sell flowers for 10 cash each.",
-  "sellflower_blue": "Sell flowers for 15 cash each.",
-  "buyflower_blue": "Buy seeds for 10 cash each.",
-  "buyflower_red": "Buy seeds for 5 cash each.",
-  "selectflower_red": "Select red flowers to plant.",
-  "selectflower_blue": "Select blue flowers to plant."
+  "sellflower_red_harvested": "Sell flowers for 10 cash each.",
+  "sellflower_blue_harvested": "Sell flowers for 15 cash each.",
+  "buyflower_blue_seed": "Buy seeds for 10 cash each.",
+  "buyflower_red_seed": "Buy seeds for 5 cash each.",
+  "selectflower_red_seed": "Select red flowers to plant.",
+  "selectflower_blue_seed": "Select blue flowers to plant."
 }
 

@@ -22,19 +22,19 @@ class Labels
     prev = @value
     case key
     when :flower_red_harvest
-      @value = args.state.game_state.shed.harvested_plants.flower_red.length
+      @value = args.state.game_state.shed.inventory.flower_red_harvested.quantity
     when :flower_blue_harvest
-      @value = args.state.game_state.shed.harvested_plants.flower_blue.length
-    when :flower_red_seeds
-      @value = args.state.game_state.plant_manager.seeds.flower_red
-    when :flower_blue_seeds
-      @value = args.state.game_state.plant_manager.seeds.flower_blue
-    when :seed
-      @value = args.state.game_state.plant_manager.seeds.values.sum
+      @value = args.state.game_state.shed.inventory.flower_blue_harvested.quantity
+    when :flower_red_seed
+      @value = args.state.game_state.shed.inventory.flower_red_seed.quantity
+    when :flower_blue_seed
+      @value = args.state.game_state.shed.inventory.flower_blue_seed.quantity
+    # when :seed
+      # @value = args.state.game_state.plant_manager.seeds.values.sum
     when :growing
       @value = args.state.game_state.plant_manager.plants.length
-    when :harvested
-      @value = args.state.game_state.harvested_plants
+    # when :harvested
+      # @value = args.state.game_state.harvested_plants
     when :cash
       @value = args.state.game_state.cash
     when :auto_harvesters
