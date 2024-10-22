@@ -19,7 +19,10 @@ class Shed
       flower_red: [],
       flower_blue: []
     }
-    @inventory = { flower_red_seed: Consumable.new(:flower_red, 5), flower_blue_seed: Consumable.new(:flower_blue, 0) }
+    @inventory = { flower_red_harvested: Consumable.new(:flower_red, 0),
+                   flower_blue_harvested: Consumable.new(:flower_blue, 0),
+                   flower_red_seed: Consumable.new(:flower_red, 5),
+                   flower_blue_seed: Consumable.new(:flower_blue, 0) }
     @labels = generate_labels
     @buttons = generate_buttons
     @spritesheet = Spritesheet.new('sprites/shed_sheet.png', 64, 64, 2)
@@ -39,20 +42,32 @@ class Shed
   private
 
   def generate_labels
+    harvested = {}
+    usable = {}
+    @inventory.each do |key, value|
+      if key.include?('_harvested')
+        harvested << { key => value }
+      else
+        usable << { key => value }
+      end
+    end
+
+    labels = {}
+    labels << build_labels(harvested, 'harvested')
+    labels << build_labels(usable, 'usable')
+
+    labels.merge(manual_labels)
+  end
+
+  def build_labels(items, type)
     labels = {}
     y = 500
-    items = @inventory
+    x = type == 'harvested' ? 250 : 450
     items.each do |key, value|
-      if key.include?('_harvested')
-        # Sellable inventory (eg. harvested plants)
-        labels["#{key}_sellabe".to_sym] = Labels.new(250, y, '', value.quantity, 20, [255, 255, 255, 255])
-      else
-        # Usable inventory (eg. seeds)
-        labels["#{key}_usable".to_sym] = Labels.new(450, y, '', value.quantity, 20, [255, 255, 255, 255])
-      end
+      labels["#{key}_#{type}".to_sym] = Labels.new(x, y, '', value.quantity, 20, [255, 255, 255, 255])
       y -= 50
     end
-    labels.merge(manual_labels)
+    labels
   end
 
   def manual_labels
