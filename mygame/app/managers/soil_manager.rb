@@ -21,7 +21,9 @@ class SoilManager
     return if args.state.game_state.shed.open || args.state.game_state.paused
 
     display_soil_plots(args)
-    apply_fertilizer(args) if args.inputs.mouse.click && find_plot(args, args.inputs.mouse.x, args.inputs.mouse.y)
+    return unless args.inputs.mouse.click && args.state.game_state.shed.selection == :fertilizer
+
+    apply_fertilizer(args, find_plot(args, args.inputs.mouse.x, args.inputs.mouse.y))
   end
 
   # rubocop:disable Naming/MethodParameterName
@@ -69,7 +71,10 @@ class SoilManager
     end
   end
 
-  def apply_fertilizer(args)
-    plot = find_plot(args, args.inputs.mouse.x, args.inputs.mouse.y)
+  def apply_fertilizer(args, plot)
+    return if plot.nil? || args.state.game_state.shed.inventory[:fertilizer].quantity.zero?
+
+    plot.improve
+    args.state.game_state.shed.inventory[:fertilizer].quantity -= 1
   end
 end

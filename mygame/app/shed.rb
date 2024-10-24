@@ -18,7 +18,8 @@ class Shed
     @inventory = { flower_red_harvested: Consumable.new(:flower_red, 0),
                    flower_blue_harvested: Consumable.new(:flower_blue, 0),
                    flower_red_seed: Consumable.new(:flower_red, 5),
-                   flower_blue_seed: Consumable.new(:flower_blue, 0) }
+                   flower_blue_seed: Consumable.new(:flower_blue, 0),
+                   fertilizer: Consumable.new(:fertilizer, 0) }
     @labels = generate_labels
     @buttons = generate_buttons
     @spritesheet = Spritesheet.new('sprites/shed_sheet.png', 64, 64, 2)
@@ -31,7 +32,7 @@ class Shed
     return unless @open
 
     handle_labels(args)
-    # handle_images(args)
+    handle_images(args)
     handle_buttons(args)
   end
 
@@ -126,16 +127,13 @@ class Shed
     end
   end
 
-  # TODO: fix to use inventory
   def handle_images(args)
-    plant_spritesheets = args.state.game_state.plant_manager.spritesheets
-    coords = [215, 480]
-    @harvested_plants.each_key do |key|
-      if plant_spritesheets.include?(key)
-        args.outputs.sprites << plant_spritesheets[key].get(30, coords[0], coords[1], 25,
-                                                            25)
-      end
-      coords[1] -= 50
+    y = 480
+    @inventory.each do |key, value|
+      next if key.include?('_harvested')
+
+      args.outputs.sprites << value.get_key_frame([215, y, 25, 25])
+      y -= 50
     end
   end
 

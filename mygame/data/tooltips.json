@@ -8,9 +8,12 @@
   "pause_game": "Pause your game.",
   "sellflower_red_harvested": "Sell flowers for 10 cash each.",
   "sellflower_blue_harvested": "Sell flowers for 15 cash each.",
+  "sellfertilizer": "Sell fertilizers for 15 cash each.",
   "buyflower_blue_seed": "Buy seeds for 10 cash each.",
   "buyflower_red_seed": "Buy seeds for 5 cash each.",
+  "buyfertilizer": "Buy fertilizers for 15 cash each.",
   "selectflower_red_seed": "Select red flowers to plant.",
-  "selectflower_blue_seed": "Select blue flowers to plant."
+  "selectflower_blue_seed": "Select blue flowers to plant.",
+  "selectfertilizer": "Select fertilizers to improve soil."
 }
 

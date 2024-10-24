@@ -24,6 +24,13 @@ class Consumable
       h: 64,
       frames: 56,
       key_frame: 30
+    },
+    fertilizer: {
+      path: 'sprites/fertilizer.png',
+      w: 64,
+      h: 64,
+      frames: 1,
+      key_frame: 0
     }
   }
 
