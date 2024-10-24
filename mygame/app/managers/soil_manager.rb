@@ -21,7 +21,8 @@ class SoilManager
     return if args.state.game_state.shed.open || args.state.game_state.paused
 
     display_soil_plots(args)
-    return unless args.inputs.mouse.click && args.state.game_state.shed.selection == :fertilizer
+    return unless args.state.game_state.shed.selection.include?('fertilizer') && args.inputs.mouse.click &&
+                  args.inputs.mouse.point.inside_rect?(args.state.game_state.plant_manager.garden)
 
     apply_fertilizer(args, find_plot(args, args.inputs.mouse.x, args.inputs.mouse.y))
   end
@@ -71,10 +72,10 @@ class SoilManager
     end
   end
 
+  # TODO: Add sound effect for apply / not apply
   def apply_fertilizer(args, plot)
     return if plot.nil? || args.state.game_state.shed.inventory[:fertilizer].quantity.zero?
 
-    plot.improve
-    args.state.game_state.shed.inventory[:fertilizer].quantity -= 1
+    args.state.game_state.shed.inventory[:fertilizer].quantity -= 1 if plot.improve
   end
 end

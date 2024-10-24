@@ -22,7 +22,7 @@ class Soil
   end
 
   def improve
-    return if @tile == 2
+    return false if @tile == 2
 
     @tile += 1
   end

@@ -67,7 +67,7 @@ class Game
 
     args.state.boot.ui_manager.game_ui.alerts << Alert.new('Dev Mode Activated!')
     @cash += 1000
-    @shed.inventory.flower_red.quantity += 500
+    @shed.inventory.flower_red_seed.quantity += 500
     @score += 9000
   end
 

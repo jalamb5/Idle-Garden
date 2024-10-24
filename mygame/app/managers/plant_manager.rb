@@ -8,7 +8,7 @@ require 'app/spritesheet.rb'
 
 # Manage growth and placement of plants
 class PlantManager
-  attr_accessor :plants, :seeds, :spritesheets, :block_plant
+  attr_accessor :plants, :seeds, :spritesheets, :block_plant, :garden
 
   def initialize
     @plants = []
@@ -45,7 +45,7 @@ class PlantManager
   end
 
   def plant_harvest(args)
-    return unless args.inputs.mouse.click && args.inputs.mouse.point.inside_rect?(@garden)
+    return unless args.inputs.mouse.click && args.inputs.mouse.point.inside_rect?(@garden) && args.state.game_state.shed.selection.include?('_seed')
 
     inventory = args.state.game_state.shed.inventory
     selection = args.state.game_state.shed.selection
