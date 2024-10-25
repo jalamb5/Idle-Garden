@@ -18,7 +18,7 @@ class Automation
     @cooldown = COOLDOWNS[type]
     @location = [250, 50]
     @target = target_generator(args)
-    @sprite = update_sprite(args)
+    # @sprite = update_sprite(args)
     @frame = 0
     @counter = 0
     @name = name_generator(args)
@@ -36,14 +36,10 @@ class Automation
     when :harvester
       auto_harvester(args) if @cooldown <= 0 && args.state.game_state.plant_manager.plants.length.positive?
     when :planter
-      auto_planter(args) if @cooldown <= 0 && args.state.game_state.plant_manager.seeds.any? do |_key, value|
-                              value.positive?
-                            end
+      auto_planter(args) if @cooldown <= 0 && args.state.game_state.shed.inventory_count('seed').positive?
     when :seller
       move_auto_seller(args)
-      auto_seller(args.state.game_state, args) if args.state.game_state.shed.harvested_plants.any? do |_key, value|
-                                              value.length.positive?
-                                            end
+      auto_seller(args.state.game_state, args) if args.state.game_state.shed.inventory_count('harvested').positive?
     end
   end
 
@@ -95,11 +91,10 @@ class Automation
   def auto_planter(args)
     return unless @location == @target
 
-    # TODO: Add logic to check if seeds are available
-    sheet = seed_selector(args.state.game_state.plant_manager.seeds)
+    sheet = seed_selector(args.state.game_state.shed.inventory_search('seed'))
     plant = Plant.new(args, sheet, @location[0], @location[1])
     args.state.game_state.plant_manager.plants << plant
-    args.state.game_state.plant_manager.seeds[sheet] -= 1
+    args.state.game_state.shed.inventory[sheet].quantity -= 1
     @work_completed += 1
     @cooldown = rand(1000)
     @target = coord_generator
@@ -107,7 +102,7 @@ class Automation
 
   # Randomly select a seed type from seeds with positive value
   def seed_selector(seeds)
-    positive_seeds = seeds.select { |_key, value| value.positive? }.keys
+    positive_seeds = seeds.select { |_key, value| value.quantity.positive? }.keys
     positive_seeds.sample
   end
 
@@ -126,7 +121,7 @@ class Automation
     return unless @location == [150, 720]
 
     starting_cash = game_state.cash
-    game_state.shed.harvested_plants.each_key do |key|
+    game_state.shed.inventory_search('harvested').each_key do |key|
       ButtonActions.sell(args, key)
     end
 
@@ -140,9 +135,7 @@ class Automation
     home = [75, 175]
     if @location == off_screen
       @target = home
-    elsif @location == home && args.state.game_state.shed.harvested_plants.any? do |_key, value|
-            value.length.positive?
-          end && @cooldown <= 0
+    elsif @location == home && args.state.game_state.shed.inventory_count('harvested').positive? && @cooldown <= 0
       @target = off_screen
     else
       @target

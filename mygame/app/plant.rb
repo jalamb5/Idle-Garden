@@ -95,7 +95,7 @@ class Plant
   # Perform actions for plants that are ready to be harvested
   def harvest_action(args, plant)
     type = "#{plant.sheet.to_s.split('_seed').first}_harvested".to_sym
-    p type
+
     unless args.state.game_state.shed.inventory.include?(type)
       args.state.game_state.shed.inventory[type] = Consumable.new(plant.sheet, 0)
     end

@@ -36,6 +36,24 @@ class Shed
     handle_buttons(args)
   end
 
+  # Return a total count of item quantity of specified type
+  def inventory_count(type)
+    count = 0
+    @inventory.each do |key, value|
+      count += value.quantity if key.include?(type)
+    end
+    count
+  end
+
+  # Return hash of items of specified type
+  def inventory_search(type)
+    items = {}
+    @inventory.each do |key, value|
+      items[key] = value if key.include?(type)
+    end
+    items
+  end
+
   private
 
   Item_types = Struct.new(:harvested, :usable)
