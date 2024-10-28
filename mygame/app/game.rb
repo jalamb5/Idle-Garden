@@ -31,6 +31,7 @@ class Game
   end
 
   def tick(args)
+    # Logic for loading from save, disabled for now
     # args.state.load_state.load_save(args) if args.state.load_state.loaded_from_save == true
 
     standard_display(args)
@@ -53,7 +54,9 @@ class Game
   end
 
   def debt_check(alerts)
-    return unless @cash <= 0 && @shed.inventory.all? { |_k, v| v.quantity.zero? } && @plant_manager.plants.length <= 0
+    unless @cash <= 0 && @shed.inventory_count('seed').zero? && @plant_manager.plants.empty? && @shed.inventory_count('harvested').zero?
+      return
+    end
 
     # If player has no money, no seeds, no plants, and no harvests, debt is accrued.
     @shed.inventory.flower_red_seed.quantity += 5
