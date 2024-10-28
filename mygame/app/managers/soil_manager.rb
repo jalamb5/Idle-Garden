@@ -72,10 +72,20 @@ class SoilManager
     end
   end
 
-  # TODO: Add sound effect for apply / not apply
   def apply_fertilizer(args, plot)
     return if plot.nil? || args.state.game_state.shed.inventory[:fertilizer].quantity.zero?
 
-    args.state.game_state.shed.inventory[:fertilizer].quantity -= 1 if plot.improve
+    applied = plot.improve
+    args.state.game_state.shed.inventory[:fertilizer].quantity -= 1 if applied
+
+    fertilizer_sound(args, applied)
+  end
+
+  def fertilizer_sound(args, applied)
+    if applied
+      args.state.boot.sound_manager.play_effect(:apply_fertilizer, args)
+    else
+      args.state.boot.sound_manager.play_effect(:reject_fertilizer, args)
+    end
   end
 end

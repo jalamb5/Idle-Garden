@@ -102,7 +102,7 @@ class Plant
 
     args.state.game_state.shed.inventory[type].quantity += 1
     args.state.game_state.shed.inventory[type].bonus += plant.soil_plot.tile
-    args.state.startup.sound_manager.play_effect(:harvest_plant, args)
+    args.state.boot.sound_manager.play_effect(:harvest_plant, args)
     args.state.game_state.score += 2
   end
 
@@ -110,7 +110,7 @@ class Plant
   def wither_action(args, plant)
     type = "#{plant.sheet}_seed".to_sym
     args.state.game_state.shed.inventory[type] += rand(5 * plant.soil_plot.tile)
-    args.state.startup.sound_manager.play_effect(:harvest_withered, args)
+    args.state.boot.sound_manager.play_effect(:harvest_withered, args)
     args.state.game_state.score += 1
   end
 

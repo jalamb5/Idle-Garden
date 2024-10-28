@@ -11,7 +11,9 @@ class SoundManager
     harvest_withered: 'sounds/harvest_withered.wav',
     harvester: 'sounds/harvester.wav',
     planter: 'sounds/planter.wav',
-    seller: 'sounds/seller.wav'
+    seller: 'sounds/seller.wav',
+    apply_fertilizer: 'sounds/apply_fertilizer.wav',
+    reject_fertilizer: 'sounds/reject_fertilizer.wav'
   }.freeze
 
   MUSIC_LIBRARY = {
