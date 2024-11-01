@@ -102,9 +102,9 @@ class GameUIBuilder
   end
 
   def construct_soil_sprite(args, spritesheet)
-    sprites = [spritesheet.get(0, 250, 50, 15, 620),
-               spritesheet.get(1, 265, 50, 950, 620),
-               spritesheet.get(2, 1215, 50, 15, 620)]
+    sprites = [spritesheet.get(0, 250 - 3, 50 - 3, 15 + 3, 620 + 6),
+               spritesheet.get(1, 265, 50 - 3, 950 + 3, 620 + 6),
+               spritesheet.get(2, 1215 + 3, 50 - 3, 15, 620 + 6)]
     sprites.each { |sprite| args.outputs.sprites << sprite }
   end
 
