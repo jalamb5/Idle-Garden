@@ -18,7 +18,7 @@ class SoilManager
   end
 
   def tick(args)
-    return if args.state.game_state.shed.open || args.state.game_state.paused
+    return if args.state.game_state.shed.frame.positive? || args.state.game_state.paused
 
     display_soil_plots(args)
     return unless args.state.game_state.shed.selection.include?('fertilizer') && args.inputs.mouse.click &&
